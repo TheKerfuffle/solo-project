@@ -33,6 +33,9 @@ function Nav() {
             <Link className="navLink" to="/grid">
               Grid
             </Link>
+            <Link className="navLink" to="/info">
+              Info
+            </Link>
             <LogOutButton className="navLink" />
           </>
         )}

@@ -21,12 +21,14 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
+import Grid from '../Grid/Grid';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
+    dispatch({type: 'GET_GRID'});
   }, [dispatch]);
 
   return (
@@ -64,6 +66,14 @@ function App() {
             path="/info"
           >
             <InfoPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/grid"
+          >
+            <Grid />
           </ProtectedRoute>
 
           {/* When a value is supplied for the authRedirect prop the user will

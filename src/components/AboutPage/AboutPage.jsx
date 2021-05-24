@@ -1,4 +1,5 @@
 import React from 'react';
+import Grid from '../Grid/Grid';
 
 // This is one of our simplest components
 // It doesn't have local state,
@@ -9,7 +10,7 @@ function AboutPage() {
   return (
     <div className="container">
       <div>
-        <p>This about page is for anyone to read!</p>
+        <Grid />
       </div>
     </div>
   );

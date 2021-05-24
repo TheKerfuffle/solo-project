@@ -102,7 +102,16 @@ function App() {
           >
             <LandingPage />
           </ProtectedRoute>
-
+          <ProtectedRoute
+            // with authRedirect:
+            // - if logged in, redirects to "/user"
+            // - else shows LandingPage at "/home"
+            exact
+            path="/home"
+            authRedirect="/user"
+          >
+            <Grid />
+          </ProtectedRoute>
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
             <h1>404</h1>

@@ -1,0 +1,28 @@
+table {
+    border: solid black 1px;
+    border-collapse: collapse;
+    align-items: center;
+    justify-content: center;
+}
+
+th {
+    border: solid black 1px;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+td {
+    border: solid black 1px;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+tbody {
+    border: solid black 1px;
+    align-items: center;
+    justify-content: center;
+}

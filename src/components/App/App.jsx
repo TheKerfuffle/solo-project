@@ -21,6 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
+import Grid from '../Grid/Grid';
 
 function App() {
   const dispatch = useDispatch();

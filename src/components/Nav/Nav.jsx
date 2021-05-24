@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import {useSelector} from 'react-redux';
+import Grid from '../Grid/Grid';
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -29,8 +30,8 @@ function Nav() {
 
         {user.id && (
           <>
-            <Link className="navLink" to="/info">
-              Info Page
+            <Link className="navLink" to="/grid">
+              Grid
             </Link>
             <LogOutButton className="navLink" />
           </>

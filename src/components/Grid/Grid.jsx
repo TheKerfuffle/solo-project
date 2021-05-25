@@ -38,7 +38,7 @@ function Grid() {
                         gridData.tabledata.map((item, i) => (
                             <tr key={i}>
                                 {
-                                    hGridData[i].map((clue, k) => (
+                                    hGridData.tableData[i].map((clue, k) => (
                                         <HClue key={k} clue={clue} />
                                     ))
                                 }

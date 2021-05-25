@@ -51,7 +51,7 @@ function generateHorizontal(gridData) {
         length: maxRowLength,
         tableData: processResult(hData, maxRowLength)
     }
-    return ;
+    return hGridData;
 }
 
 function processResult(data, length) {

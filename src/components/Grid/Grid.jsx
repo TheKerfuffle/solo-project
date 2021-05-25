@@ -1,28 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GridElement from '../GridElement/GridElement'
+import HClue from '../HorizontalClues/HClue';
 import './Grid.css';
 
-function Grid(props) {
+function Grid() {
 
     // let [gridData, setGridData] = useState([])
-    let [vData, setVData] = useState([]);
-    let [hData, setHData] = useState([]);
-    let [rowClue, setRowClue] = useState([0])
 
     const dispatch = useDispatch();
 
     const gridData = useSelector(store => store.grid);
+    const hGridData = useSelector(store => store.hGrid);
 
     useEffect(() => {
         dispatch({type: 'GET_GRID'});
     }, [])
-
-    function generateVertical(gridArray) {
-        
-    }
-
-    
 
     return (
         <>
@@ -44,7 +37,11 @@ function Grid(props) {
                     ):(
                         gridData.tabledata.map((item, i) => (
                             <tr key={i}>
-                                
+                                {
+                                    hGridData[i].map((clue, k) => (
+                                        <HClue key={k} clue={clue} />
+                                    ))
+                                }
     
                                 {
                                     item.map((thing, j) => (

@@ -3,7 +3,7 @@ import { useState } from "react";
 import './HClue.css';
 
 
-function HClue(row) {
+function HClue({ clue }) {
 
     // let [colorToggle, setColorToggle] = useState("colorWhite");
     // 
@@ -16,12 +16,12 @@ function HClue(row) {
     //         setColorToggle("colorWhite");
     //     }
     // }
-    
+
 
     return (
-        <td>
-            
-        </td>
+        <>
+            {clue === 0 ? (<td></td>) : (<td>{clue}</td>)}
+        </>
     )
 }
 

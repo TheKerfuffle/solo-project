@@ -9,66 +9,59 @@ const hGrid = (state = {}, action) => {
 
 export default hGrid;
 
+// This block of code contains the most hard fought element of this project.
+// I am extremely proud of this code
 function generateHorizontal(gridData) {
+
+    // Initialize varaibles for use in this part of the project
     let gridArray = gridData.tabledata;
     let hData = [];
     let newRow = [];
     let newClue = 0;
     let maxRowLength = 0;
-    // console.log(gridArray, 'IN GENERATE HORIZONTAL');
 
-    // Loop through i which denotes which row we are working with
+    // Loop through i which denotes the row we are working with
     for (let i = 0; i < gridArray.length; i++) {
 
-
-        // Loop through j which denotes which element of the row we are working with
+        // Loop through j which denotes the element of the row we are working with
         for (let j = 0; j < gridArray[i].length; j++) {
-            // console.log(i, j);
-
-
             if (gridArray[i][j] === 1) {
                 newClue++;
             } else if (gridArray[i][j] === 0 && newClue > 0) {
                 newRow.push(newClue);
-                // console.log('pushed:', newClue);
-
                 newClue = 0;
             }
         }
+
+        // If the last element of the grid contains a clue, this if statement grabs it
+        // Then it resets the current clue for use with the next row
         if (newClue > 0) {
             newRow.push(newClue);
-            // console.log('pushing last item of row', newClue);
             newClue = 0;
         }
-
+        // We need to know the longest row of clues so that all can be made this long
         if (newRow.length > maxRowLength) {
             maxRowLength = newRow.length;
         }
         hData.push(newRow);
         newRow = [];
     }
-    console.log('maxRowLength', maxRowLength);
 
-    // return hData;
-    return processResult(hData, maxRowLength);
+    const hGridData = {
+        length: maxRowLength,
+        tableData: processResult(hData, maxRowLength)
+    }
+    return ;
 }
 
 function processResult(data, length) {
     let newData = [];
-    let newRow= [];
-    console.log('data:', data);
-    
+    let newRow = [];
 
     for (let array of data) {
-        console.log('array:', array);
-        
         newRow = processRow(array, length);
-        console.log('newRow', newRow);
-        
         newData.push(newRow);
         newRow = [];
-
-        
     }
     return newData;
 }
@@ -76,8 +69,7 @@ function processResult(data, length) {
 
 function processRow(row, length) {
     let newRow = row;
-    console.log(newRow.length, length);
-    
+
     if (newRow.length < length) {
         newRow.unshift(0);
         return processRow(newRow, length)

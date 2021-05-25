@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GridElement from '../GridElement/GridElement'
-import HClue from '../HorizontalClues/HClue';
+import HClue from '../HClue/HClue';
 import './Grid.css';
 
 function Grid() {
@@ -14,47 +14,51 @@ function Grid() {
     const hGridData = useSelector(store => store.hGrid);
 
     useEffect(() => {
-        dispatch({type: 'GET_GRID'});
+        dispatch({ type: 'GET_GRID' });
     }, [])
 
     return (
         <>
-        {/* { gridData == undefined ? (<> </>):(JSON.stringify(gridData.tabledata)) } */}
-        {/* { hData == [] ? (<> </>):(JSON.stringify(hData)) } */}
+            {/* { gridData == undefined ? (<> </>):(JSON.stringify(gridData.tabledata)) } */}
+            {/* { hData == [] ? (<> </>):(JSON.stringify(hData)) } */}
             <table>
                 <thead>
                     <tr>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
 
-                
-                    { gridData == undefined ? (
-                        <>
 
-                        </>
-                    ):(
-                        gridData.tabledata.map((item, i) => (
-                            <tr key={i}>
-                                {
-                                    hGridData.tableData[i].map((clue, k) => (
-                                        <HClue key={k} clue={clue} />
-                                    ))
-                                }
-    
-                                {
-                                    item.map((thing, j) => (
-                                        <GridElement key={j} id={j} thing={thing} />
-                                    ))
-                                }
-                            </tr>
-    
-    
-                        ))
-                    )}
+                    {gridData.id == undefined ?
+                        (
+                            <>
 
-                    
+                            </>
+                        )
+                        :
+                        (
+                            gridData.tabledata.map((item, i) => (
+                                <tr key={i}>
+                                    {
+                                        hGridData.tableData[i].map((clue, k) => (
+                                            <HClue key={k} clue={clue} />
+                                        ))
+                                    }
+
+                                    {
+                                        item.map((thing, j) => (
+                                            <GridElement key={j} id={j} thing={thing} />
+                                        ))
+                                    }
+                                </tr>
+
+
+                            ))
+                        )
+                    }
+
+
                 </tbody>
             </table>
         </>

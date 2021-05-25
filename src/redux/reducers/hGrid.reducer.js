@@ -78,5 +78,3 @@ function processRow(row, length) {
         return newRow;
     }
 }
-
-

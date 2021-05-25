@@ -75,7 +75,7 @@ function generateHorizontal(gridData) {
         newRow = [];
     }
 
-    let finishedData = reverseArrays(rotateArray(processResult(hData, maxRowLength), maxRowLength));
+    let finishedData = rotateReverseArray(processResult(hData, maxRowLength), maxRowLength);
     console.log('finishedData', finishedData);
 
 
@@ -113,7 +113,7 @@ function processRow(row, length) {
     }
 }
 
-function rotateArray(array, length) {
+function rotateReverseArray(array, length) {
     console.log('array/ length', array, length);
 
     let rotatedArray = [];
@@ -124,21 +124,8 @@ function rotateArray(array, length) {
         for (let j = array.length - 1; j >= 0; j--) {
             newRow.push(array[j][i]);
         }
-        rotatedArray.push(newRow);
+        rotatedArray.push(newRow.reverse());
         newRow = [];
     }
     return rotatedArray;
-}
-
-function reverseArrays(array) {
-    let reversedAr = [];
-    let newRow = [];
-    for (let nestedArray of array) {
-        for (let i = nestedArray.length - 1; i < nestedArray.length; i--) {
-            newRow.push(nestedArray[i]);
-        }
-        reversedAr.push(newRow);
-        newRow = [];
-    }
-    return reversedAr;
 }

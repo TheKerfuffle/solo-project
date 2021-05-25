@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import './HorizontalClues.css';
+import './HClue.css';
 
 
-function HorizontalClues(row) {
+function HClue(row) {
 
     // let [colorToggle, setColorToggle] = useState("colorWhite");
     // 
@@ -25,4 +25,4 @@ function HorizontalClues(row) {
     )
 }
 
-export default HorizontalClues;
+export default HClue;

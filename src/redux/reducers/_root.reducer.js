@@ -3,6 +3,7 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import timer from './timer.reducer';
 import grid from './grid.reducer';
+import hGrid from './hGrid.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -12,6 +13,7 @@ import grid from './grid.reducer';
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
   grid,
+  hGrid,
   timer,    // contains local timer data
   errors,   // contains registrationMessage and loginMessage
   user,     // will have an id and username if someone is logged in

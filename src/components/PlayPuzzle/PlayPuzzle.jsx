@@ -1,19 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import GridElement from '../GridElement/GridElement'
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import GridElement from '../GridElement/GridElement';
 import HClue from '../HClue/HClue';
 import VClue from '../VClue/VClue';
-import './Grid.css';
+import './PlayPuzzle.css';
 
-function Grid() {
 
-    // let [gridData, setGridData] = useState([])
 
-    const dispatch = useDispatch();
+function PlayPuzzle() {
 
-    const gridData = useSelector(store => store.grid);
+
     const hGridData = useSelector(store => store.hGrid);
     const vGridData = useSelector(store => store.vGrid);
+    const attempt = useSelector(store => store.attempt);
 
     return (
         <>
@@ -44,7 +43,7 @@ function Grid() {
                         )
                     }
 
-                    {gridData.id == undefined ?
+                    {attempt == {} ?
                         (
                             <>
 
@@ -52,9 +51,11 @@ function Grid() {
                         )
                         :
                         (
-                            gridData.solution_data.map((item, i) => (
+                            attempt.input_data.map((item, i) => (
                                 <>
                                     <tr key={i}>
+                                        {/* In each row, the clues come first, which have 
+                                            already been processed to the format we need */}
                                         {
                                             hGridData.tableData[i].map((clue, k) => (
                                                 <HClue key={k} clue={clue} />
@@ -62,8 +63,8 @@ function Grid() {
                                         }
 
                                         {
-                                            item.map((thing, j) => (
-                                                <GridElement key={j} id={j} thing={thing} />
+                                            item.map((value, j) => (
+                                                <GridElement key={j} id={j} value={value} position={[i,j]} />
                                             ))
                                         }
                                     </tr>
@@ -80,4 +81,4 @@ function Grid() {
     )
 }
 
-export default Grid;
+export default PlayPuzzle;

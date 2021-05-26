@@ -6,6 +6,7 @@ import userSaga from './user.saga';
 // import putTimer from './timer.sagas/putTimer.saga';
 // import getTimer from './timer.sagas/getTimer.saga';
 import getGrid from './grid.sagas/getGrid.saga';
+import getRandomPuzzle from './play.sagas/getRandomPuzzle.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -19,6 +20,7 @@ export default function* rootSaga() {
   // yield takeEvery('PUT_TIMER', putTimer);
   // yield takeEvery('GET_TIMER', getTimer);
   yield takeEvery('GET_GRID', getGrid);
+  yield takeEvery('GET_RANDOM_PUZZLE', getRandomPuzzle);
   yield all([
     loginSaga(), // login saga is now registered
     registrationSaga(),

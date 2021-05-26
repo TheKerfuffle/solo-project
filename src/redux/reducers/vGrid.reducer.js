@@ -13,7 +13,7 @@ export default vGrid;
 // I am extremely proud of this code
 function generateVertical(gridData) {
 
-    let gridArray = gridData.tabledata;
+    let gridArray = gridData.solution_data;
     let puzzleSize = gridArray.length; // 10
     let vData = []; // thing to return
     let rotateData = [];
@@ -76,7 +76,7 @@ function generateHorizontal(gridData) {
     }
 
     let finishedData = rotateReverseArray(processResult(hData, maxRowLength), maxRowLength);
-    console.log('finishedData', finishedData);
+    // console.log('finishedData', finishedData);
 
 
     const vGridData = {
@@ -115,7 +115,7 @@ function processRow(row, length) {
 }
 
 function rotateReverseArray(array, length) {
-    console.log('array/ length', array, length);
+    // console.log('array/ length', array, length);
 
     let rotatedArray = [];
     let newRow = [];

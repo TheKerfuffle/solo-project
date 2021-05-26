@@ -14,7 +14,7 @@ export default hGrid;
 function generateHorizontal(gridData) {
 
     // Initialize varaibles for use in this part of the project
-    let gridArray = gridData.tabledata;
+    let gridArray = gridData.solution_data;
     let hData = [];
     let newRow = [];
     let newClue = 0;

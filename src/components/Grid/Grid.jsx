@@ -25,36 +25,31 @@ function Grid() {
             {/* { gridData == undefined ? (<> </>):(JSON.stringify(gridData.tabledata)) } */}
             {/* { hData == [] ? (<> </>):(JSON.stringify(hData)) } */}
             <table>
-                <thead>
-                    <tr>
-
-                    </tr>
-                </thead>
                 <tbody>
 
-                    { vGridData.length == undefined ? 
-                    (
-                        <>
-                        </>
-                    ) 
-                    : 
-                    (
+                    {vGridData.length == undefined ?
+                        (
+                            <>
+                            </>
+                        )
+                        :
+                        (
 
-                        vGridData.tableData.map((item,i) => (
-                            <tr key={i}>
-                            {hGridData.fillerGrid.map(() => (
-                                <td className="filler"></td>
-                            ))}
+                            vGridData.tableData.map((item, i) => (
+                                <tr key={i}>
+                                    {hGridData.fillerGrid.map(() => (
+                                        <td className="filler"></td>
+                                    ))}
 
-                            {item.map((clue,j) => (
-                                <VClue key={j} clue={clue} />
-                            ))}
-                            </tr>
-                        ))
-                    )
+                                    {item.map((clue, j) => (
+                                        <VClue key={j} clue={clue} />
+                                    ))}
+                                </tr>
+                            ))
+                        )
                     }
 
-                    { gridData.id == undefined ?
+                    {gridData.id == undefined ?
                         (
                             <>
 
@@ -62,7 +57,7 @@ function Grid() {
                         )
                         :
                         (
-                            gridData.tabledata.map((item, i) => (
+                            gridData.solution_data.map((item, i) => (
                                 <>
                                     <tr key={i}>
                                         {
@@ -91,5 +86,3 @@ function Grid() {
 }
 
 export default Grid;
-
-// { JSON.stringify(gridData) }

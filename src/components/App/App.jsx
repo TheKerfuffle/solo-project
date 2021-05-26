@@ -20,8 +20,9 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
-import './App.css';
 import Grid from '../Grid/Grid';
+import PlayPuzzle from '../PlayPuzzle/PlayPuzzle';
+import './App.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -69,11 +70,19 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
+            // logged in shows Grid else shows LoginPage
             exact
             path="/grid"
           >
             <Grid />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows PlayPuzzle else shows LoginPage
+            exact
+            path="/play"
+          >
+            <PlayPuzzle />
           </ProtectedRoute>
 
           {/* When a value is supplied for the authRedirect prop the user will

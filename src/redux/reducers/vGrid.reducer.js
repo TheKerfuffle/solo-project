@@ -13,7 +13,7 @@ export default vGrid;
 // I am extremely proud of this code
 function generateVertical(gridData) {
 
-    let gridArray = gridData.tabledata;
+    let gridArray = gridData.solution_data;
     let puzzleSize = gridArray.length; // 10
     let vData = []; // thing to return
     let rotateData = [];

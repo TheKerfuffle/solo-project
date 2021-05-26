@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GridElement from '../GridElement/GridElement';
 import HClue from '../HClue/HClue';
+import Timer from '../Timer/Timer';
 import VClue from '../VClue/VClue';
 import './PlayPuzzle.css';
 
@@ -13,11 +14,22 @@ function PlayPuzzle() {
     const hGridData = useSelector(store => store.hGrid);
     const vGridData = useSelector(store => store.vGrid);
     const attempt = useSelector(store => store.attempt);
+    const dispatch = useDispatch();
+
+    function saveProgress() {
+        if (attempt.id ===0 ) {
+            dispatch({type: 'POST_NEW_ATTEMPT', payload: attempt})
+        } else {
+            dispatch({type: 'UPDATE_ATTEMPT', payload: attempt})
+        }
+    }
 
     return (
         <>
             {/* { gridData == undefined ? (<> </>):(JSON.stringify(gridData.tabledata)) } */}
             {/* { hData == [] ? (<> </>):(JSON.stringify(hData)) } */}
+            <button onClick={saveProgress}>Save Progress</button>
+            <Timer />
             <table>
                 <tbody>
 

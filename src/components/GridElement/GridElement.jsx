@@ -10,6 +10,9 @@ function GridElement({ id, value, position }) {
     let [newValue, setNewValue] = useState(value)
 
     const attempt = useSelector(store => store.attempt);
+    const attemptData = attempt.input_data;
+    const user = useSelector(store => store.user);
+    const timer = useSelector(store => store.timer);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -17,17 +20,48 @@ function GridElement({ id, value, position }) {
     }, [])
 
     function changeColor() {
-        console.log('clicked grid space position of:', position );
+        // console.log('clicked grid space position of:', position);
+        let val;
+
         if (colorToggle === "colorWhite") {
             setColorToggle("colorGreen");
             setNewValue(1);
+            val = 1;
         } else if (colorToggle === "colorGreen") {
             setColorToggle("colorRed");
             setNewValue(2);
+            val = 2;
         } else {
             setColorToggle("colorWhite");
             setNewValue(0);
+            val = 0;
         }
+
+        attemptData[position[0]][position[1]] = val;
+
+        if (attempt.id === 0) {
+            dispatch({type: 'SET_ATTEMPT', payload: {
+                id: 0,
+                player_id: user.id,
+                puzzle_id: attempt.puzzle_id,
+                timer: timer,
+                input_data: attemptData,
+                completed: false
+            }});
+        } else {
+            dispatch({type: 'SET_ATTEMPT', payload: {
+                id: attempt.id,
+                player_id: user.id,
+                puzzle_id: attempt.puzzle_id,
+                timer: timer,
+                input_data: attemptData,
+                completed: false
+            }});
+
+        }
+
+
+        
     }
 
     function setStartColor() {

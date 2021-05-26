@@ -81,7 +81,8 @@ function generateHorizontal(gridData) {
 
     const vGridData = {
         length: maxRowLength,
-        tableData: finishedData
+        tableData: finishedData,
+        fillerGrid: generateFiller(maxRowLength)
     }
     return vGridData;
 }
@@ -128,4 +129,12 @@ function rotateReverseArray(array, length) {
         newRow = [];
     }
     return rotatedArray;
+}
+
+function generateFiller(length) {
+    let filler = [];
+    for (let i = 0; i < length; i++) {
+        filler.push(0);
+    }
+    return filler;
 }

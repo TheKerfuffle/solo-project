@@ -39,8 +39,12 @@ function Grid() {
                     ) 
                     : 
                     (
+
                         vGridData.tableData.map((item,i) => (
                             <tr key={i}>
+                            {hGridData.fillerGrid.map(() => (
+                                <td className="filler"></td>
+                            ))}
 
                             {item.map((clue,j) => (
                                 <VClue key={j} clue={clue} />

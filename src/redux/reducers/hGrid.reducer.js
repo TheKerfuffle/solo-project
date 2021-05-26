@@ -49,7 +49,8 @@ function generateHorizontal(gridData) {
 
     const hGridData = {
         length: maxRowLength,
-        tableData: processResult(hData, maxRowLength)
+        tableData: processResult(hData, maxRowLength),
+        fillerGrid: generateFiller(maxRowLength)
     }
     return hGridData;
 }
@@ -77,4 +78,12 @@ function processRow(row, length) {
     else {
         return newRow;
     }
+}
+
+function generateFiller(length) {
+    let filler = [];
+    for (let i = 0; i < length; i++) {
+        filler.push(0);
+    }
+    return filler;
 }

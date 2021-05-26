@@ -29,7 +29,8 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-    dispatch({type: 'GET_GRID'});
+    // dispatch({type: 'GET_GRID'});
+    dispatch({ type: 'GET_RANDOM_PUZZLE'});
   }, [dispatch]);
 
   return (

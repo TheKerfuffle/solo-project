@@ -15,11 +15,6 @@ function Grid() {
     const hGridData = useSelector(store => store.hGrid);
     const vGridData = useSelector(store => store.vGrid);
 
-
-    useEffect(() => {
-        dispatch({ type: 'GET_GRID' });
-    }, [])
-
     return (
         <>
             {/* { gridData == undefined ? (<> </>):(JSON.stringify(gridData.tabledata)) } */}

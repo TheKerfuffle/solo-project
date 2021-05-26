@@ -4,8 +4,9 @@ import './PlayPuzzle.css';
 
 function PlayPuzzle() {
     
-    useEffect
-    useSelector
+
+    const hGridData = useSelector(store => store.hGrid);
+    const vGridData = useSelector(store => store.vGrid);
 
     return (
         <>

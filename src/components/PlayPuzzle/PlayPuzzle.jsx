@@ -12,7 +12,7 @@ function PlayPuzzle() {
 
     const hGridData = useSelector(store => store.hGrid);
     const vGridData = useSelector(store => store.vGrid);
-    const attempt = useSelector(store => store.attempt)
+    const attempt = useSelector(store => store.attempt);
 
     return (
         <>

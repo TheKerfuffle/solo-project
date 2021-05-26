@@ -1,20 +1,48 @@
-const hGrid = (state = {}, action) => {
+const vGrid = (state = {}, action) => {
     switch (action.type) {
-        case 'SET_H_GRID':
-            return generateHorizontal(action.payload);
+        case 'SET_V_GRID':
+            return generateVertical(action.payload);
         default:
             return state;
     }
 };
 
-export default hGrid;
+export default vGrid;
 
 // This block of code contains the most hard fought element of this project.
 // I am extremely proud of this code
+function generateVertical(gridData) {
+
+    let gridArray = gridData.tabledata;
+    let puzzleSize = gridArray.length; // 10
+    let vData = []; // thing to return
+    let rotateData = [];
+    let newRow = [];
+    let newClue = 0;
+    let maxRowLength = 0;
+
+    for (let i = 0; i < puzzleSize; i++) {
+
+        for (let j = 0; j < puzzleSize; j++) {
+            // console.log('rotate order', gridArray[j][i]);
+            newRow.push(gridArray[j][i]);
+        }
+        rotateData.push(newRow);
+        newRow = [];
+
+    }
+
+    return generateHorizontal(rotateData);
+}
+
+
+// Since the vertical columns have been rotated 90degrees counterclockwise,
+// we can treat the data as though it were horizontal, 
+// then rotate the resultant data 90 degrees clockwise back to normal
 function generateHorizontal(gridData) {
 
     // Initialize varaibles for use in this part of the project
-    let gridArray = gridData.tabledata;
+    let gridArray = gridData;
     let hData = [];
     let newRow = [];
     let newClue = 0;
@@ -47,13 +75,19 @@ function generateHorizontal(gridData) {
         newRow = [];
     }
 
-    const hGridData = {
+    let finishedData = rotateReverseArray(processResult(hData, maxRowLength), maxRowLength);
+    console.log('finishedData', finishedData);
+
+
+    const vGridData = {
         length: maxRowLength,
-        tableData: processResult(hData, maxRowLength),
+        tableData: finishedData,
         fillerGrid: generateFiller(maxRowLength)
     }
-    return hGridData;
+    return vGridData;
 }
+
+
 
 function processResult(data, length) {
     let newData = [];
@@ -78,6 +112,23 @@ function processRow(row, length) {
     else {
         return newRow;
     }
+}
+
+function rotateReverseArray(array, length) {
+    console.log('array/ length', array, length);
+
+    let rotatedArray = [];
+    let newRow = [];
+
+    for (let i = 0; i < length; i++) {
+
+        for (let j = array.length - 1; j >= 0; j--) {
+            newRow.push(array[j][i]);
+        }
+        rotatedArray.push(newRow.reverse());
+        newRow = [];
+    }
+    return rotatedArray;
 }
 
 function generateFiller(length) {

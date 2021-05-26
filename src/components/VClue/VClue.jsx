@@ -20,7 +20,7 @@ function VClue({ clue }) {
 
     return (
         <>
-            {clue === 0 ? (<td></td>) : (<td>{clue}</td>)}
+            {clue === 0 ? (<td className="vertClue"></td>) : (<td className="vertClue">{clue}</td>)}
         </>
     )
 }

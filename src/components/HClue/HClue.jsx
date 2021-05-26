@@ -20,7 +20,7 @@ function HClue({ clue }) {
 
     return (
         <>
-            {clue === 0 ? (<td></td>) : (<td>{clue}</td>)}
+            {clue === 0 ? (<td className="horiClue"></td>) : (<td className="horiClue">{clue}</td>)}
         </>
     )
 }

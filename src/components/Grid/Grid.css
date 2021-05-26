@@ -1,4 +1,5 @@
 table {
+    margin: auto;
     border: solid black 1px;
     border-collapse: collapse;
     align-items: center;
@@ -25,4 +26,22 @@ tbody {
     border: solid black 1px;
     align-items: center;
     justify-content: center;
+}
+
+.horiClue {
+    border-top: solid black 3px;
+    border-bottom: solid black 3px;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+.vertClue {
+    border-left: solid black 3px;
+    border-right: solid black 3px;
+    border-top: 0px;
+    border-bottom: 0px;
+}
+
+.filler {
+    border: 0px;
 }

@@ -70,7 +70,19 @@ router.post('/', (req, res) => {
       })
 });
 
+/**
+ * DELETE - ATTEMPT
+ */
 
+ router.delete('/:id', rejectUnauthenticated, (req, res) => {
+  const queryText = 'DELETE FROM attempted_puzzles WHERE puzzle_id=$1 AND player_id=$2;';
+  pool.query(queryText, [req.params.id, req.user.id])
+    .then(() => { res.sendStatus(200) })
+    .catch((error) => {
+      console.log('Error in DELETE attempt', error);
+      res.sendStatus(500);
+    });
+});
 
 
 

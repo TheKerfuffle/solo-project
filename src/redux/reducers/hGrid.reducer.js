@@ -1,4 +1,6 @@
-const hGrid = (state = {}, action) => {
+const hGrid = (state = {length: 0,
+    tableData: [],
+    fillerGrid: []}, action) => {
     switch (action.type) {
         case 'SET_H_GRID':
             return generateHorizontal(action.payload);

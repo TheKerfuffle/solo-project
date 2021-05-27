@@ -9,7 +9,7 @@ function* getAttempt(action) {
         
         // checks if payload is an attempt or a raw puzzle, both are possible
         // If it is an attempt ...
-        if (action.payload.id === 0) {
+        if (action.payload.puzzle_id > 0) {
             attempt = yield axios.get(`/api/attempt/${action.payload.puzzle_id}`);
             console.log('try GET attempt.data[0]', attempt.data[0]);
         } 
@@ -23,9 +23,13 @@ function* getAttempt(action) {
         if (attempt.data[0] === undefined) {
             const newAttempt = generateAttempt(action.payload);
             console.log('attempt is empty, generating new attempt', newAttempt);
-            yield put({ type: 'SET_ATTEMPT', payload: newAttempt })
+            yield put({ type: 'SET_ATTEMPT', payload: newAttempt });
+            yield put({ type: 'ALLOW_RENDER', payload: false });
+
         } else {
             yield put({ type: 'SET_ATTEMPT', payload: attempt.data[0] });
+            yield put({ type: 'ALLOW_RENDER', payload: false });
+
         }
 
     } catch (error) {

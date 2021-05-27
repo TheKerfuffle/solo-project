@@ -14,13 +14,26 @@ function PlayPuzzle() {
     const hGridData = useSelector(store => store.hGrid);
     const vGridData = useSelector(store => store.vGrid);
     const attempt = useSelector(store => store.attempt);
+
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        dispatch({ type: 'GET_RANDOM_PUZZLE' });
+    }, [])
+
     function saveProgress() {
-        if (attempt.id ===0 ) {
-            dispatch({type: 'POST_NEW_ATTEMPT', payload: attempt})
+        if (attempt.id === 0) {
+            dispatch({ type: 'POST_NEW_ATTEMPT', payload: attempt })
         } else {
-            dispatch({type: 'UPDATE_ATTEMPT', payload: attempt})
+            dispatch({ type: 'UPDATE_ATTEMPT', payload: attempt })
+        }
+    }
+
+    function deleteProgress() {
+        if (attempt.id === 0) {
+            alert('No Saved Data')
+        } else {
+            dispatch({ type: 'DELETE_ATTEMPT', payload: attempt })
         }
     }
 
@@ -29,39 +42,33 @@ function PlayPuzzle() {
             {/* { gridData == undefined ? (<> </>):(JSON.stringify(gridData.tabledata)) } */}
             {/* { hData == [] ? (<> </>):(JSON.stringify(hData)) } */}
             <button onClick={saveProgress}>Save Progress</button>
+            <button onClick={deleteProgress}>Delete Progress</button>
             <Timer />
             <table>
                 <tbody>
 
-                    {vGridData.length == undefined ?
-                        (
-                            <>
-                            </>
-                        )
-                        :
-                        (
+                    {console.log('logging vGridData.tableData', vGridData.tableData)}
+                    {
 
-                            vGridData.tableData.map((item, i) => (
-                                <tr key={i}>
-                                    {hGridData.fillerGrid.map(() => (
-                                        <td className="filler"></td>
-                                    ))}
+                        vGridData.tableData.map((item, i) => (
+                            <tr key={i}>
+                                {hGridData.fillerGrid.map(() => (
+                                    <td className="filler"></td>
+                                ))}
 
-                                    {item.map((clue, j) => (
-                                        <VClue key={j} clue={clue} />
-                                    ))}
-                                </tr>
-                            ))
-                        )
+                                {item.map((clue, j) => (
+                                    <VClue key={j} clue={clue} />
+                                ))}
+                            </tr>
+                        ))
+                        // :
+                        // ('')
+
                     }
 
-                    {attempt == {} ?
-                        (
-                            <>
-
-                            </>
-                        )
-                        :
+                    {attempt.input_data ?
+                        
+                        
                         (
                             attempt.input_data.map((item, i) => (
                                 <>
@@ -76,13 +83,19 @@ function PlayPuzzle() {
 
                                         {
                                             item.map((value, j) => (
-                                                <GridElement key={j} id={j} value={value} position={[i,j]} />
+                                                <GridElement key={j} id={j} value={value} position={[i, j]} />
                                             ))
                                         }
                                     </tr>
                                 </>
 
                             ))
+                        )
+                        :
+                        (
+                            <>
+
+                            </>
                         )
                     }
 

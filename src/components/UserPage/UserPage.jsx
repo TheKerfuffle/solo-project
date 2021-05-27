@@ -7,10 +7,6 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch({ type: 'GET_RANDOM_PUZZLE'});
-  }, [])
-
   return (
     <div className="container">
       <h2>Welcome, {user.username}!</h2>

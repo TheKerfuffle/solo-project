@@ -7,6 +7,10 @@ import userSaga from './user.saga';
 // import getTimer from './timer.sagas/getTimer.saga';
 import getGrid from './grid.sagas/getGrid.saga';
 import getRandomPuzzle from './play.sagas/getRandomPuzzle.saga';
+import postNewAttempt from './attempt.sagas/postNewAttempt.saga';
+import updateAttempt from './attempt.sagas/updateAttempt.saga';
+import getAttempt from './attempt.sagas/getAttempt.saga';
+import deleteAttempt from './attempt.sagas/deleteAttempt.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -16,11 +20,13 @@ import getRandomPuzzle from './play.sagas/getRandomPuzzle.saga';
 // the registration triggers a login
 // and login triggers setting the user
 export default function* rootSaga() {
-  // yield takeEvery('POST_TIMER', postTimer);
-  // yield takeEvery('PUT_TIMER', putTimer);
-  // yield takeEvery('GET_TIMER', getTimer);
+
   yield takeEvery('GET_GRID', getGrid);
   yield takeEvery('GET_RANDOM_PUZZLE', getRandomPuzzle);
+  yield takeEvery('GET_ATTEMPT', getAttempt)
+  yield takeEvery('POST_NEW_ATTEMPT', postNewAttempt);
+  yield takeEvery('UPDATE_ATTEMPT', updateAttempt);
+  yield takeEvery('DELETE_ATTEMPT', deleteAttempt)
   yield all([
     loginSaga(), // login saga is now registered
     registrationSaga(),

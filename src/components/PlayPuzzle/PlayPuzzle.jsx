@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import GridElement from '../GridElement/GridElement';
@@ -17,6 +17,12 @@ function PlayPuzzle() {
     const attempt = useSelector(store => store.attempt);
     const solution = useSelector(store => store.solution);
 
+    let [time, setTime] = useState(attempt.timer);
+
+    const countRef = useRef(null);
+
+
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -26,8 +32,10 @@ function PlayPuzzle() {
 
     function saveProgress() {
         if (attempt.id === 0) {
-            dispatch({ type: 'POST_NEW_ATTEMPT', payload: attempt })
+            attempt.timer = time;
+            dispatch({ type: 'POST_NEW_ATTEMPT', payload: attempt });
         } else {
+            attempt.timer = time;
             dispatch({ type: 'UPDATE_ATTEMPT', payload: attempt })
         }
     }
@@ -45,11 +53,32 @@ function PlayPuzzle() {
     }
 
     function newRandomPuzzle() {
-        dispatch({type: 'RESET_V_GRID'});
-        dispatch({type: 'RESET_H_GRID'});
-        dispatch({type: 'RESET_ATTEMPT'});
-        dispatch({type: 'RESET_SOLUTION'});
+        dispatch({ type: 'RESET_V_GRID' });
+        dispatch({ type: 'RESET_H_GRID' });
+        dispatch({ type: 'RESET_ATTEMPT' });
+        dispatch({ type: 'RESET_SOLUTION' });
         dispatch({ type: 'GET_RANDOM_PUZZLE' });
+        setTime(attempt.timer);
+    }
+
+    const renderTime = () => {
+        const getSeconds = `0${(time % 60)}`.slice(-2);
+        const minutes = `${Math.floor(time / 60)}`;
+        const getMinutes = `0${minutes % 60}`.slice(-2);
+        const getHours = `0${Math.floor(time / 3600)}`.slice(-2);
+
+        return `${getHours} : ${getMinutes} : ${getSeconds}`;
+    }
+
+    useEffect(() => {
+        startTimer()
+    }, []);
+
+    function startTimer() {
+        // setToggleRunning(true);
+        countRef.current = setInterval(() => {
+            setTime((time) => time + 1)
+        }, 1000);
     }
 
     return (
@@ -61,7 +90,9 @@ function PlayPuzzle() {
             <button onClick={saveProgress}>Save Progress</button>
             <button onClick={deleteProgress}>Delete Progress</button>
             <button onClick={newRandomPuzzle}>New Random Puzzle</button>
-            {/* <Timer /> */}
+            <h3>
+                {renderTime()}
+            </h3>
             <table>
                 <tbody>
 
@@ -103,8 +134,12 @@ function PlayPuzzle() {
                     }
 
 
+
+
                 </tbody>
             </table>
+
+
         </>
     )
 }

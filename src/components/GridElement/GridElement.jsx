@@ -12,7 +12,6 @@ function GridElement({ id, value, position }) {
     const attempt = useSelector(store => store.attempt);
     const attemptData = attempt.input_data;
     const user = useSelector(store => store.user);
-    const timer = useSelector(store => store.timer);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -41,7 +40,7 @@ function GridElement({ id, value, position }) {
                 id: 0,
                 player_id: user.id,
                 puzzle_id: attempt.puzzle_id,
-                timer: timer,
+                timer: attempt.timer,
                 input_data: attemptData,
                 completed: false
             }});
@@ -50,7 +49,7 @@ function GridElement({ id, value, position }) {
                 id: attempt.id,
                 player_id: user.id,
                 puzzle_id: attempt.puzzle_id,
-                timer: timer,
+                timer: attempt.timer,
                 input_data: attemptData,
                 completed: false
             }});

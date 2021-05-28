@@ -2,7 +2,9 @@ const timer = (state = 0, action) => {
     switch (action.type) {
         case 'SET_TIMER':
             return action.payload;
-        default: 
+        case 'RESET_TIMER':
+            return 0;
+        default:
             return state;
     }
 };

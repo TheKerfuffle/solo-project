@@ -48,7 +48,7 @@ function PlayPuzzle() {
         dispatch({type: 'RESET_V_GRID'});
         dispatch({type: 'RESET_H_GRID'});
         dispatch({type: 'RESET_ATTEMPT'});
-
+        dispatch({type: 'RESET_SOLUTION'});
         dispatch({ type: 'GET_RANDOM_PUZZLE' });
     }
 

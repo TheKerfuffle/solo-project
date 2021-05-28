@@ -62,14 +62,13 @@ function PlayPuzzle() {
             for (let j = 0; j < correct[i].length; j++) {
                 if (current[i][j] === 2 && correct[i][j] === 1) {
                     totalMistakes++;
-                    console.log('adding mistake', totalMistakes);
-                    setMistakeMessage(`There are ${totalMistakes} mistakes in this puzzle`)
+                    // console.log('adding mistake', totalMistakes);
                 }
 
                 if (current[i][j] === 1 && correct[i][j] === 0) {
                     totalMistakes++;
-                    console.log('adding mistake', totalMistakes);
-                    setMistakeMessage(`There are ${totalMistakes} mistakes in this puzzle`)
+                    // console.log('adding mistake', totalMistakes);
+                    
                 }
             }
         }
@@ -78,6 +77,8 @@ function PlayPuzzle() {
             setMistakeMessage(`There are no mistakes in this puzzle`);
         } else if (totalMistakes === 1) {
             setMistakeMessage(`There is 1 mistake in this puzzle`);
+        } else {
+            setMistakeMessage(`There are ${totalMistakes} mistakes in this puzzle`)
         }
 
     }

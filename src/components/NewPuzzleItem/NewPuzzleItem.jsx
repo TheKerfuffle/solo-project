@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import './GridElement.css';
+import './NewPuzzleItem.css';
 
 
-function GridElement({ id, value, position }) {
+function NewPuzzleItem({ value, position, title }) {
 
     let [colorToggle, setColorToggle] = useState("colorWhite");
-    let [newValue, setNewValue] = useState(value)
+    let [newValue, setNewValue] = useState(value);
 
-    const attempt = useSelector(store => store.attempt);
-    const attemptData = attempt.input_data;
-    const user = useSelector(store => store.user);
-    const timer = useSelector(store => store.timer);
+    const newPuzzle = useSelector(store => store.newPuzzle);
+    const newPuzzleData = newPuzzle.solution_data;
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,40 +23,29 @@ function GridElement({ id, value, position }) {
 
         if (colorToggle === "colorWhite") {
             setColorToggle("colorGreen");
+            setNewValue(1);
             val = 1;
         } else if (colorToggle === "colorGreen") {
             setColorToggle("colorRed");
+            setNewValue(2);
             val = 2;
         } else {
             setColorToggle("colorWhite");
+            setNewValue(0);
             val = 0;
         }
 
-        attemptData[position[0]][position[1]] = val;
-
-        if (attempt.id === 0) {
-            dispatch({type: 'SET_ATTEMPT', payload: {
-                id: 0,
-                player_id: user.id,
-                puzzle_id: attempt.puzzle_id,
-                timer: timer,
-                input_data: attemptData,
-                completed: false
-            }});
-        } else {
-            dispatch({type: 'SET_ATTEMPT', payload: {
-                id: attempt.id,
-                player_id: user.id,
-                puzzle_id: attempt.puzzle_id,
-                timer: timer,
-                input_data: attemptData,
-                completed: false
-            }});
-
-        }
-
-
+        newPuzzleData[position[0]][position[1]] = val;
         
+        console.log(newPuzzleData);
+
+        dispatch({type: 'SET_NEW_PUZZLE', payload: {
+            creator_id: newPuzzle.creator_id,
+            solution_data: newPuzzleData,
+            title: newPuzzle.title,
+            height: newPuzzle.height,
+            width: newPuzzle.width
+        }});
     }
 
     function setStartColor() {
@@ -82,4 +69,4 @@ function GridElement({ id, value, position }) {
     )
 }
 
-export default GridElement;
+export default NewPuzzleItem;

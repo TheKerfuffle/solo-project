@@ -1,9 +1,17 @@
-const vGrid = (state = {length: 0,
+const vGrid = (state = {
+    length: 0,
     tableData: [],
-    fillerGrid: []}, action) => {
+    fillerGrid: []
+}, action) => {
     switch (action.type) {
         case 'SET_V_GRID':
             return generateVertical(action.payload);
+        case 'RESET_V_GRID':
+            return {
+                length: 0,
+                tableData: [],
+                fillerGrid: []
+            };
         default:
             return state;
     }

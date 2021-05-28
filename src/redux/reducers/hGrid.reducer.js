@@ -1,9 +1,17 @@
-const hGrid = (state = {length: 0,
+const hGrid = (state = {
+    length: 0,
     tableData: [],
-    fillerGrid: []}, action) => {
+    fillerGrid: []
+}, action) => {
     switch (action.type) {
         case 'SET_H_GRID':
             return generateHorizontal(action.payload);
+        case 'RESET_H_GRID':
+            return {
+                length: 0,
+                tableData: [],
+                fillerGrid: []
+            };
         default:
             return state;
     }

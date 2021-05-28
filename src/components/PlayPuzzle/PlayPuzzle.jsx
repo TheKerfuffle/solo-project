@@ -45,6 +45,10 @@ function PlayPuzzle() {
     }
 
     function newRandomPuzzle() {
+        dispatch({type: 'RESET_V_GRID'});
+        dispatch({type: 'RESET_H_GRID'});
+        dispatch({type: 'RESET_ATTEMPT'});
+
         dispatch({ type: 'GET_RANDOM_PUZZLE' });
     }
 
@@ -52,6 +56,8 @@ function PlayPuzzle() {
         <>
             {/* { gridData == undefined ? (<> </>):(JSON.stringify(gridData.tabledata)) } */}
             {/* { hData == [] ? (<> </>):(JSON.stringify(hData)) } */}
+
+            { solution && <h1>{solution.title}</h1>}
             <button onClick={saveProgress}>Save Progress</button>
             <button onClick={deleteProgress}>Delete Progress</button>
             <button onClick={newRandomPuzzle}>New Random Puzzle</button>

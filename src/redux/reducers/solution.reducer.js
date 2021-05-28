@@ -2,7 +2,9 @@ const solution = (state = [], action) => {
     switch (action.type) {
         case 'SET_SOLUTION':
             return action.payload;
-        default: 
+        case 'RESET_SOLUTION':
+            return [];
+        default:
             return state;
     }
 };

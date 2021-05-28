@@ -12,6 +12,7 @@ const userRouter = require('./routes/user.router');
 const gridRouter = require('./routes/grid.router');
 const playRouter = require('./routes/play.router');
 const attemptRouter = require('./routes/attempt.router');
+const puzzleRouter = require('./routes/puzzle.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -29,6 +30,7 @@ app.use('/api/user', userRouter);
 app.use('/api/grid', gridRouter);
 app.use('/api/play', playRouter);
 app.use('/api/attempt', attemptRouter);
+app.use('/api/puzzle', puzzleRouter);
 
 // Serve static files
 app.use(express.static('build'));

@@ -17,14 +17,11 @@ function PlayPuzzle() {
     const attempt = useSelector(store => store.attempt);
     const solution = useSelector(store => store.solution);
 
-    let [time, setTime] = useState(attempt.timer);
-
-    const countRef = useRef(null);
-
-
-
     const dispatch = useDispatch();
     const history = useHistory();
+
+    let [mistakes, setMistakes] = useState(0);
+    let [mistakeMessage, setMistakeMessage] = useState('');
 
     useEffect(() => {
         dispatch({ type: 'GET_RANDOM_PUZZLE' });
@@ -32,10 +29,10 @@ function PlayPuzzle() {
 
     function saveProgress() {
         if (attempt.id === 0) {
-            attempt.timer = time;
+
             dispatch({ type: 'POST_NEW_ATTEMPT', payload: attempt });
         } else {
-            attempt.timer = time;
+
             dispatch({ type: 'UPDATE_ATTEMPT', payload: attempt })
         }
     }
@@ -52,33 +49,47 @@ function PlayPuzzle() {
         }
     }
 
+    function checkSolution() {
+        // Current attempt input data
+        let current = attempt.input_data;
+        // Current puzzle correct data
+        let correct = solution.solution_data;
+
+        let totalMistakes = 0;
+
+        // Check every item in the attempt against all correct input points
+        for (let i = 0; i < correct.length; i++) {
+            for (let j = 0; j < correct[i].length; j++) {
+                if (current[i][j] === 2 && correct[i][j] === 1) {
+                    totalMistakes++;
+                    console.log('adding mistake', totalMistakes);
+                    setMistakeMessage(`There are ${totalMistakes} mistakes in this puzzle`)
+                }
+
+                if (current[i][j] === 1 && correct[i][j] === 0) {
+                    totalMistakes++;
+                    console.log('adding mistake', totalMistakes);
+                    setMistakeMessage(`There are ${totalMistakes} mistakes in this puzzle`)
+                }
+            }
+        }
+
+        if (totalMistakes === 0) {
+            setMistakeMessage(`There are no mistakes in this puzzle`);
+        } else if (totalMistakes === 1) {
+            setMistakeMessage(`There is 1 mistake in this puzzle`);
+        }
+
+    }
+
     function newRandomPuzzle() {
+        setMistakeMessage('');
+        setMistakes(0);
         dispatch({ type: 'RESET_V_GRID' });
         dispatch({ type: 'RESET_H_GRID' });
         dispatch({ type: 'RESET_ATTEMPT' });
         dispatch({ type: 'RESET_SOLUTION' });
         dispatch({ type: 'GET_RANDOM_PUZZLE' });
-        setTime(attempt.timer);
-    }
-
-    const renderTime = () => {
-        const getSeconds = `0${(time % 60)}`.slice(-2);
-        const minutes = `${Math.floor(time / 60)}`;
-        const getMinutes = `0${minutes % 60}`.slice(-2);
-        const getHours = `0${Math.floor(time / 3600)}`.slice(-2);
-
-        return `${getHours} : ${getMinutes} : ${getSeconds}`;
-    }
-
-    useEffect(() => {
-        startTimer()
-    }, []);
-
-    function startTimer() {
-        // setToggleRunning(true);
-        countRef.current = setInterval(() => {
-            setTime((time) => time + 1)
-        }, 1000);
     }
 
     return (
@@ -90,9 +101,11 @@ function PlayPuzzle() {
             <button onClick={saveProgress}>Save Progress</button>
             <button onClick={deleteProgress}>Delete Progress</button>
             <button onClick={newRandomPuzzle}>New Random Puzzle</button>
-            <h3>
-                {renderTime()}
-            </h3>
+            <button onClick={checkSolution}>Check Solution</button>
+
+            {attempt.completed ? <h4>Completed!</h4> : ''}
+            {mistakeMessage === '' ? '' : <h4>{mistakeMessage}</h4>}
+
             <table>
                 <tbody>
 

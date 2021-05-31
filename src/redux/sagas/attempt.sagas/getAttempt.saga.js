@@ -4,27 +4,27 @@ import axios from 'axios';
 function* getAttempt(action) {
     // ACTION PAYLOAD IS A PUZZLE OBJECT NOT A USER ID
     try {
-        console.log('action.payload in getAttempt',action.payload);
+        // console.log('action.payload in getAttempt', action.payload);
         let attempt;
-        
+
         // checks if payload is an attempt or a raw puzzle, both are possible
         // If it is an attempt ...
         if (action.payload.puzzle_id > 0) {
             attempt = yield axios.get(`/api/attempt/${action.payload.puzzle_id}`);
             console.log('try GET attempt.data[0]', attempt.data[0]);
-        } 
+        }
         // If it is a raw puzzle
         else {
             attempt = yield axios.get(`/api/attempt/${action.payload.id}`);
-            console.log('try GET attempt.data[0]', attempt.data[0]);
+            // console.log('try GET attempt.data[0]', attempt.data[0]);
         }
 
         // Checks to see if there was an attempt in the database for the associated user/puzzle
         if (attempt.data[0] === undefined) {
             const newAttempt = generateAttempt(action.payload);
-            console.log('attempt is empty, generating new attempt', newAttempt);
+            // console.log('attempt is empty, generating new attempt', newAttempt);
             yield put({ type: 'SET_ATTEMPT', payload: newAttempt });
-            
+
         } else {
             yield put({ type: 'SET_ATTEMPT', payload: attempt.data[0] });
         }
@@ -37,12 +37,12 @@ function* getAttempt(action) {
 export default getAttempt;
 
 function generateAttempt(puzzle) {
-    console.log('generating attempt for puzzle:', puzzle);
+    // console.log('generating attempt for puzzle:', puzzle);
 
     let newTry = [];
     let newRow = [];
     let solutionArray = puzzle.solution_data;
-    
+
     for (let i = 0; i < solutionArray.length; i++) {
         for (let j = 0; j < solutionArray[0].length; j++) {
             newRow = [...newRow, 0]

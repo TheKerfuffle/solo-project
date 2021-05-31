@@ -8,6 +8,7 @@ import vGrid from './vGrid.reducer';
 import attempt from './attempt.reducer';
 import solution from './solution.reducer';
 import newPuzzle from './newPuzzle.reducer';
+import userAttempts from './userAttempts.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -16,6 +17,7 @@ import newPuzzle from './newPuzzle.reducer';
 // Lets make a bigger object for our store, with the objects from our reducers.
 // This is what we get when we use 'state' inside of 'mapStateToProps'
 const rootReducer = combineReducers({
+  userAttempts,
   newPuzzle,
   solution,
   attempt,

@@ -84,7 +84,7 @@ function AddPuzzle() {
             {newPuzzle ?
                 <>
 
-                    <table>
+                    <table className="addPuzzleTable">
                         <tbody>
                             {newPuzzle.solution_data &&
 

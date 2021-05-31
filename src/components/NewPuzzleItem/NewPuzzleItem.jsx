@@ -22,18 +22,14 @@ function NewPuzzleItem({ value, position, title }) {
         let val;
 
         if (colorToggle === "colorWhite") {
-            setColorToggle("colorGreen");
+            setColorToggle("colorBlack");
             setNewValue(1);
             val = 1;
-        } else if (colorToggle === "colorGreen") {
-            setColorToggle("colorRed");
-            setNewValue(2);
-            val = 2;
-        } else {
+        } else if (colorToggle === "colorBlack") {
             setColorToggle("colorWhite");
             setNewValue(0);
             val = 0;
-        }
+        } 
 
         newPuzzleData[position[0]][position[1]] = val;
         
@@ -53,7 +49,7 @@ function NewPuzzleItem({ value, position, title }) {
             case 0:
                 return setColorToggle("colorWhite");
             case 1:
-                return setColorToggle("colorGreen");
+                return setColorToggle("colorBlack");
             case 2:
                 return setColorToggle("colorRed");
         }

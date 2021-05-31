@@ -4,7 +4,7 @@ import axios from 'axios';
 function* getRandomPuzzle() {
     try {
         const puzzles = yield axios.get(`/api/play`);
-        console.log('GET all puzzles/all puzzles length', puzzles.data, puzzles.data.length);
+        // console.log('GET all puzzles/all puzzles length', puzzles.data, puzzles.data.length);
         const randomPuzzle = Math.floor(Math.random() * puzzles.data.length);
         
 

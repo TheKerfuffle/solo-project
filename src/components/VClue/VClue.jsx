@@ -5,22 +5,25 @@ import './VClue.css';
 
 function VClue({ clue }) {
 
-    // let [colorToggle, setColorToggle] = useState("colorWhite");
-    // 
-    // function changeColor() {
-    //     if (colorToggle === "colorWhite") {
-    //         setColorToggle("colorGreen");
-    //     } else if (colorToggle === "colorGreen") {
-    //         setColorToggle("colorRed");
-    //     } else {
-    //         setColorToggle("colorWhite");
-    //     }
-    // }
+    let [classThing, setClassThing] = useState("vertClue");
+
+    function toggleClue() {
+        if (classThing === "vertClue") {
+            setClassThing("vertClue clueToggle");
+        } else {
+            setClassThing("vertClue");
+        }
+    }
 
 
     return (
         <>
-            {clue === 0 ? (<td className="vertClue"></td>) : (<td className="vertClue">{clue}</td>)}
+            {
+                clue === 0 ?
+                    (<td className={classThing}></td>)
+                    :
+                    (<td className={classThing} onClick={toggleClue}>{clue}</td>)
+            }
         </>
     )
 }

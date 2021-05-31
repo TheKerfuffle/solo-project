@@ -5,7 +5,7 @@
   align-items: center;
 
   margin: 0 0 30px;
-  background-color: #00acb0;
+  background-color: maroon;
   overflow: hidden;
 }
 
@@ -19,12 +19,23 @@
   color: #f2f2f2;
   padding-left: 10px;
   margin: 0;
+
+  border: solid black 3px;
+  border-collapse: collapse;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.navLetter {
+  width: 28px;
+  height: 28px;
 }
 
 .navLink {
   display: inline-block;
   color: #f2f2f2;
-  background-color: #00acb0;
+  background-color: maroon;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
@@ -38,5 +49,5 @@
 }
 
 .navLink:hover {
-  background-color: #008183;
+  background-color: red;
 }

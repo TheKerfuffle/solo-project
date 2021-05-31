@@ -24,6 +24,7 @@ import Grid from '../Grid/Grid';
 import PlayPuzzle from '../PlayPuzzle/PlayPuzzle';
 import AddPuzzle from '../AddPuzzle/AddPuzzle';
 import './App.css';
+import Profile from '../Profile/Profile';
 
 function App() {
   const dispatch = useDispatch();
@@ -90,6 +91,14 @@ function App() {
             path="/add"
           >
             <AddPuzzle />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows PlayPuzzle else shows LoginPage
+            exact
+            path="/profile"
+          >
+            <Profile />
           </ProtectedRoute>
 
           {/* When a value is supplied for the authRedirect prop the user will

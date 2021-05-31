@@ -31,7 +31,7 @@ function AddPuzzle() {
 
     function sendNewPuzzle() {
         dispatch({ type: 'POST_NEW_PUZZLE', payload: newPuzzle });
-        history.push('/play');
+        history.push('/home');
     }
 
 
@@ -84,7 +84,7 @@ function AddPuzzle() {
             {newPuzzle ?
                 <>
 
-                    <table>
+                    <table className="addPuzzleTable">
                         <tbody>
                             {newPuzzle.solution_data &&
 

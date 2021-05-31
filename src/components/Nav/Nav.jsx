@@ -21,7 +21,38 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Puzzle Please</h2>
+      <table className="nav-title">
+                <tbody>
+                <tr>
+                        <td className="navLetter">P</td>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">u</td>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">z</td>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">z</td>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">l</td>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">e</td>
+                        <td className="navLetter"></td>
+                    </tr>
+                    <tr>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">P</td>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">l</td>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">e</td>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">a</td>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">s</td>
+                        <td className="navLetter"></td>
+                        <td className="navLetter">e</td>
+                    </tr>
+                </tbody>
+            </table>
       </Link>
       <div>
         <Link className="navLink" to={loginLinkData.path}>
@@ -35,6 +66,9 @@ function Nav() {
             </Link>
             <Link className="navLink" to="/add">
               Add
+            </Link>
+            <Link className="navLink" to="/profile">
+              Profile
             </Link>
             <Link className="navLink" to="/info">
               Info

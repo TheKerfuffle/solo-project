@@ -1,4 +1,12 @@
-table {
+.playtable {
+    margin: auto;
+    border: solid black 3px;
+    border-collapse: collapse;
+    align-items: center;
+    justify-content: center;
+}
+
+.addPuzzleTable {
     margin: auto;
     border: solid black 3px;
     border-collapse: collapse;
@@ -8,10 +16,14 @@ table {
 
 td {
     border: solid black 1px;
-    width: 15px;
-    height: 15px;
-    align-items: center;
+    width: 25px;
+    height: 25px;
+    text-align: center;
     justify-content: center;
+}
+
+.clueToggle {
+    color: cyan;
 }
 
 tbody {

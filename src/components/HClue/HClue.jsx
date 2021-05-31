@@ -5,22 +5,24 @@ import './HClue.css';
 
 function HClue({ clue }) {
 
-    // let [colorToggle, setColorToggle] = useState("colorWhite");
-    // 
-    // function changeColor() {
-    //     if (colorToggle === "colorWhite") {
-    //         setColorToggle("colorGreen");
-    //     } else if (colorToggle === "colorGreen") {
-    //         setColorToggle("colorRed");
-    //     } else {
-    //         setColorToggle("colorWhite");
-    //     }
-    // }
+    let [classThing, setClassThing] = useState("horiClue");
 
+    function toggleClue() {
+        if (classThing === "horiClue") {
+            setClassThing("horiClue clueToggle");
+        } else {
+            setClassThing("horiClue");
+        }
+    }
 
     return (
         <>
-            {clue === 0 ? (<td className="horiClue"></td>) : (<td className="horiClue">{clue}</td>)}
+            {
+                clue === 0 ?
+                    (<td className={classThing}></td>)
+                    :
+                    (<td className={classThing} onClick={toggleClue}>{clue}</td>)
+            }
         </>
     )
 }

@@ -23,9 +23,9 @@ function GridElement({ id, value, position }) {
         let val;
 
         if (colorToggle === "colorWhite") {
-            setColorToggle("colorGreen");
+            setColorToggle("colorBlack");
             val = 1;
-        } else if (colorToggle === "colorGreen") {
+        } else if (colorToggle === "colorBlack") {
             setColorToggle("colorRed");
             val = 2;
         } else {
@@ -42,7 +42,7 @@ function GridElement({ id, value, position }) {
                 puzzle_id: attempt.puzzle_id,
                 timer: attempt.timer,
                 input_data: attemptData,
-                completed: false
+                completed: attempt.completed
             }});
         } else {
             dispatch({type: 'SET_ATTEMPT', payload: {
@@ -51,7 +51,7 @@ function GridElement({ id, value, position }) {
                 puzzle_id: attempt.puzzle_id,
                 timer: attempt.timer,
                 input_data: attemptData,
-                completed: false
+                completed: attempt.completed
             }});
 
         }
@@ -65,7 +65,7 @@ function GridElement({ id, value, position }) {
             case 0:
                 return setColorToggle("colorWhite");
             case 1:
-                return setColorToggle("colorGreen");
+                return setColorToggle("colorBlack");
             case 2:
                 return setColorToggle("colorRed");
         }

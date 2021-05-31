@@ -6,11 +6,27 @@ const {
 } = require('../modules/authentication-middleware');
 
 /**
- * GET route template
+ * GET:id
  */
 router.get('/:id', rejectUnauthenticated, (req, res) => {
   pool
     .query(`SELECT * FROM "attempted_puzzles" WHERE player_id=$1 AND puzzle_id=$2;`, [req.user.id, req.params.id])
+    .then((results) => {
+      res.send(results.rows);
+    }).catch(err => {
+      res.sendStatus(500);
+      console.log('Error in GET ATTEMPT', err);
+    })
+});
+
+/**
+ * GET
+ */
+router.get('/', rejectUnauthenticated, (req, res) => {
+  pool
+    .query(`SELECT * FROM attempted_puzzles as ap
+    JOIN raw_puzzles as r ON r.id = ap.puzzle_id
+    WHERE player_id=$1;`, [req.user.id])
     .then((results) => {
       res.send(results.rows);
     }).catch(err => {

@@ -79,9 +79,17 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
+            // logged in shows Getting Puzzle Page else shows LoginPage
+            exact
+            path="/play/"
+          >
+            <PlayReRoute />
+          </ProtectedRoute>
+
+          <ProtectedRoute
             // logged in shows PlayPuzzle else shows LoginPage
             exact
-            path="/play"
+            path="/play/:id"
           >
             <PlayPuzzle />
           </ProtectedRoute>

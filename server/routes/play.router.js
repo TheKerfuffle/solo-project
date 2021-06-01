@@ -30,19 +30,19 @@ router.get('/', (req, res) => {
  */
 
 // RETOOL FOR GET CREATED PUZZLES!!!
-router.get('/:id', rejectUnauthenticated, (req, res) => {
-  const queryText = "SELECT * FROM raw_puzzles WHERE player_id=$1;"
+// router.get('/:id', rejectUnauthenticated, (req, res) => {
+//   const queryText = "SELECT * FROM raw_puzzles WHERE player_id=$1;"
 
-  pool
-    .query(queryText, [req.params.id])
-    .then((results) => {
-      res.send(results.rows);
-    }).catch(err => {
-      res.sendStatus(500);
-      console.log('Error in GET /api/play', err);
+//   pool
+//     .query(queryText, [req.params.id])
+//     .then((results) => {
+//       res.send(results.rows);
+//     }).catch(err => {
+//       res.sendStatus(500);
+//       console.log('Error in GET /api/play', err);
 
-    })
-});
+//     })
+// });
 
 /**
  * DELETE:id - deletes all attempts associated with a specific puzzle

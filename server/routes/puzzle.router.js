@@ -6,7 +6,7 @@ const {
 } = require('../modules/authentication-middleware');
 
 /**
- * GET - Gets a specific user's created puzzles for their profile
+ * GET - Profile view - Gets a specific user's created puzzles
  */
 router.get('/', rejectUnauthenticated,(req, res) => {
     user = req.user.id
@@ -23,7 +23,7 @@ router.get('/', rejectUnauthenticated,(req, res) => {
 });
 
 /**
- * POST
+ * POST - The Add page will post a new puzzle to the server
  */
 router.post('/', (req, res) => {
     // POST route code here
@@ -43,20 +43,14 @@ router.post('/', (req, res) => {
 });
 
 /**
- * PUT
+ * PUT - currently not in use
  */
 router.put('/', (req, res) => {
-    const user = req.user.id;
-    console.log('user id', user);
-    console.log('post attempt req.body', req.body);
-
-
-
 
 });
 
 /**
- * DELETE
+ * DELETE - Profile view, users can delete their puzzles
  */
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
     const user = req.user.id;

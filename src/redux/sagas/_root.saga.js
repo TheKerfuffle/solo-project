@@ -11,8 +11,9 @@ import postNewAttempt from './attempt.sagas/postNewAttempt.saga';
 import updateAttempt from './attempt.sagas/updateAttempt.saga';
 import getAttempt from './attempt.sagas/getAttempt.saga';
 import deleteAttempt from './attempt.sagas/deleteAttempt.saga';
-import postNewPuzzle from './addPuzzle.sagas/postNewPuzzle.saga';
+import postNewPuzzle from './puzzle.sagas/postNewPuzzle.saga';
 import getUserAttempts from './play.sagas/getUserAttempts.saga';
+import deleteRawPuzzle from './puzzle.sagas/deleteRawPuzzle.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -30,6 +31,7 @@ export default function* rootSaga() {
   yield takeEvery('UPDATE_ATTEMPT', updateAttempt);
   yield takeEvery('DELETE_ATTEMPT', deleteAttempt);
   yield takeEvery('POST_NEW_PUZZLE', postNewPuzzle);
+  yield takeEvery('DELETE_RAW_PUZZLE', deleteRawPuzzle);
   yield takeEvery('GET_USER_ATTEMPTS', getUserAttempts);
   yield all([
     loginSaga(), // login saga is now registered

@@ -136,8 +136,8 @@ function PlayPuzzle() {
                     {
                         vGridData.tableData.map((item, i) => (
                             <tr key={i}>
-                                {hGridData.fillerGrid.map(() => (
-                                    <td className="filler"></td>
+                                {hGridData.fillerGrid.map((filler, k) => (
+                                    <td key={k} className="filler"></td>
                                 ))}
 
                                 {item.map((clue, j) => (

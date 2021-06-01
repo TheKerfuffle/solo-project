@@ -6,14 +6,14 @@ const {
 } = require('../modules/authentication-middleware');
 
 /**
- * GET route template
+ * GET
  */
 router.get('/', (req, res) => {
     // GET route code here
 });
 
 /**
- * POST route template
+ * POST
  */
 router.post('/', (req, res) => {
     // POST route code here
@@ -32,7 +32,9 @@ router.post('/', (req, res) => {
         })
 });
 
-
+/**
+ * PUT
+ */
 router.put('/', (req, res) => {
     const user = req.user.id;
     console.log('user id', user);
@@ -42,4 +44,11 @@ router.put('/', (req, res) => {
 
 
 });
+
+/**
+ * DELETE
+ */
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+    const user = req.user.id;
+})
 module.exports = router;

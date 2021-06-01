@@ -13,6 +13,7 @@ function* deleteAttempt( action ) {
 
         yield axios.delete(`/api/attempt/${action.payload.id}`);
         yield put({ type: 'GET_ATTEMPT', payload: action.payload });
+        yield put({type: 'GET_USER_ATTEMPTS'});
         
     } catch (error) {
         console.log('PUT attempt error', error);

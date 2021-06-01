@@ -4,8 +4,14 @@ import axios from 'axios';
 function* deleteRawPuzzle(action) {
     try {
         console.log('ACTIONPAYLOAD IN deleteRawPuzzle', action.payload);
-        
-        // yield axios.delete(`/api/puzzle/${action.payload.id}`);
+
+        // DELETES ALL ATTEMPTS FOR RAW PUZZLE FIRST.
+        yield axios.delete(`/api/play/${action.payload.id}`)
+        // DELETES THE RAW PUZZLE.
+        yield axios.delete(`/api/puzzle/${action.payload.id}`);
+
+        yield put({type: 'GET_USER_ATTEMPTS'});
+        yield put({type: 'GET_USER_PUZZLES'});
 
 
 

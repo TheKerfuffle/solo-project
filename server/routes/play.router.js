@@ -44,4 +44,18 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
     })
 });
 
+/**
+ * DELETE:id - deletes all attempts associated with a specific puzzle
+ */
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+  queryText=`DELETE FROM attempted_puzzles WHERE puzzle_id=$1`;
+
+  pool.query(queryText, [req.params.id])
+  .then(() => { res.sendStatus(200) })
+  .catch((error) => {
+    console.log('Error in DELETE /api/puzzle', error);
+    res.sendStatus(500);
+  });
+})
+
 module.exports = router;

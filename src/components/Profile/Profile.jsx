@@ -8,9 +8,11 @@ function Profile() {
     const dispatch = useDispatch();
     const user = useSelector(store => store.user);
     const userAttempts = useSelector(store => store.userAttempts);
+    const userPuzzles = useSelector(store => store.userPuzzles);
 
     useEffect(() => {
-        dispatch({ type: 'GET_USER_ATTEMPTS', payload: user.id });
+        dispatch({ type: 'GET_USER_ATTEMPTS'});
+        dispatch({ type: 'GET_USER_PUZZLES'});
     }, []);
 
 
@@ -40,11 +42,11 @@ function Profile() {
             <ul>
 
                 {
-                    userAttempts.length === 0
+                    userPuzzles.length === 0
                         ?
                         ('')
                         :
-                        userAttempts.map((attempt, i) =>
+                        userPuzzles.map((attempt, i) =>
                             attempt.creator_id === user.id
                                 ?
                                 <ProfileItem key={i} profileType={1} attempt={attempt} />

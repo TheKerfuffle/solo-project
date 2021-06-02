@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 
 function PlayReRoute() {
 
-    const solution = useSelector(store => store.solution)
+    const solution = useSelector(store => store.solution);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -13,7 +13,7 @@ function PlayReRoute() {
     useEffect(() => {
         dispatch({ type: 'GET_RANDOM_PUZZLE' });
         history.push(`/play/${solution.id}`);
-    }, [])
+    }, []);
 
     return (
         <>

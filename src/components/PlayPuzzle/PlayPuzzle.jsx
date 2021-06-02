@@ -11,13 +11,16 @@ import './PlayPuzzle.css';
 
 function PlayPuzzle() {
 
-    let [wait, setWait] = useState(true);
+    const countRef = useRef(null);
 
     const hGridData = useSelector(store => store.hGrid);
     const vGridData = useSelector(store => store.vGrid);
     const attempt = useSelector(store => store.attempt);
     const solution = useSelector(store => store.solution);
     const user = useSelector(store => store.user);
+
+    let [time, setTime] = useState(attempt.timer);
+    let [wait, setWait] = useState(true);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -27,12 +30,23 @@ function PlayPuzzle() {
 
     useEffect(() => {
         dispatch({ type: 'GET_PUZZLE', payload: id });
+
+        countRef.current = setInterval(() => {
+            setTime((time) => time + 1)
+        }, 1000);
+
+        // Loads Puzzle Grid after 500 ms 
+        // - helps get the new table data upon page load
         setTimeout(() => {
             setWait(false);
-          }, 500);
+        }, 500);
+
+        return (() => clearInterval(countRef.current))
     }, []);
 
     function saveProgress() {
+        let attemptToSave = attempt;
+        attemptToSave.timer = time;
         if (attempt.id === 0) {
             dispatch({ type: 'POST_NEW_ATTEMPT', payload: attempt });
         } else {
@@ -44,11 +58,10 @@ function PlayPuzzle() {
         if (attempt.id === 0) {
             confirm('No Saved Data')
         } else {
-            if (confirm("ARE YOU SURE YOU WANT TO DELETE YOUR PROGRESS?")) {
+            if (confirm("DELETE YOUR PROGRESS AND RETRY?")) {
                 dispatch({ type: 'DELETE_ATTEMPT', payload: solution })
                 history.push('/home');
             }
-
         }
     }
 
@@ -124,6 +137,15 @@ function PlayPuzzle() {
         history.push(`/play`);
     }
 
+    const renderTime = () => {
+        const getSeconds = `0${(time % 60)}`.slice(-2);
+        const minutes = `${Math.floor(time / 60)}`;
+        const getMinutes = `0${minutes % 60}`.slice(-2);
+        const getHours = `0${Math.floor(time / 3600)}`.slice(-2);
+
+        return `${getHours} : ${getMinutes} : ${getSeconds}`;
+    }
+
     return (
         <>
             { solution && <h1>{solution.title}</h1>}
@@ -134,6 +156,29 @@ function PlayPuzzle() {
 
             {attempt.completed ? <h3>Completed!</h3> : ''}
             {mistakeMessage === '' ? '' : <h4>{mistakeMessage}</h4>}
+
+            {solution ?
+                <>
+                    <h5>'Puzzle ID:' {solution.id}</h5>
+                    <h5>'Param ID:' {id}</h5>
+                </>
+                :
+                ''}
+            {
+                attempt
+                    ?
+                    <h3>{renderTime()}</h3>
+                    :
+                    ''
+            }
+
+{
+                attempt
+                    ?
+                    <h3>{attempt.timer}</h3>
+                    :
+                    ''
+            }
 
             {
                 wait ?
@@ -179,6 +224,7 @@ function PlayPuzzle() {
                         </tbody>
                     </table>
             }
+
         </>
     )
 }

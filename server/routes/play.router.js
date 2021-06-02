@@ -6,17 +6,17 @@ const {
 } = require('../modules/authentication-middleware');
 
 /**
- * GET route template
+ * GET - GETS A RANDOM PUZZLE ID FROM DATABASE
  */
 router.get('/', (req, res) => {
   // GET route code here
-  const queryText = "SELECT * FROM raw_puzzles;"
+  const queryText = "SELECT id FROM raw_puzzles ORDER BY RANDOM() LIMIT 1;"
 
 
   pool
     .query(queryText)
     .then((results) => {
-      res.send(results.rows);
+      res.send(results.rows[0]);
     }).catch(err => {
       res.sendStatus(500);
       console.log('Error in GET /api/play', err);
@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
 
 // RETOOL FOR GET CREATED PUZZLES!!!
 router.get('/:id', rejectUnauthenticated, (req, res) => {
-  const queryText = "SELECT * FROM raw_puzzles WHERE player_id=$1;"
+  const queryText = "SELECT * FROM raw_puzzles WHERE id=$1;"
 
   pool
     .query(queryText, [req.params.id])
@@ -43,5 +43,19 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
     })
 });
+
+/**
+ * DELETE:id - deletes all attempts associated with a specific puzzle
+ */
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+  queryText=`DELETE FROM attempted_puzzles WHERE puzzle_id=$1`;
+
+  pool.query(queryText, [req.params.id])
+  .then(() => { res.sendStatus(200) })
+  .catch((error) => {
+    console.log('Error in DELETE /api/puzzle', error);
+    res.sendStatus(500);
+  });
+})
 
 module.exports = router;

@@ -6,14 +6,24 @@ const {
 } = require('../modules/authentication-middleware');
 
 /**
- * GET route template
+ * GET - Profile view - Gets a specific user's created puzzles
  */
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated,(req, res) => {
+    user = req.user.id
+    const queryText = `SELECT * FROM raw_puzzles WHERE creator_id=$1`;
     // GET route code here
+
+    pool.query(queryText, [user])
+    .then((results) => {
+        res.send(results.rows);
+      }).catch(err => {
+        res.sendStatus(500);
+        console.log('Error in GET /api/puzzle', err);
+      })
 });
 
 /**
- * POST route template
+ * POST - The Add page will post a new puzzle to the server
  */
 router.post('/', (req, res) => {
     // POST route code here
@@ -27,19 +37,30 @@ router.post('/', (req, res) => {
     pool.query(queryText, queryValues)
         .then(() => res.sendStatus(201))
         .catch((error) => {
-            console.log('Error in POST ATTEMPT', error);
+            console.log('Error in POST /api/puzzle', error);
             res.sendStatus(500);
         })
 });
 
-
+/**
+ * PUT - currently not in use
+ */
 router.put('/', (req, res) => {
-    const user = req.user.id;
-    console.log('user id', user);
-    console.log('post attempt req.body', req.body);
-
-
-
 
 });
+
+/**
+ * DELETE - Profile view, users can delete their puzzles
+ */
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+    const user = req.user.id;
+    queryText=`DELETE FROM raw_puzzles WHERE id=$1;`;
+
+    pool.query(queryText, [req.params.id])
+    .then(() => { res.sendStatus(200) })
+    .catch((error) => {
+      console.log('Error in DELETE /api/puzzle', error);
+      res.sendStatus(500);
+    });
+})
 module.exports = router;

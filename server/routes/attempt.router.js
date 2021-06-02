@@ -6,7 +6,7 @@ const {
 } = require('../modules/authentication-middleware');
 
 /**
- * GET:id
+ * GET:id - gets a specific puzzle attempt - attempt
  */
 router.get('/:id', rejectUnauthenticated, (req, res) => {
   pool
@@ -20,7 +20,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 });
 
 /**
- * GET
+ * GET - gets all of a user's attempts - userAttempts
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
   pool

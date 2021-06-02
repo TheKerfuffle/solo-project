@@ -25,6 +25,7 @@ import PlayPuzzle from '../PlayPuzzle/PlayPuzzle';
 import AddPuzzle from '../AddPuzzle/AddPuzzle';
 import './App.css';
 import Profile from '../Profile/Profile';
+import PlayReRoute from '../PlayReRoute/PlayReRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -79,9 +80,16 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows PlayPuzzle else shows LoginPage
+            // logged in shows Getting Puzzle Page else shows LoginPage
             exact
             path="/play"
+          >
+            <PlayPuzzle />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows PlayPuzzle else shows LoginPage
+            path="/play/:id"
           >
             <PlayPuzzle />
           </ProtectedRoute>

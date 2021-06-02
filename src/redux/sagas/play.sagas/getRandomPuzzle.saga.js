@@ -1,20 +1,27 @@
 import { put } from '@redux-saga/core/effects';
 import axios from 'axios';
+import { useHistory } from 'react-router';
+
+
 
 function* getRandomPuzzle() {
     try {
-        const puzzles = yield axios.get(`/api/play`);
-        // console.log('GET all puzzles/all puzzles length', puzzles.data, puzzles.data.length);
-        const randomPuzzle = Math.floor(Math.random() * puzzles.data.length);
-        
+        const puzzleID = yield axios.get(`/api/play`);
 
-        yield put({ type: 'SET_SOLUTION', payload: puzzles.data[randomPuzzle] });
-        yield put({ type: 'GET_ATTEMPT', payload: puzzles.data[randomPuzzle] });
-        yield put({ type: 'SET_H_GRID', payload: puzzles.data[randomPuzzle] });
-        yield put({ type: 'SET_V_GRID', payload: puzzles.data[randomPuzzle] });
+        console.log('in getRandomPuzzle, random puzzle ID', puzzleID.data.id);
+
+        // yield put ({ type: 'RESET_SOLUTION'});
+
+        yield put({ type: 'SET_RANDOM_ID', payload: puzzleID.data.id});
+
+        // yield put(push(`/play/${puzzleID.data.id}`))
+
+        // yield put({ type: 'GET_PUZZLE', payload: puzzleID.data.id});
+
     } catch (error) {
         console.log('get items error', error);
     }
 }
 
 export default getRandomPuzzle;
+

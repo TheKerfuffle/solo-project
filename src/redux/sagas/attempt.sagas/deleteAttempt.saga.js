@@ -9,10 +9,11 @@ function* deleteAttempt( action ) {
 
 
         // ID IS A PUZZLE ID NOT A USER/PLAYER ID
-        // PAYLOAD IS A PUZZLE OBJECT, NOT AN ATTEMPT
+        // PAYLOAD IS A SOLUTION PUZZLE, NOT AN ATTEMPT
 
         yield axios.delete(`/api/attempt/${action.payload.id}`);
         yield put({ type: 'GET_ATTEMPT', payload: action.payload });
+        yield put({type: 'GET_USER_ATTEMPTS'});
         
     } catch (error) {
         console.log('PUT attempt error', error);

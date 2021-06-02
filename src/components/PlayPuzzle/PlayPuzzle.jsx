@@ -11,16 +11,14 @@ import './PlayPuzzle.css';
 
 function PlayPuzzle() {
 
-    const countRef = useRef(null);
-
     const hGridData = useSelector(store => store.hGrid);
     const vGridData = useSelector(store => store.vGrid);
     const attempt = useSelector(store => store.attempt);
     const solution = useSelector(store => store.solution);
     const user = useSelector(store => store.user);
+    const randID = useSelector(store => store.randomPuzzleID);
 
-    let [time, setTime] = useState(attempt.timer);
-    let [wait, setWait] = useState(true);
+    let [time, setTime] = useState(0);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -29,20 +27,47 @@ function PlayPuzzle() {
     let [mistakeMessage, setMistakeMessage] = useState('');
 
     useEffect(() => {
-        dispatch({ type: 'GET_PUZZLE', payload: id });
+        // Coming from /play - get a random puzzle
+        // gets a random puzzle id and updates a reducer that we watch 
+        if (!id && randID === 0) {
+            dispatch({ type: 'GET_RANDOM_PUZZLE' });
+        } else if (!id && randID > 0) {
+            dispatch({type: 'RESET_RANDOM_ID'});
+            console.log('pushing!', randID);
+            history.push(`/play/${randID}`);
+        }
+        // COMING FROM PROFILE PAGE - No puzzle yet
+        else if (solution.id !== id && attempt.puzzle_id !== id) {
+            dispatch({ type: 'GET_PUZZLE', payload: id });
+        }
 
-        countRef.current = setInterval(() => {
+        const clock = setInterval(() => {
             setTime((time) => time + 1)
         }, 1000);
 
-        // Loads Puzzle Grid after 500 ms 
-        // - helps get the new table data upon page load
-        setTimeout(() => {
-            setWait(false);
-        }, 500);
+        return (() => clearInterval(clock))
 
-        return (() => clearInterval(countRef.current))
-    }, []);
+    }, [randID]);
+
+    // This sets the timer on the DOM to the user's saved time
+    useEffect(() => {
+        setTime(attempt.timer);
+        // console.log('TIME HAS BEEN SET');
+    }, [attempt])
+
+    useEffect(() => {
+
+
+    }, [])
+
+    const renderTime = poop => {
+        // setTime(poop);
+        const getSeconds = `0${(time % 60)}`.slice(-2);
+        const minutes = `${Math.floor(time / 60)}`;
+        const getMinutes = `0${minutes % 60}`.slice(-2);
+        const getHours = `0${Math.floor(time / 3600)}`.slice(-2);
+        return `${getHours} : ${getMinutes} : ${getSeconds}`;
+    }
 
     function saveProgress() {
         let attemptToSave = attempt;
@@ -137,14 +162,7 @@ function PlayPuzzle() {
         history.push(`/play`);
     }
 
-    const renderTime = () => {
-        const getSeconds = `0${(time % 60)}`.slice(-2);
-        const minutes = `${Math.floor(time / 60)}`;
-        const getMinutes = `0${minutes % 60}`.slice(-2);
-        const getHours = `0${Math.floor(time / 3600)}`.slice(-2);
 
-        return `${getHours} : ${getMinutes} : ${getSeconds}`;
-    }
 
     return (
         <>
@@ -164,66 +182,64 @@ function PlayPuzzle() {
                 </>
                 :
                 ''}
+
+            {/* Timer from attempt reducer */}
+            {
+                attempt.timer > 0
+                    ?
+                    <h3>renderTime: {renderTime(attempt.timer)}</h3>
+                    :
+                    <h3>renderTime: {renderTime(0)}</h3>
+            }
+
             {
                 attempt
                     ?
-                    <h3>{renderTime()}</h3>
+                    <h3>attempt.timer: {attempt.timer}</h3>
                     :
                     ''
             }
 
-{
-                attempt
-                    ?
-                    <h3>{attempt.timer}</h3>
-                    :
-                    ''
-            }
 
-            {
-                wait ?
-                    ''
-                    :
-                    <table className="playtable">
-                        <tbody>
-                            {
-                                vGridData.tableData.map((item, i) => (
-                                    <tr key={i}>
-                                        {hGridData.fillerGrid.map((filler, k) => (
-                                            <td key={k} className="filler"></td>
-                                        ))}
 
-                                        {item.map((clue, j) => (
-                                            <VClue key={j} clue={clue} />
-                                        ))}
-                                    </tr>
-                                ))
-                            }
+            <table className="playtable">
+                <tbody>
+                    {
+                        vGridData.tableData.map((item, i) => (
+                            <tr key={'top' + i}>
+                                {hGridData.fillerGrid.map((filler, k) => (
+                                    <td key={'filler' + k} className="filler"></td>
+                                ))}
 
-                            {
-                                attempt.input_data.map((item, i) => (
-                                    <>
-                                        <tr key={i}>
-                                            {/* In each row, the clues come first, which have 
+                                {item.map((clue, j) => (
+                                    <VClue key={'vclue' + j} clue={clue} />
+                                ))}
+                            </tr>
+                        ))
+                    }
+
+                    {attempt.puzzle_id > 0 && 
+                        attempt.input_data.map((item, i) => (
+                            <tr key={'bottom' + i}>
+                                {/* In each row, the clues come first, which have 
                                             already been processed to the format we need */}
-                                            {
-                                                hGridData.tableData[i].map((clue, k) => (
-                                                    <HClue key={k} clue={clue} />
-                                                ))
-                                            }
+                                {
+                                    hGridData.tableData[i].map((clue, k) => (
+                                        <HClue key={'hclue' + k} clue={clue} />
+                                    ))
+                                }
 
-                                            {
-                                                item.map((value, j) => (
-                                                    <GridElement key={j} id={j} value={value} position={[i, j]} />
-                                                ))
-                                            }
-                                        </tr>
-                                    </>
-                                ))
-                            }
-                        </tbody>
-                    </table>
-            }
+                                {
+                                    item.map((value, j) => (
+                                        <GridElement key={attempt.id+'grid' + j} id={j} value={value} position={[i, j]} />
+                                    ))
+                                }
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+
 
         </>
     )

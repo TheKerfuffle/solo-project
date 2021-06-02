@@ -2,7 +2,7 @@ import { put } from '@redux-saga/core/effects';
 import axios from 'axios';
 
 function* getAttempt(action) {
-    // ACTION PAYLOAD IS A PUZZLE OBJECT (RAW OR ATTEMPT) NOT A USER ID
+    // ACTION PAYLOAD IS A PUZZLE OBJECT (RAW OR) NOT A USER ID
     try {
         // console.log('action.payload in getAttempt', action.payload);
         let attempt;

@@ -23,10 +23,6 @@ function ProfileItem({ profileType, attempt }) {
     }
 
     function goPlay() {
-        dispatch({ type: 'RESET_SOLUTION' });
-        dispatch({ type: 'RESET_ATTEMPT' });
-        dispatch({ type: 'RESET_V_GRID' });
-        dispatch({ type: 'RESET_H_GRID' });
         history.push(`/play/${attempt.id}`)
     }
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import GridElement from '../GridElement/GridElement';
 import HClue from '../HClue/HClue';
 import Timer from '../Timer/Timer';
@@ -11,6 +11,7 @@ import './PlayPuzzle.css';
 
 function PlayPuzzle() {
 
+    let [wait, setWait] = useState(true);
 
     const hGridData = useSelector(store => store.hGrid);
     const vGridData = useSelector(store => store.vGrid);
@@ -20,12 +21,16 @@ function PlayPuzzle() {
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const { id } = useParams();
 
     let [mistakeMessage, setMistakeMessage] = useState('');
 
     useEffect(() => {
-        newRandomPuzzle();
-    }, [])
+        dispatch({ type: 'GET_PUZZLE', payload: id });
+        setTimeout(() => {
+            setWait(false);
+          }, 500);
+    }, []);
 
     function saveProgress() {
         if (attempt.id === 0) {
@@ -89,35 +94,34 @@ function PlayPuzzle() {
 
         if (solutionTotal === totalCorrectInput) {
             if (attempt.id === 0) {
-                dispatch({ type: 'POST_NEW_ATTEMPT', payload: {
-                    id: attempt.id,
-                    player_id: user.id,
-                    puzzle_id: attempt.puzzle_id,
-                    timer: attempt.timer,
-                    input_data: attempt.input_data,
-                    completed: true
-                }});
+                dispatch({
+                    type: 'POST_NEW_ATTEMPT', payload: {
+                        id: attempt.id,
+                        player_id: user.id,
+                        puzzle_id: attempt.puzzle_id,
+                        timer: attempt.timer,
+                        input_data: attempt.input_data,
+                        completed: true
+                    }
+                });
             } else {
-                dispatch({ type: 'UPDATE_ATTEMPT', payload: {
-                    id: attempt.id,
-                    player_id: user.id,
-                    puzzle_id: attempt.puzzle_id,
-                    timer: attempt.timer,
-                    input_data: attempt.input_data,
-                    completed: true
-                }});
+                dispatch({
+                    type: 'UPDATE_ATTEMPT', payload: {
+                        id: attempt.id,
+                        player_id: user.id,
+                        puzzle_id: attempt.puzzle_id,
+                        timer: attempt.timer,
+                        input_data: attempt.input_data,
+                        completed: true
+                    }
+                });
             }
         }
 
     }
 
     function newRandomPuzzle() {
-        setMistakeMessage('');
-        dispatch({ type: 'RESET_V_GRID' });
-        dispatch({ type: 'RESET_H_GRID' });
-        dispatch({ type: 'RESET_ATTEMPT' });
-        dispatch({ type: 'RESET_SOLUTION' });
-        dispatch({ type: 'GET_RANDOM_PUZZLE' });
+        history.push(`/play`);
     }
 
     return (
@@ -131,45 +135,50 @@ function PlayPuzzle() {
             {attempt.completed ? <h3>Completed!</h3> : ''}
             {mistakeMessage === '' ? '' : <h4>{mistakeMessage}</h4>}
 
-            <table className="playtable">
-                <tbody>
-                    {
-                        vGridData.tableData.map((item, i) => (
-                            <tr key={i}>
-                                {hGridData.fillerGrid.map((filler, k) => (
-                                    <td key={k} className="filler"></td>
-                                ))}
+            {
+                wait ?
+                    ''
+                    :
+                    <table className="playtable">
+                        <tbody>
+                            {
+                                vGridData.tableData.map((item, i) => (
+                                    <tr key={i}>
+                                        {hGridData.fillerGrid.map((filler, k) => (
+                                            <td key={k} className="filler"></td>
+                                        ))}
 
-                                {item.map((clue, j) => (
-                                    <VClue key={j} clue={clue} />
-                                ))}
-                            </tr>
-                        ))
-                    }
+                                        {item.map((clue, j) => (
+                                            <VClue key={j} clue={clue} />
+                                        ))}
+                                    </tr>
+                                ))
+                            }
 
-                    {
-                        attempt.input_data.map((item, i) => (
-                            <>
-                                <tr key={i}>
-                                    {/* In each row, the clues come first, which have 
+                            {
+                                attempt.input_data.map((item, i) => (
+                                    <>
+                                        <tr key={i}>
+                                            {/* In each row, the clues come first, which have 
                                             already been processed to the format we need */}
-                                    {
-                                        hGridData.tableData[i].map((clue, k) => (
-                                            <HClue key={k} clue={clue} />
-                                        ))
-                                    }
+                                            {
+                                                hGridData.tableData[i].map((clue, k) => (
+                                                    <HClue key={k} clue={clue} />
+                                                ))
+                                            }
 
-                                    {
-                                        item.map((value, j) => (
-                                            <GridElement key={j} id={j} value={value} position={[i, j]} />
-                                        ))
-                                    }
-                                </tr>
-                            </>
-                        ))
-                    }
-                </tbody>
-            </table>
+                                            {
+                                                item.map((value, j) => (
+                                                    <GridElement key={j} id={j} value={value} position={[i, j]} />
+                                                ))
+                                            }
+                                        </tr>
+                                    </>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+            }
         </>
     )
 }

@@ -25,6 +25,7 @@ import PlayPuzzle from '../PlayPuzzle/PlayPuzzle';
 import AddPuzzle from '../AddPuzzle/AddPuzzle';
 import './App.css';
 import Profile from '../Profile/Profile';
+import PlayReRoute from '../PlayReRoute/PlayReRoute';
 
 function App() {
   const dispatch = useDispatch();

@@ -7,6 +7,7 @@ import userSaga from './user.saga';
 // import getTimer from './timer.sagas/getTimer.saga';
 import getGrid from './grid.sagas/getGrid.saga';
 import getRandomPuzzle from './play.sagas/getRandomPuzzle.saga';
+import getPuzzle from './play.sagas/getPuzzle.saga';
 import postNewAttempt from './attempt.sagas/postNewAttempt.saga';
 import updateAttempt from './attempt.sagas/updateAttempt.saga';
 import getAttempt from './attempt.sagas/getAttempt.saga';
@@ -27,6 +28,7 @@ export default function* rootSaga() {
 
   yield takeEvery('GET_GRID', getGrid);
   yield takeEvery('GET_RANDOM_PUZZLE', getRandomPuzzle);
+  yield takeEvery('GET_PUZZLE', getPuzzle);
   yield takeEvery('GET_ATTEMPT', getAttempt)
   yield takeEvery('POST_NEW_ATTEMPT', postNewAttempt);
   yield takeEvery('UPDATE_ATTEMPT', updateAttempt);

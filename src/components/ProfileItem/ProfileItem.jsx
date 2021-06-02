@@ -22,6 +22,14 @@ function ProfileItem({ profileType, attempt }) {
         dispatch({type: 'DELETE_RAW_PUZZLE', payload: attempt})
     }
 
+    function goPlay() {
+        dispatch({ type: 'RESET_SOLUTION' });
+        dispatch({ type: 'RESET_ATTEMPT' });
+        dispatch({ type: 'RESET_V_GRID' });
+        dispatch({ type: 'RESET_H_GRID' });
+        history.push(`/play/${attempt.id}`)
+    }
+
 
     return (
         <>
@@ -37,13 +45,12 @@ function ProfileItem({ profileType, attempt }) {
                         ?
                         <li>
                             {attempt.title}
-                            <button>Edit</button>
                             <button onClick={deleteRaw}>Delete</button>
                         </li>
                         :
                         <li>
                             {attempt.title}
-                            <button>Edit</button>
+                            <button onClick={goPlay}>Continue</button>
                             <button onClick={deleteAttempt}>Delete</button>
                         </li>
             }

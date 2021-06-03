@@ -6,6 +6,9 @@ import HClue from '../HClue/HClue';
 import VClue from '../VClue/VClue';
 import './PlayPuzzle.css';
 
+// Material UI Imports:
+import {CasinoIcon} from '@material-ui/icons';
+
 function PlayPuzzle() {
 
     // REDUCERS!!!! ALL OF THEM(almost)!!!

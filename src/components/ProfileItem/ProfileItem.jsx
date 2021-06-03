@@ -41,6 +41,7 @@ function ProfileItem({ profileType, attempt }) {
                         ?
                         <li>
                             {attempt.title}
+                            <button onClick={goPlay}>Play</button>
                             <button onClick={deleteRaw}>Delete</button>
                         </li>
                         :

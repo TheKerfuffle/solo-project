@@ -9,7 +9,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
     Grid, Paper, Typography,
     List, Toolbar, AppBar,
-    Button,
+    Button, Tooltip,
     IconButton
 } from '@material-ui/core/';
 
@@ -30,8 +30,9 @@ const useStyles = makeStyles({
         }
     },
     profileItem: {
-        marginBottom: 20
-        
+        marginBottom: 20,
+        marginRight: 20
+
     }
 });
 
@@ -102,31 +103,35 @@ function ProfileItem({ profileType, attempt }) {
 
 
                             <Grid item xs={12} className={classes.profileItem}>
-                                <Paper>
+                                <Paper style={{ marginLeft: 20 }}>
                                     <Grid container justify="flex-start" alignItems="center">
                                         <Grid item xs={10} >
-                                            <Typography variant="h6" align="left" style={{marginLeft: 10}}>
+                                            <Typography variant="h6" align="left" style={{ marginLeft: 10 }}>
                                                 {attempt.title}
                                             </Typography>
                                         </Grid>
 
                                         <Grid item xs={1}>
-                                            <IconButton
-                                                color="inherit"
-                                                aria-label="play puzzle"
-                                                onClick={goPlay}
-                                            >
-                                                <ArrowRightAltIcon />
-                                            </IconButton>
+                                            <Tooltip title="Play This Puzzle">
+                                                <IconButton
+                                                    color="inherit"
+                                                    aria-label="play puzzle"
+                                                    onClick={goPlay}
+                                                >
+                                                    <ArrowRightAltIcon />
+                                                </IconButton>
+                                            </Tooltip>
                                         </Grid>
                                         <Grid item xs={1}>
-                                            <IconButton
-                                                color="inherit"
-                                                aria-label="delete progress"
-                                                onClick={deleteRaw}
-                                            >
-                                                <DeleteIcon />
-                                            </IconButton>
+                                            <Tooltip title="Delete This Puzzle">
+                                                <IconButton
+                                                    color="inherit"
+                                                    aria-label="delete this puzzle"
+                                                    onClick={deleteRaw}
+                                                >
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </Tooltip>
                                         </Grid>
                                     </Grid>
                                 </Paper>

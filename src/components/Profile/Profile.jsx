@@ -29,8 +29,7 @@ const useStyles = makeStyles({
         }
     },
     profileContainer: {
-        marginLeft: 20,
-        marginRight: 20
+        
     }
 });
 
@@ -91,7 +90,7 @@ function Profile() {
             </ul>
 
             <h3>Created Puzzles</h3>
-            <Grid container className={classes.profileContainer}>
+            <Grid container >
                 {
                     userPuzzles.length === 0
                         ?

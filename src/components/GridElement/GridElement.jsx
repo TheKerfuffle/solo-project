@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import './GridElement.css';
 
 
-function GridElement({ id, value, position }) {
+function GridElement({ id, value, position, time}) {
 
     let [colorToggle, setColorToggle] = useState("colorWhite");
     let [newValue, setNewValue] = useState(value)
@@ -40,7 +40,7 @@ function GridElement({ id, value, position }) {
                 id: 0,
                 player_id: user.id,
                 puzzle_id: attempt.puzzle_id,
-                timer: attempt.timer,
+                timer: time,
                 input_data: attemptData,
                 completed: attempt.completed
             }});
@@ -49,7 +49,7 @@ function GridElement({ id, value, position }) {
                 id: attempt.id,
                 player_id: user.id,
                 puzzle_id: attempt.puzzle_id,
-                timer: attempt.timer,
+                timer: time,
                 input_data: attemptData,
                 completed: attempt.completed
             }});

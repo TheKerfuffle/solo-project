@@ -73,9 +73,9 @@ function PlayPuzzle() {
         let attemptToSave = attempt;
         attemptToSave.timer = time;
         if (attempt.id === 0) {
-            dispatch({ type: 'POST_NEW_ATTEMPT', payload: attempt });
+            dispatch({ type: 'POST_NEW_ATTEMPT', payload: attemptToSave });
         } else {
-            dispatch({ type: 'UPDATE_ATTEMPT', payload: attempt });
+            dispatch({ type: 'UPDATE_ATTEMPT', payload: attemptToSave });
         }
     }
 
@@ -137,7 +137,7 @@ function PlayPuzzle() {
                         id: attempt.id,
                         player_id: user.id,
                         puzzle_id: attempt.puzzle_id,
-                        timer: attempt.timer,
+                        timer: time,
                         input_data: attempt.input_data,
                         completed: true
                     }
@@ -148,7 +148,7 @@ function PlayPuzzle() {
                         id: attempt.id,
                         player_id: user.id,
                         puzzle_id: attempt.puzzle_id,
-                        timer: attempt.timer,
+                        timer: time,
                         input_data: attempt.input_data,
                         completed: true
                     }
@@ -231,7 +231,7 @@ function PlayPuzzle() {
 
                                 {
                                     item.map((value, j) => (
-                                        <GridElement key={attempt.id+'grid' + j} id={j} value={value} position={[i, j]} />
+                                        <GridElement key={attempt.id+'grid' + j} id={j} value={value} position={[i, j]} time={time} />
                                     ))
                                 }
                             </tr>

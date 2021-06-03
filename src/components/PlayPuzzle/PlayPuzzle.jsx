@@ -190,29 +190,9 @@ function PlayPuzzle() {
             {attempt.completed ? <h3>Completed!</h3> : ''}
             {mistakeMessage === '' ? '' : <h4>{mistakeMessage}</h4>}
 
-            {solution ?
-                <>
-                    <h5>'Puzzle ID:' {solution.id}</h5>
-                    <h5>'Param ID:' {id}</h5>
-                </>
-                :
-                ''}
-
             {/* Timer from attempt reducer */}
             {
-                attempt.timer > 0
-                    ?
-                    <h3>renderTime: {renderTime(attempt.timer)}</h3>
-                    :
-                    <h3>renderTime: {renderTime(0)}</h3>
-            }
-
-            {
-                attempt
-                    ?
-                    <h3>attempt.timer: {attempt.timer}</h3>
-                    :
-                    ''
+                    <h3>{renderTime()}</h3>
             }
 
 

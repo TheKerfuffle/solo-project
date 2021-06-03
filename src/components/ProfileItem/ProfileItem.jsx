@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
+// Custom Styles/Themes
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+
 // MUI Core:
 import {
     Grid, Paper, Typography,
@@ -15,8 +18,29 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
+const useStyles = makeStyles({
+    menuBtn: {
+        marginTop: 20,
+        marginLeft: 20,
+
+    },
+    hover: {
+        '&:hover': {
+            backgroundColor: 'green',
+        }
+    },
+    profileItem: {
+        marginBottom: 20
+        
+    }
+});
+
 
 function ProfileItem({ profileType, attempt }) {
+
+    const classes = useStyles();
+
+
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -44,26 +68,6 @@ function ProfileItem({ profileType, attempt }) {
 
     return (
         <>
-            <Grid container>
-                <Grid item xs={1}>
-
-                </Grid>
-                <Paper>
-
-                    <Grid item xs={8}>
-
-                    </Grid>
-                    <Grid item xs={1}>
-
-                    </Grid>
-                    <Grid item xs={1}>
-
-                    </Grid>
-                </Paper>
-                <Grid item xs={1}>
-
-                </Grid>
-            </Grid>
 
 
 
@@ -92,50 +96,46 @@ function ProfileItem({ profileType, attempt }) {
                     profileType === 1
                         ?
                         <>
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <Grid container>
+
+                            {/* <Grid item xs={12}>
+                                    <Grid container> */}
 
 
-
-                                        <Grid item xs={1}>
-
+                            <Grid item xs={12} className={classes.profileItem}>
+                                <Paper>
+                                    <Grid container justify="flex-start" alignItems="center">
+                                        <Grid item xs={10} >
+                                            <Typography variant="h6" align="left" style={{marginLeft: 10}}>
+                                                {attempt.title}
+                                            </Typography>
                                         </Grid>
-                                        <Paper>
-                                            <Grid item xs={10}>
-                                                <Grid container>
-                                                    <Grid item xs={10}>
-                                                        <Typography component="h6">
-                                                            {attempt.title}
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid item xs={1}>
-                                                        <IconButton
-                                                            color="inherit"
-                                                            aria-label="play puzzle"
-                                                            onClick={goPlay}
-                                                        >
-                                                            <ArrowRightAltIcon />
-                                                        </IconButton>
-                                                    </Grid>
-                                                    <Grid item xs={1}>
-                                                        <IconButton
-                                                            color="inherit"
-                                                            aria-label="delete progress"
-                                                            onClick={deleteRaw}
-                                                        >
-                                                            <DeleteIcon />
-                                                        </IconButton>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                        </Paper>
-                                        <Grid item xs={1}>
 
+                                        <Grid item xs={1}>
+                                            <IconButton
+                                                color="inherit"
+                                                aria-label="play puzzle"
+                                                onClick={goPlay}
+                                            >
+                                                <ArrowRightAltIcon />
+                                            </IconButton>
+                                        </Grid>
+                                        <Grid item xs={1}>
+                                            <IconButton
+                                                color="inherit"
+                                                aria-label="delete progress"
+                                                onClick={deleteRaw}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
                                         </Grid>
                                     </Grid>
-                                </Grid>
+                                </Paper>
                             </Grid>
+
+
+                            {/* </Grid>
+                                </Grid> */}
+
 
 
 

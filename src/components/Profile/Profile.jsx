@@ -6,25 +6,16 @@ import ProfileItem from '../ProfileItem/ProfileItem';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 // MUI Core: 
-import { Paper, Typography, List, 
-    Toolbar, AppBar, CssBaseline, 
-    Drawer , Button, IconButton, 
-    Divider} from '@material-ui/core/';
+import {
+    Paper, Typography, List,
+    Toolbar, AppBar, CssBaseline,
+    Drawer, Button, IconButton,
+    Divider, Grid
+} from '@material-ui/core/';
 
 // Icons
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import CasinoIcon from '@material-ui/icons/Casino';
-
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-
-
-const drawerWidth = 60;
 
 const useStyles = makeStyles({
     menuBtn: {
@@ -36,6 +27,10 @@ const useStyles = makeStyles({
         '&:hover': {
             backgroundColor: 'green',
         }
+    },
+    profileContainer: {
+        marginLeft: 20,
+        marginRight: 20
     }
 });
 
@@ -68,21 +63,12 @@ function Profile() {
     return (
         <>
 
-            <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                className={classes.menuBtn}
-            >
-                <MenuIcon />
-            </IconButton>
 
 
-
-            <Typography 
+            <Typography
                 variant="h2"
-                
-                >
+
+            >
                 Profile View
             </Typography>
 
@@ -105,8 +91,7 @@ function Profile() {
             </ul>
 
             <h3>Created Puzzles</h3>
-
-
+            <Grid container className={classes.profileContainer}>
                 {
                     userPuzzles.length === 0
                         ?
@@ -120,7 +105,7 @@ function Profile() {
                                 ''
                         )
                 }
-
+            </Grid>
 
             <h3>Saved Attempts</h3>
 

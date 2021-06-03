@@ -8,11 +8,12 @@ function* getPuzzle(action) {
         // console.log('GET all puzzles/all puzzles length', puzzles.data, puzzles.data.length);
         console.log('SHOULD BE HERE! getting puzzle data for:', action.payload, puzzle.data[0]);
 
+        // RESET REDUCERS TO DEFAULT
         yield put({ type: 'RESET_SOLUTION' });
         yield put({ type: 'RESET_ATTEMPT' });
         yield put({ type: 'RESET_V_GRID' });
         yield put({ type: 'RESET_H_GRID' });
-        
+        // SETS IMPORTANT REDUCERS TO NEW VALUES
         yield put({ type: 'SET_SOLUTION', payload: puzzle.data[0] });
         yield put({ type: 'GET_ATTEMPT', payload: puzzle.data[0] });
         yield put({ type: 'SET_H_GRID', payload: puzzle.data[0] });

@@ -21,6 +21,11 @@ export default hGrid;
 
 // This block of code contains the most hard fought element of this project.
 // I am extremely proud of this code
+
+// ******************************************************************************************
+// FOR ANOTHER AND SLIGHTLY MORE IN DEPTH LOOK AT THIS CODE, see the vGrid reducer
+// That component has more steps and does the same thing while rotating the data back and forth
+// ******************************************************************************************
 function generateHorizontal(gridData) {
 
     // Initialize varaibles for use in this part of the project
@@ -65,6 +70,7 @@ function generateHorizontal(gridData) {
     return hGridData;
 }
 
+// Fills each row with zeros before the clues until they all are the same length
 function processResult(data, length) {
     let newData = [];
     let newRow = [];
@@ -77,7 +83,7 @@ function processResult(data, length) {
     return newData;
 }
 
-
+// Uses recursion to fill in the given row up to the max length
 function processRow(row, length) {
     let newRow = row;
 
@@ -90,6 +96,7 @@ function processRow(row, length) {
     }
 }
 
+// Filler grid for use on the PlayPuzzle page, top left of the grid
 function generateFiller(length) {
     let filler = [];
     for (let i = 0; i < length; i++) {

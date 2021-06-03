@@ -29,8 +29,6 @@ function generateVertical(gridData) {
     let rotateData = [];
     let newRow = [];
 
-    console.log('gridArray:', gridArray);
-
     // Effectively rotates the data 90 degrees CounterClockwise, 
     // stores that new nested array in rotateData
     for (let j = gridArray[0].length - 1; j >= 0; j--) {
@@ -106,7 +104,7 @@ function generateHorizontal(gridData) {
     // to be mounted ABOVE the grid, thus matching the solution data
     let finishedData = rotateArray(processResult(hData, maxRowLength), maxRowLength);
 
-    // 
+    // Bundle up data for use in PlayPuzzle component
     const vGridData = {
         length: maxRowLength,
         tableData: finishedData,

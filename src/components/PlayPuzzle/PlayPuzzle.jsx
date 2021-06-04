@@ -212,7 +212,6 @@ function PlayPuzzle() {
                 </Typography>
             }
 
-
             {attempt.completed ?
                 <>
                     <Typography variant='h4' align="center" style={{ marginBottom: 20 }}>
@@ -228,12 +227,7 @@ function PlayPuzzle() {
                 </Typography>
             }
 
-
-
             <Grid container>
-
-
-
                 {
                     mistakeMessage === ''
                         ?
@@ -290,18 +284,10 @@ function PlayPuzzle() {
             <Grid container>
 
                 <Grid item xs={3} align="center">
-                    <Tooltip title="Random Puzzle">
-                        <IconButton
-                            color="inherit"
-                            aria-label="Play Random Puzzle"
-                            onClick={newRandomPuzzle}
-                        >
-                            <CasinoIcon style={{ fontSize: 50, color: 'maroon' }} />
-                        </IconButton>
-                    </Tooltip>
+
                 </Grid>
 
-                <Grid item xs={3} align="center">
+                <Grid item xs={2} align="center">
                     <Tooltip title="Save Progress">
                         <IconButton
                             color="inherit"
@@ -313,7 +299,7 @@ function PlayPuzzle() {
                     </Tooltip>
                 </Grid>
 
-                <Grid item xs={3} align="center">
+                <Grid item xs={2} align="center">
                     <Tooltip title="Delete Progress">
                         <IconButton
                             color="inherit"
@@ -325,8 +311,8 @@ function PlayPuzzle() {
                     </Tooltip>
                 </Grid>
 
-                <Grid item xs={3} align="center">
-                    <Tooltip title="Check Solution">
+                <Grid item xs={2} align="center">
+                    <Tooltip title="Check Progress">
                         <IconButton
                             color="inherit"
                             aria-label="Play Random Puzzle"
@@ -336,6 +322,11 @@ function PlayPuzzle() {
                         </IconButton>
                     </Tooltip>
                 </Grid>
+
+                <Grid item xs={3} align="center">
+
+                </Grid>
+
             </Grid>
         </>
     )

@@ -34,7 +34,7 @@ function GridElement({ id, value, position, time }) {
                 val = 0;
             }
         } else {
-            event.preventDefault();
+            e.preventDefault();
             if (colorToggle === "colorWhite") {
                 setColorToggle("colorRed");
                 val = 2;

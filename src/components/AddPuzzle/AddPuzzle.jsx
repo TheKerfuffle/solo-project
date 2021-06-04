@@ -11,7 +11,6 @@ import {
     Divider, Grid, Tooltip, TextField
 } from '@material-ui/core/';
 
-
 function AddPuzzle() {
 
     let [width, setWidth] = useState(0);
@@ -91,7 +90,6 @@ function AddPuzzle() {
                                 />
                             </Tooltip>
                         </>
-
                     }
                 </Grid>
                 <Grid item xs={3} align="center" style={{ marginBottom: 20 }}>
@@ -105,7 +103,6 @@ function AddPuzzle() {
                         >Generate Puzzle Grid
                         </Button>
                     }
-
                 </Grid>
             </Grid>
 

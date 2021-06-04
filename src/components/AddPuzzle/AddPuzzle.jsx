@@ -1,14 +1,11 @@
-import { useReducer, useState } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import NewPuzzleItem from "../NewPuzzleItem/NewPuzzleItem";
 
 // MUI Core: 
 import {
-    Paper, Typography, List,
-    Toolbar, AppBar, CssBaseline,
-    Drawer, Button, IconButton,
-    Divider, Grid, Tooltip, TextField
+    Button, Grid, Tooltip, TextField
 } from '@material-ui/core/';
 
 function AddPuzzle() {

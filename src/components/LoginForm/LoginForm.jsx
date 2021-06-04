@@ -19,6 +19,7 @@ function LoginForm() {
   const login = (event) => {
     event.preventDefault();
 
+
     if (username && password) {
       dispatch({
         type: 'LOGIN',

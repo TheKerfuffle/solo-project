@@ -4,6 +4,9 @@ import { useHistory } from "react-router";
 
 
 function PlayReRoute() {
+    // THIS PAGE IS NOT USED IN THE FINAL PROJECT, 
+    // IT HAS BEEN LEFT FOR THOSE WHO WISH TO SEE THE PROCESS
+    // OF MAKING IT OBSELETE IN THIS PROJECT
 
     let solution = useSelector(store => store.solution);
     let randID = useSelector(store => store.randomPuzzleID);

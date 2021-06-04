@@ -11,6 +11,29 @@ function InfoPage() {
     <div className="container">
       <div>
         <p>Information about this project</p>
+        <ul>
+          <li>
+              React
+          </li>
+          <li>
+              React Redux
+          </li>
+          <li>
+              Material UI
+          </li>
+          <li>
+              Node.js
+          </li>
+          <li>
+              PostgreSQL
+          </li>
+          <li>
+              Express
+          </li>
+          <li>
+              And more!
+          </li>
+        </ul>
       </div>
     </div>
   );

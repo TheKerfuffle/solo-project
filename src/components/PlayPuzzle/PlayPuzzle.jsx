@@ -7,21 +7,14 @@ import VClue from '../VClue/VClue';
 import './PlayPuzzle.css';
 
 // Icons:
-import CasinoIcon from '@material-ui/icons/Casino';
-import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
 import ClearIcon from '@material-ui/icons/Clear';
 import CheckIcon from '@material-ui/icons/Check';
 
-// Custom Styles/Themes
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-
 // MUI Core: 
 import {
-    Paper, Typography, List,
-    Toolbar, AppBar, CssBaseline,
-    Drawer, Button, IconButton,
-    Divider, Grid, Tooltip, TextField
+    Typography, IconButton, 
+    Grid, Tooltip
 } from '@material-ui/core/';
 
 function PlayPuzzle() {

@@ -51,6 +51,7 @@ function Profile() {
                 {user.username}'s Profile
             </Typography>
 
+            {/* The Grid Container gets filled with items within the ProfileItem component */}
             <Grid container >
                 {
                     userAttempts.length === 0

@@ -69,107 +69,112 @@ function ProfileItem({ profileType, attempt }) {
 
     return (
         <>
-
-
-
-
-
-
-
-
-
-
-
             {
                 profileType === 0
                     ?
-                    <li>
-                        {attempt.title}, Completed in: {attempt.timer}
-                        <IconButton
-                            color="inherit"
-                            aria-label="delete progress"
-                            onClick={deleteAttempt}
-                        >
-                            <DeleteIcon />
-                        </IconButton>
-                    </li>
+                    <Grid item xs={12} className={classes.profileItem}>
+                        <Paper style={{ marginLeft: 20 }}>
+                            <Grid container justify="flex-start" alignItems="center">
+                                <Grid item xs={5} sm={5}>
+                                    <Typography variant="h6" align="left" style={{ marginLeft: 10 }}>
+                                        {attempt.title}
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={5} sm={6}>
+                                    <Typography variant="h6" align="left" style={{ marginLeft: 10 }}>
+                                        Completed in: {attempt.timer}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2} sm={1}>
+                                    <Tooltip title="Delete Progress">
+                                        <IconButton
+                                            color="inherit"
+                                            aria-label="delete progress"
+                                            onClick={deleteAttempt}
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Grid>
                     :
                     profileType === 1
                         ?
-                        <>
-
-                            {/* <Grid item xs={12}>
-                                    <Grid container> */}
-
-
-                            <Grid item xs={12} className={classes.profileItem}>
-                                <Paper style={{ marginLeft: 20 }}>
-                                    <Grid container justify="flex-start" alignItems="center">
-                                        <Grid item xs={10} >
-                                            <Typography variant="h6" align="left" style={{ marginLeft: 10 }}>
-                                                {attempt.title}
-                                            </Typography>
-                                        </Grid>
-
-                                        <Grid item xs={1}>
-                                            <Tooltip title="Play This Puzzle">
-                                                <IconButton
-                                                    color="inherit"
-                                                    aria-label="play puzzle"
-                                                    onClick={goPlay}
-                                                >
-                                                    <ArrowRightAltIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </Grid>
-                                        <Grid item xs={1}>
-                                            <Tooltip title="Delete This Puzzle">
-                                                <IconButton
-                                                    color="inherit"
-                                                    aria-label="delete this puzzle"
-                                                    onClick={deleteRaw}
-                                                >
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                        </Grid>
+                        <Grid item xs={12} className={classes.profileItem}>
+                            <Paper style={{ marginLeft: 20 }}>
+                                <Grid container justify="flex-start" alignItems="center">
+                                    <Grid item xs={8} sm={10}>
+                                        <Typography variant="h6" align="left" style={{ marginLeft: 10 }}>
+                                            {attempt.title}
+                                        </Typography>
                                     </Grid>
-                                </Paper>
-                            </Grid>
 
-
-                            {/* </Grid>
-                                </Grid> */}
-
-
-
-
-
-
-
-
-                        </>
+                                    <Grid item xs={2} sm={1}>
+                                        <Tooltip title="Play This Puzzle">
+                                            <IconButton
+                                                color="inherit"
+                                                aria-label="play puzzle"
+                                                onClick={goPlay}
+                                            >
+                                                <ArrowRightAltIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Grid>
+                                    <Grid item xs={2} sm={1}>
+                                        <Tooltip title="Delete This Puzzle">
+                                            <IconButton
+                                                color="inherit"
+                                                aria-label="delete this puzzle"
+                                                onClick={deleteRaw}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
                         :
-                        <li>
-                            {attempt.title}
+                        <Grid item xs={12} className={classes.profileItem}>
+                            <Paper style={{ marginLeft: 20 }}>
+                                <Grid container justify="flex-start" alignItems="center">
 
+                                    <Grid item xs={8} sm={10}>
+                                        <Typography variant="h6" align="left" style={{ marginLeft: 10 }}>
+                                            {attempt.title}
+                                        </Typography>
+                                    </Grid>
 
-                            <IconButton
-                                color="inherit"
-                                aria-label="play puzzle"
-                                onClick={goPlay}
-                            >
-                                <ArrowRightAltIcon />
-                            </IconButton>
+                                    <Grid item xs={2} sm={1}>
+                                        <Tooltip title="Play This Puzzle">
+                                            <IconButton
+                                                color="inherit"
+                                                aria-label="play puzzle"
+                                                onClick={goPlay}
+                                            >
+                                                <ArrowRightAltIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Grid>
 
-                            <IconButton
-                                color="inherit"
-                                aria-label="delete progress"
-                                onClick={deleteAttempt}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                        </li>
+                                    <Grid item xs={2} sm={1}>
+                                        <Tooltip title="Delete This Puzzle">
+                                            <IconButton
+                                                color="inherit"
+                                                aria-label="delete progress"
+                                                onClick={deleteAttempt}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Grid>
+
+                                </Grid>
+                            </Paper>
+                        </Grid>
             }
         </>
     )

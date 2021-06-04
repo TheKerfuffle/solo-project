@@ -13,23 +13,14 @@ import {
     Divider, Grid
 } from '@material-ui/core/';
 
-// Icons
-import MenuIcon from '@material-ui/icons/Menu';
-import CasinoIcon from '@material-ui/icons/Casino';
-
 const useStyles = makeStyles({
     menuBtn: {
         marginTop: 20,
         marginLeft: 20,
 
     },
-    hover: {
-        '&:hover': {
-            backgroundColor: 'green',
-        }
-    },
     profileContainer: {
-        
+
     }
 });
 
@@ -39,14 +30,6 @@ function Profile() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = useState(false);
-
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
 
     const dispatch = useDispatch();
     const user = useSelector(store => store.user);
@@ -61,69 +44,84 @@ function Profile() {
 
     return (
         <>
-
-
-
             <Typography
                 variant="h2"
-
+                style={{ textAlign: "center", textDecoration: "underline", marginBottom: 40 }}
             >
-                Profile View
+                {user.username}'s Profile
             </Typography>
 
-            <h3>Completed Puzzles</h3>
-
-            <ul>
+            <Grid container >
                 {
                     userAttempts.length === 0
                         ?
                         ('')
                         :
-                        userAttempts.map((attempt, i) =>
-                            attempt.completed
-                                ?
-                                <ProfileItem key={i} profileType={0} attempt={attempt} />
-                                :
-                                ''
-                        )
+                        <>
+                            <Typography
+                                variant="h3"
+                                style={{ marginLeft: 20, marginBottom: 20 }}
+                            >
+                                Completed Puzzles
+                            </Typography>
+                            {userAttempts.map((attempt, i) =>
+                                attempt.completed
+                                    ?
+                                    <ProfileItem key={i} profileType={0} attempt={attempt} />
+                                    :
+                                    ''
+                            )}
+                        </>
                 }
-            </ul>
+            </Grid>
 
-            <h3>Created Puzzles</h3>
             <Grid container >
                 {
                     userPuzzles.length === 0
                         ?
                         ('')
                         :
-                        userPuzzles.map((attempt, i) =>
-                            attempt.creator_id === user.id
-                                ?
-                                <ProfileItem key={i} profileType={1} attempt={attempt} />
-                                :
-                                ''
-                        )
+                        <>
+                            <Typography
+                                variant="h3"
+                                style={{ marginLeft: 20, marginBottom: 20 }}
+                            >
+                                Created Puzzles
+                            </Typography>
+                            {userPuzzles.map((attempt, i) =>
+                                attempt.creator_id === user.id
+                                    ?
+                                    <ProfileItem key={i} profileType={1} attempt={attempt} />
+                                    :
+                                    ''
+                            )}
+                        </>
                 }
             </Grid>
 
-            <h3>Saved Attempts</h3>
-
-            <ul>
+            <Grid container >
                 {
                     userAttempts.length === 0
                         ?
                         ('')
                         :
-
-                        userAttempts.map((attempt, i) =>
-                            !attempt.completed
-                                ?
-                                <ProfileItem key={i} profileType={2} attempt={attempt} />
-                                :
-                                ''
-                        )
+                        <>
+                            <Typography
+                                variant="h3"
+                                style={{ marginLeft: 20, marginBottom: 20 }}
+                            >
+                                Saved Attempts
+                            </Typography>
+                            {userAttempts.map((attempt, i) =>
+                                !attempt.completed
+                                    ?
+                                    <ProfileItem key={i} profileType={2} attempt={attempt} />
+                                    :
+                                    ''
+                            )}
+                        </>
                 }
-            </ul>
+            </Grid>
 
 
         </>

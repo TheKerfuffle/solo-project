@@ -49,8 +49,8 @@ function Nav() {
   return (
 
     <div className="nav">
-      <Link to="/home">
-        <Tooltip title="home">
+      <Tooltip title="home">
+        <Link to="/home">
           <table className="nav-title">
             <tbody>
               <tr>
@@ -83,8 +83,8 @@ function Nav() {
               </tr>
             </tbody>
           </table>
-        </Tooltip>
-      </Link>
+        </Link>
+      </Tooltip>
 
       <div>
         {/* <Link className="navLink" to={loginLinkData.path}>
@@ -93,7 +93,7 @@ function Nav() {
 
         {user.id && (
           <>
-            <Tooltip title="Play Random Puzzle">
+            <Tooltip title="Random Puzzle">
               <Link className="navLink" to="/play">
                 <IconButton
                   color="inherit"

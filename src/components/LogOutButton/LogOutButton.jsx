@@ -16,6 +16,7 @@ function LogOutButton(props) {
         aria-label="Log Out"
         className={props.className}
         onClick={() => dispatch({ type: 'LOGOUT' })}
+        style={{ margin: 10 }}
       >
         <ExitToAppIcon style={{ fontSize: 36, color: 'white' }} />
       </IconButton>

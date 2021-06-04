@@ -3,6 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import NewPuzzleItem from "../NewPuzzleItem/NewPuzzleItem";
 
+// MUI Core: 
+import {
+    Paper, Typography, List,
+    Toolbar, AppBar, CssBaseline,
+    Drawer, Button, IconButton,
+    Divider, Grid, Tooltip, TextField
+} from '@material-ui/core/';
+
 
 function AddPuzzle() {
 
@@ -31,82 +39,120 @@ function AddPuzzle() {
 
     function sendNewPuzzle() {
         dispatch({ type: 'POST_NEW_PUZZLE', payload: newPuzzle });
-        history.push('/play');
+        setWidth(0);
+        setHeight(0);
+        setTitle('');
     }
 
 
 
     return (
         <>
-            <label>title</label>
-            <input
-                value={title}
-                label="Puzzle Title"
-                type="text"
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            {title === '' ? '' :
-                <>
-                    <label>width</label>
-                    <input
-                        value={width}
-                        label="width"
-                        type="number"
-                        onChange={(e) => setWidth(e.target.value)}
-                    />
-                </>
-            }
-            {width <= 0 ?
-                ''
-                :
-                <>
-                    <label>height</label>
-                    <input
-                        value={height}
-                        label="height"
-                        type="number"
-                        onChange={(e) => setHeight(e.target.value)}
-                    />
-                </>
+            <Grid container>
+                <Grid item xs={3} align="center" style={{ marginBottom: 20 }}>
+                    <Tooltip title="Start by giving your puzzle a name">
+                        <TextField
+                            id="standard-basic"
+                            value={title}
+                            label="Puzzle Title"
+                            type="text"
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                    </Tooltip>
+                </Grid>
+                <Grid item xs={3} align="center" style={{ marginBottom: 20 }}>
+                    {title === '' ? '' :
+                        <>
+                            <Tooltip title="This will set how wide your puzzle will be">
+                                <TextField
+                                    id="standard-basic"
+                                    value={width}
+                                    label="Puzzle Width"
+                                    type="number"
+                                    onChange={(e) => setWidth(e.target.value)}
+                                />
+                            </Tooltip>
+                        </>
+                    }
 
-            }
+                </Grid>
+                <Grid item xs={3} align="center" style={{ marginBottom: 20 }}>
+                    {width <= 0 ?
+                        ''
+                        :
+                        <>
+                            <Tooltip title="This will set how tall your puzzle will be">
+                                <TextField
+                                    id="standard-basic"
+                                    value={height}
+                                    label="Puzzle Height"
+                                    type="number"
+                                    onChange={(e) => setHeight(e.target.value)}
+                                />
+                            </Tooltip>
+                        </>
 
-            {height <= 0 ?
-                ''
-                :
-                <button onClick={generateGrid}>Generate Grid</button>
-            }
+                    }
+                </Grid>
+                <Grid item xs={3} align="center" style={{ marginBottom: 20 }}>
+                    {height <= 0 ?
+                        ''
+                        :
+                        <Button
+                            variant="contained"
+                            onClick={generateGrid}
+                            style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                        >Generate Puzzle Grid
+                        </Button>
+                    }
 
-            {
-                newPuzzle.title === '' ? '' : <button onClick={sendNewPuzzle}>Add Puzzle</button>
-            }
+                </Grid>
+            </Grid>
 
-            {newPuzzle ?
-                <>
 
-                    <table className="addPuzzleTable">
-                        <tbody>
-                            {newPuzzle.solution_data &&
+            <Grid container>
+                <Grid item xs={12} align="center" style={{ marginBottom: 20 }}>
+                    {
+                        newPuzzle.title === ''
+                            ?
+                            ''
+                            :
+                            <Button
+                                variant="contained"
+                                onClick={sendNewPuzzle}
+                                style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                            >Add Puzzle
+                            </Button>
+                    }
+                </Grid>
+                <Grid item xs={12} align="center">
+                    {newPuzzle ?
+                        <>
+                            <table className="addPuzzleTable">
+                                <tbody>
+                                    {newPuzzle.solution_data &&
 
-                                newPuzzle.solution_data.map((row, i) => (
-                                    <tr key={i}>
-                                        {row.map((value, j) => (
-                                            <NewPuzzleItem
-                                                key={j}
-                                                position={[i, j]}
-                                                value={value}
-                                            />
+                                        newPuzzle.solution_data.map((row, i) => (
+                                            <tr key={i}>
+                                                {row.map((value, j) => (
+                                                    <NewPuzzleItem
+                                                        key={j + 'element' + i}
+                                                        position={[i, j]}
+                                                        value={value}
+                                                    />
+                                                ))
+                                                }
+                                            </tr>
                                         ))
-                                        }
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
-                </>
-                :
-                ''
-            }
+                                    }
+                                </tbody>
+                            </table>
+                        </>
+                        :
+                        ''
+                    }
+                </Grid>
+            </Grid>
         </>
     )
 }

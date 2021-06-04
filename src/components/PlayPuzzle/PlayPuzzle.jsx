@@ -21,7 +21,7 @@ import {
     Paper, Typography, List,
     Toolbar, AppBar, CssBaseline,
     Drawer, Button, IconButton,
-    Divider, Grid, Tooltip
+    Divider, Grid, Tooltip, TextField
 } from '@material-ui/core/';
 
 function PlayPuzzle() {
@@ -92,6 +92,16 @@ function PlayPuzzle() {
         const minutes = `${Math.floor(time / 60)}`;
         const getMinutes = `0${minutes % 60}`.slice(-2);
         const getHours = `0${Math.floor(time / 3600)}`.slice(-2);
+        return `${getHours} : ${getMinutes} : ${getSeconds}`;
+    }
+
+    // This function is called below to render the user's completed time
+    // displays in an hour:minute:second format which looks nice.
+    const displayTime = staticTime => {
+        const getSeconds = `0${(staticTime % 60)}`.slice(-2);
+        const minutes = `${Math.floor(staticTime / 60)}`;
+        const getMinutes = `0${minutes % 60}`.slice(-2);
+        const getHours = `0${Math.floor(staticTime / 3600)}`.slice(-2);
         return `${getHours} : ${getMinutes} : ${getSeconds}`;
     }
 
@@ -204,35 +214,33 @@ function PlayPuzzle() {
 
 
             {attempt.completed ?
-                <Typography variant='h4' align="center" style={{ marginBottom: 20 }}>
-                    Puzzle Complete!
-                </Typography>
+                <>
+                    <Typography variant='h4' align="center" style={{ marginBottom: 20 }}>
+                        Puzzle Complete!
+                    </Typography>
+                    <Typography variant='h4' align="center" style={{ marginBottom: 20 }}>
+                        {displayTime(attempt.timer)}
+                    </Typography>
+                </>
                 :
-                ''
+                <Typography variant='h4' align="center" style={{ marginBottom: 20 }}>
+                    {renderTime()}
+                </Typography>
             }
 
 
 
             <Grid container>
 
-                <Grid item xs={12} justify="center">
-                    {/* Timer from attempt reducer */}
-                    {attempt && attempt.complete ?
-                        ''
-                        :
-                        <Typography variant='h4' align="center" style={{ marginBottom: 20 }}>
-                            {renderTime()}
-                        </Typography>
-                    }
-                </Grid>
+
 
                 {
                     mistakeMessage === ''
                         ?
                         ''
                         :
-                        <Grid item xs={12} justify="center">
-                            <Typography variant='h5' align="center" justify="center" style={{ marginBottom: 20 }}>
+                        <Grid item xs={12}>
+                            <Typography variant='h5' align="center" style={{ marginBottom: 20 }}>
                                 {mistakeMessage}
                             </Typography>
                         </Grid>
@@ -277,8 +285,11 @@ function PlayPuzzle() {
                         </tbody>
                     </table>
                 </Grid>
+            </Grid>
 
-                <Grid item xs={3} justify="space-evenly" align="center">
+            <Grid container>
+
+                <Grid item xs={3} align="center">
                     <Tooltip title="Random Puzzle">
                         <IconButton
                             color="inherit"
@@ -290,7 +301,7 @@ function PlayPuzzle() {
                     </Tooltip>
                 </Grid>
 
-                <Grid item xs={3} justify="space-evenly" align="center">
+                <Grid item xs={3} align="center">
                     <Tooltip title="Save Progress">
                         <IconButton
                             color="inherit"
@@ -302,7 +313,7 @@ function PlayPuzzle() {
                     </Tooltip>
                 </Grid>
 
-                <Grid item xs={3} justify="space-evenly" align="center">
+                <Grid item xs={3} align="center">
                     <Tooltip title="Delete Progress">
                         <IconButton
                             color="inherit"
@@ -314,7 +325,7 @@ function PlayPuzzle() {
                     </Tooltip>
                 </Grid>
 
-                <Grid item xs={3} justify="space-evenly" align="center">
+                <Grid item xs={3} align="center">
                     <Tooltip title="Check Solution">
                         <IconButton
                             color="inherit"

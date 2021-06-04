@@ -18,7 +18,7 @@ function LogOutButton(props) {
         onClick={() => dispatch({ type: 'LOGOUT' })}
         style={{ margin: 10 }}
       >
-        <ExitToAppIcon style={{ fontSize: 36, color: 'white' }} />
+        <ExitToAppIcon style={{ fontSize: 36, color: 'white', backgroundColor: 'maroon' }} />
       </IconButton>
     </Tooltip>
   );

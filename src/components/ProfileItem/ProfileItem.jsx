@@ -66,6 +66,14 @@ function ProfileItem({ profileType, attempt }) {
         history.push(`/play/${attempt.id}`)
     }
 
+    const displayTime = staticTime => {
+        const getSeconds = `0${(staticTime % 60)}`.slice(-2);
+        const minutes = `${Math.floor(staticTime / 60)}`;
+        const getMinutes = `0${minutes % 60}`.slice(-2);
+        const getHours = `0${Math.floor(staticTime / 3600)}`.slice(-2);
+        return `${getHours} : ${getMinutes} : ${getSeconds}`;
+    }
+
 
     return (
         <>
@@ -83,7 +91,7 @@ function ProfileItem({ profileType, attempt }) {
 
                                 <Grid item xs={5} sm={6}>
                                     <Typography variant="h6" align="left" style={{ marginLeft: 10 }}>
-                                        Completed in: {attempt.timer}
+                                        Completed in: {displayTime(attempt.timer)}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={2} sm={1}>

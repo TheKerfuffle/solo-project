@@ -127,7 +127,7 @@ function Nav() {
             </Tooltip>
 
             <Tooltip title="How to Play">
-              <Link className="navLink" to="/info">
+              <Link className="navLink" to="/how">
                 <IconButton
                   color="inherit"
                   aria-label="Play Random Puzzle"
@@ -138,7 +138,7 @@ function Nav() {
             </Tooltip>
 
             <Tooltip title="Info Page">
-              <Link className="navLink" to="/about">
+              <Link className="navLink" to="/info">
                 <IconButton
                   color="inherit"
                   aria-label="Play Random Puzzle"

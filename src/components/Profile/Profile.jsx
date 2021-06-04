@@ -110,7 +110,7 @@ function Profile() {
                                 variant="h3"
                                 style={{ marginLeft: 20, marginBottom: 20 }}
                             >
-                                Saved Attempts
+                                Saved Progress
                             </Typography>
                             {userAttempts.map((attempt, i) =>
                                 !attempt.completed

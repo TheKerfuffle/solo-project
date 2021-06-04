@@ -6,25 +6,31 @@ import './LandingPage.css';
 import RegisterForm from '../RegisterForm/RegisterForm';
 import LoginForm from '../LoginForm/LoginForm';
 
+// MUI Core: 
+import {
+  Paper, Typography, List,
+  Toolbar, AppBar, CssBaseline,
+  Drawer, Button, IconButton,
+  Divider, Grid, Tooltip
+} from '@material-ui/core/';
+
 function LandingPage() {
   const [heading, setHeading] = useState('Welcome');
 
   return (
     <div className="container">
+      
       <h2>{heading}</h2>
-      
-      <div className="grid">
-        <div className="grid-col">
-          <LoginForm />
-        </div>
-      </div>
 
-      <div className="grid">
-        <div className="grid-col">
+      <Grid container>
+        <Grid item xs={12} sm={6}>
+          <LoginForm />
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <RegisterForm />
-        </div>
-      </div>
-      
+        </Grid>
+      </Grid>
+
     </div>
   );
 }

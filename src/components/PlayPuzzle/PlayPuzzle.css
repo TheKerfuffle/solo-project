@@ -4,6 +4,7 @@
     border-collapse: collapse;
     align-items: center;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .addPuzzleTable {
@@ -20,6 +21,7 @@ td {
     height: 25px;
     text-align: center;
     justify-content: center;
+    font-family: 'Roboto', 'sans-serif';
 }
 
 .clueToggle {

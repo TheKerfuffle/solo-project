@@ -13,8 +13,6 @@ function* deleteRawPuzzle(action) {
         yield put({type: 'GET_USER_ATTEMPTS'});
         yield put({type: 'GET_USER_PUZZLES'});
 
-
-
     } catch (error) {
         console.log('get items error', error);
     }

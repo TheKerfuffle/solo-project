@@ -6,6 +6,24 @@ import HClue from '../HClue/HClue';
 import VClue from '../VClue/VClue';
 import './PlayPuzzle.css';
 
+// Icons:
+import CasinoIcon from '@material-ui/icons/Casino';
+import AddIcon from '@material-ui/icons/Add';
+import SaveIcon from '@material-ui/icons/Save';
+import ClearIcon from '@material-ui/icons/Clear';
+import CheckIcon from '@material-ui/icons/Check';
+
+// Custom Styles/Themes
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+// MUI Core: 
+import {
+    Paper, Typography, List,
+    Toolbar, AppBar, CssBaseline,
+    Drawer, Button, IconButton,
+    Divider, Grid, Tooltip, TextField
+} from '@material-ui/core/';
+
 function PlayPuzzle() {
 
     // REDUCERS!!!! ALL OF THEM(almost)!!!
@@ -39,7 +57,7 @@ function PlayPuzzle() {
         // After we get a random id, we watch for it to be updated in the reducer,
         // then navigate to the page using params and reset the random id to 0
         else if (!id && randID > 0) {
-            dispatch({type: 'RESET_RANDOM_ID'});
+            dispatch({ type: 'RESET_RANDOM_ID' });
             console.log('pushing!', randID);
             history.push(`/play/${randID}`);
         }
@@ -74,6 +92,16 @@ function PlayPuzzle() {
         const minutes = `${Math.floor(time / 60)}`;
         const getMinutes = `0${minutes % 60}`.slice(-2);
         const getHours = `0${Math.floor(time / 3600)}`.slice(-2);
+        return `${getHours} : ${getMinutes} : ${getSeconds}`;
+    }
+
+    // This function is called below to render the user's completed time
+    // displays in an hour:minute:second format which looks nice.
+    const displayTime = staticTime => {
+        const getSeconds = `0${(staticTime % 60)}`.slice(-2);
+        const minutes = `${Math.floor(staticTime / 60)}`;
+        const getMinutes = `0${minutes % 60}`.slice(-2);
+        const getHours = `0${Math.floor(staticTime / 3600)}`.slice(-2);
         return `${getHours} : ${getMinutes} : ${getSeconds}`;
     }
 
@@ -178,81 +206,128 @@ function PlayPuzzle() {
 
     return (
         <>
-            { solution && <h1>{solution.title}</h1>}
-            <button onClick={saveProgress}>Save Progress</button>
-            <button onClick={deleteProgress}>Delete Progress</button>
-            <button onClick={newRandomPuzzle}>New Random Puzzle</button>
-            <button onClick={checkSolution}>Check Solution</button>
+            { solution &&
+                <Typography variant="h2" align="center" style={{ textDecoration: "underline", marginBottom: 40 }}>
+                    {solution.title}
+                </Typography>
+            }
 
-            {attempt.completed ? <h3>Completed!</h3> : ''}
-            {mistakeMessage === '' ? '' : <h4>{mistakeMessage}</h4>}
-
-            {solution ?
+            {attempt.completed ?
                 <>
-                    <h5>'Puzzle ID:' {solution.id}</h5>
-                    <h5>'Param ID:' {id}</h5>
+                    <Typography variant='h4' align="center" style={{ marginBottom: 20 }}>
+                        Puzzle Complete!
+                    </Typography>
+                    <Typography variant='h4' align="center" style={{ marginBottom: 20 }}>
+                        {displayTime(attempt.timer)}
+                    </Typography>
                 </>
                 :
-                ''}
-
-            {/* Timer from attempt reducer */}
-            {
-                attempt.timer > 0
-                    ?
-                    <h3>renderTime: {renderTime(attempt.timer)}</h3>
-                    :
-                    <h3>renderTime: {renderTime(0)}</h3>
+                <Typography variant='h4' align="center" style={{ marginBottom: 20 }}>
+                    {renderTime()}
+                </Typography>
             }
 
-            {
-                attempt
-                    ?
-                    <h3>attempt.timer: {attempt.timer}</h3>
-                    :
-                    ''
-            }
+            <Grid container>
+                {
+                    mistakeMessage === ''
+                        ?
+                        ''
+                        :
+                        <Grid item xs={12}>
+                            <Typography variant='h5' align="center" style={{ marginBottom: 20 }}>
+                                {mistakeMessage}
+                            </Typography>
+                        </Grid>
+                }
 
+                <Grid item xs={12}>
+                    <table className="playtable">
+                        <tbody>
+                            {
+                                vGridData.tableData.map((item, i) => (
+                                    <tr key={'top' + i}>
+                                        {hGridData.fillerGrid.map((filler, k) => (
+                                            <td key={'filler' + k} className="filler"></td>
+                                        ))}
 
+                                        {item.map((clue, j) => (
+                                            <VClue key={'vclue' + j} clue={clue} />
+                                        ))}
+                                    </tr>
+                                ))
+                            }
 
-            <table className="playtable">
-                <tbody>
-                    {
-                        vGridData.tableData.map((item, i) => (
-                            <tr key={'top' + i}>
-                                {hGridData.fillerGrid.map((filler, k) => (
-                                    <td key={'filler' + k} className="filler"></td>
-                                ))}
-
-                                {item.map((clue, j) => (
-                                    <VClue key={'vclue' + j} clue={clue} />
-                                ))}
-                            </tr>
-                        ))
-                    }
-
-                    {attempt.puzzle_id > 0 && 
-                        attempt.input_data.map((item, i) => (
-                            <tr key={'bottom' + i}>
-                                {/* In each row, the clues come first, which have 
+                            {attempt.puzzle_id > 0 &&
+                                attempt.input_data.map((item, i) => (
+                                    <tr key={'bottom' + i}>
+                                        {/* In each row, the clues come first, which have 
                                             already been processed to the format we need */}
-                                {
-                                    hGridData.tableData[i].map((clue, k) => (
-                                        <HClue key={'hclue' + k} clue={clue} />
-                                    ))
-                                }
+                                        {
+                                            hGridData.tableData[i].map((clue, k) => (
+                                                <HClue key={'hclue' + k} clue={clue} />
+                                            ))
+                                        }
 
-                                {
-                                    item.map((value, j) => (
-                                        <GridElement key={attempt.id+'grid' + j} id={j} value={value} position={[i, j]} time={time} />
-                                    ))
-                                }
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+                                        {
+                                            item.map((value, j) => (
+                                                <GridElement key={attempt.id + 'grid' + j} id={j} value={value} position={[i, j]} time={time} />
+                                            ))
+                                        }
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </Grid>
+            </Grid>
 
+            <Grid container>
 
+                <Grid item xs={3} align="center">
+
+                </Grid>
+
+                <Grid item xs={2} align="center">
+                    <Tooltip title="Save Progress">
+                        <IconButton
+                            color="inherit"
+                            aria-label="Play Random Puzzle"
+                            onClick={saveProgress}
+                        >
+                            <SaveIcon style={{ fontSize: 50, color: 'maroon' }} />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+
+                <Grid item xs={2} align="center">
+                    <Tooltip title="Delete Progress">
+                        <IconButton
+                            color="inherit"
+                            aria-label="Play Random Puzzle"
+                            onClick={deleteProgress}
+                        >
+                            <ClearIcon style={{ fontSize: 50, color: 'maroon' }} />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+
+                <Grid item xs={2} align="center">
+                    <Tooltip title="Check Progress">
+                        <IconButton
+                            color="inherit"
+                            aria-label="Play Random Puzzle"
+                            onClick={checkSolution}
+                        >
+                            <CheckIcon style={{ fontSize: 50, color: 'maroon' }} />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+
+                <Grid item xs={3} align="center">
+
+                </Grid>
+
+            </Grid>
         </>
     )
 }

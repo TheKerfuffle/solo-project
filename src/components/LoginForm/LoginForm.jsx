@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+
+// MUI Core: 
+import {
+  Paper, Typography, List,
+  Toolbar, AppBar, CssBaseline,
+  Drawer, Button, IconButton, Input,
+  Divider, Grid, Tooltip, TextField
+} from '@material-ui/core/';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -33,31 +41,37 @@ function LoginForm() {
         </h3>
       )}
       <div>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            required
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
+        <TextField
+          id="standard-basic"
+          name="username"
+          value={username}
+          required
+          label="Username"
+          type="text"
+          onChange={(event) => setUsername(event.target.value)}
+        />
       </div>
       <div>
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            required
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
+        <TextField
+          id="standard-basic"
+          name="password"
+          value={password}
+          required
+          label="Password"
+          type="password"
+          onChange={(event) => setPassword(event.target.value)}
+        />
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Log In" />
+        <Button
+          type="submit"
+          name="submit"
+          variant="contained"
+          onClick={login}
+          style={{ marginTop: 20, color: 'white', backgroundColor: 'maroon' }}
+        >
+          Log In
+        </Button>
       </div>
     </form>
   );

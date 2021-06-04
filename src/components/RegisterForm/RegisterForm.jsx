@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+// MUI Core: 
+import {
+  Paper, Typography, List,
+  Toolbar, AppBar, CssBaseline,
+  Drawer, Button, IconButton,
+  Divider, Grid, Tooltip, TextField
+} from '@material-ui/core/';
+
 function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
+
 
   const registerUser = (event) => {
     event.preventDefault();
@@ -28,31 +37,37 @@ function RegisterForm() {
         </h3>
       )}
       <div>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={username}
-            required
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
+        <TextField
+          id="standard-basic"
+          name="username"
+          value={username}
+          required
+          label="Username"
+          type="text"
+          onChange={(event) => setUsername(event.target.value)}
+        />
       </div>
       <div>
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            required
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
+        <TextField
+          id="standard-basic"
+          name="password"
+          value={password}
+          required
+          label="Password"
+          type="password"
+          onChange={(event) => setPassword(event.target.value)}
+        />
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
+        <Button
+          type="submit"
+          name="submit"
+          variant="contained"
+          onClick={registerUser}
+          style={{ marginTop: 20, color: 'white', backgroundColor: 'maroon' }}
+        >
+          Register
+        </Button>
       </div>
     </form>
   );

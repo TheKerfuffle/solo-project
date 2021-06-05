@@ -7,7 +7,6 @@ import './GridElement.css';
 function GridElement({ id, value, position, time }) {
 
     let [colorToggle, setColorToggle] = useState("colorWhite");
-    let [newValue, setNewValue] = useState(value)
 
     const attempt = useSelector(store => store.attempt);
     const attemptData = attempt.input_data;
@@ -80,7 +79,7 @@ function GridElement({ id, value, position, time }) {
     }
 
     function setStartColor() {
-        switch (newValue) {
+        switch (value) {
             case 0:
                 return setColorToggle("colorWhite");
             case 1:
@@ -97,7 +96,6 @@ function GridElement({ id, value, position, time }) {
         <td className={colorToggle}
             onClick={event => changeColor(event)}
             onContextMenu={(event) => changeColor(event)}>
-
         </td>
     )
 }

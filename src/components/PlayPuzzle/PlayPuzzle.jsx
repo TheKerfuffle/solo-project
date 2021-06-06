@@ -13,7 +13,7 @@ import CheckIcon from '@material-ui/icons/Check';
 
 // MUI Core: 
 import {
-    Typography, IconButton, 
+    Typography, IconButton,
     Grid, Tooltip
 } from '@material-ui/core/';
 
@@ -117,6 +117,7 @@ function PlayPuzzle() {
         } else {
             if (confirm("DELETE YOUR PROGRESS AND RETRY?")) {
                 dispatch({ type: 'DELETE_ATTEMPT', payload: solution });
+                history.push('/play');
             }
         }
     }
@@ -199,12 +200,14 @@ function PlayPuzzle() {
 
     return (
         <>
+            {/* Puzzle Title */}
             { solution &&
                 <Typography variant="h2" align="center" style={{ textDecoration: "underline", marginBottom: 40 }}>
                     {solution.title}
                 </Typography>
             }
 
+            {/* Either render the current game timer or, upon puzzle completion, their final time */}
             {attempt.completed ?
                 <>
                     <Typography variant='h4' align="center" style={{ marginBottom: 20 }}>
@@ -221,6 +224,7 @@ function PlayPuzzle() {
             }
 
             <Grid container>
+                {/* Conditionally render the mistake message, triggered by the check solution button */}
                 {
                     mistakeMessage === ''
                         ?
@@ -233,6 +237,7 @@ function PlayPuzzle() {
                         </Grid>
                 }
 
+                {/* This is the table which holds the Puzzle grid. */}
                 <Grid item xs={12}>
                     <table className="playtable">
                         <tbody>
@@ -240,11 +245,11 @@ function PlayPuzzle() {
                                 vGridData.tableData.map((item, i) => (
                                     <tr key={'top' + i}>
                                         {hGridData.fillerGrid.map((filler, k) => (
-                                            <td key={'filler' + k} className="filler"></td>
+                                            <td key={i + 'filler' + k} className="filler"></td>
                                         ))}
 
                                         {item.map((clue, j) => (
-                                            <VClue key={'vclue' + j} clue={clue} />
+                                            <VClue key={i + 'vclue' + j} clue={clue} />
                                         ))}
                                     </tr>
                                 ))
@@ -257,13 +262,18 @@ function PlayPuzzle() {
                                             already been processed to the format we need */}
                                         {
                                             hGridData.tableData[i].map((clue, k) => (
-                                                <HClue key={'hclue' + k} clue={clue} />
+                                                <HClue key={i + 'hclue' + k} clue={clue} />
                                             ))
                                         }
 
                                         {
                                             item.map((value, j) => (
-                                                <GridElement key={attempt.id + 'grid' + j} id={j} value={value} position={[i, j]} time={time} />
+                                                <GridElement
+                                                    id={j}
+                                                    key={i + 'grid' + j}
+                                                    value={value} position={[i, j]}
+                                                    time={time}
+                                                />
                                             ))
                                         }
                                     </tr>
@@ -274,6 +284,8 @@ function PlayPuzzle() {
                 </Grid>
             </Grid>
 
+            {/* Buttons on the bottom of the page, they link 
+                to the various interactions with the current puzzle */}
             <Grid container>
 
                 <Grid item xs={3} align="center">

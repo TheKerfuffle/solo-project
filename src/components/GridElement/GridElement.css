@@ -4,8 +4,10 @@
 
 .colorBlack {
     background-color: black;
+    border: solid white 1px;
 }
 
 .colorRed {
     background-color: red;
+    border: solid white 1px;
 }

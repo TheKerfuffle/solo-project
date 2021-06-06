@@ -117,6 +117,7 @@ function PlayPuzzle() {
         } else {
             if (confirm("DELETE YOUR PROGRESS AND RETRY?")) {
                 dispatch({ type: 'DELETE_ATTEMPT', payload: solution });
+                history.push('/play');
             }
         }
     }

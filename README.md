@@ -1,7 +1,11 @@
 # Puzzle Please - Charlie Stokes Solo Project
-
 ## Fortunate Cohort - June 2021
 
+Puzzle Please is a user driven Nonogram Puzzle hosting platform. It is the culmination of my time in Prime Digital Academy's Full Stack Engineering program.
+
+## Description
+
+I play nonogram puzzles online all the time. I love puzzles. But there are no sites that I have found which allow the user to make and play puzzles made by their friends or of their own. This app fills this need! Anyone who registers an account can create a puzzle, play any of the puzzles created by other users and keep track of their times to complete increasingly challenging puzzles! It also should be noted that any size puzzle is supported with this app. Have fun puzzling!
 
 ## Prerequisites
 

@@ -31,6 +31,8 @@ function AddPuzzle() {
                 width: width
             }
         });
+
+        
     }
 
     function sendNewPuzzle() {
@@ -38,6 +40,7 @@ function AddPuzzle() {
         setWidth(0);
         setHeight(0);
         setTitle('');
+        alert(`New Puzzle: ${title} added to Database!`);
     }
 
 

@@ -79,7 +79,7 @@ function HowPage() {
 
       <ul>
         <li>
-          Left clicking on the grid will cycle the square through black, red and then back to white.
+          Left clicking on a grid square will cycle the square through black, red and then back to white.
         </li>
         <li>
           Right clicking will mark the square as red or remove a red marking.

@@ -47,19 +47,23 @@ function ProfileItem({ profileType, attempt }) {
     const history = useHistory();
 
     function deleteAttempt() {
-        dispatch({
-            type: 'DELETE_ATTEMPT', payload: {
-                id: attempt.puzzle_id,
-                title: attempt.title,
-                solution_data: attempt.solution_data,
-                creator_id: attempt.creator_id
-            }
-        })
-        history.push('/profile');
+        if (confirm("DELETE THIS ATTEMPT?")) {
+            dispatch({
+                type: 'DELETE_ATTEMPT', payload: {
+                    id: attempt.puzzle_id,
+                    title: attempt.title,
+                    solution_data: attempt.solution_data,
+                    creator_id: attempt.creator_id
+                }
+            })
+            history.push('/profile');
+        }
     }
 
     function deleteRaw() {
-        dispatch({ type: 'DELETE_RAW_PUZZLE', payload: attempt })
+        if (confirm("DELETE THIS PUZZLE AND ALL ASSOCIATED ATTEMPTS?")) {
+            dispatch({ type: 'DELETE_RAW_PUZZLE', payload: attempt })
+        }
     }
 
     function goPlay() {

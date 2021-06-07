@@ -41,8 +41,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
  */
 router.post('/', (req, res) => {
   const user = req.user.id;
-  console.log('user id', user);
-  console.log('post attempt req.body', req.body);
+  // console.log('user id', user);
+  // console.log('post attempt req.body', req.body);
   const queryText = `INSERT INTO "attempted_puzzles" (player_id, puzzle_id, timer, input_data, completed)
     VALUES ($1, $2, $3, $4, $5)`;
   const queryValues = [
@@ -66,8 +66,8 @@ router.post('/', (req, res) => {
  */
 router.put('/', (req, res) => {
   const user = req.user.id;
-  console.log('user id', user);
-  console.log('put attempt req.body', req.body);
+  // console.log('user id', user);
+  // console.log('put attempt req.body', req.body);
   const queryText = `UPDATE attempted_puzzles 
   SET (timer, input_data, completed)=($1, $2, $3)
   WHERE "id"=$4;`;

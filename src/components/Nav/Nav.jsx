@@ -49,7 +49,7 @@ function Nav() {
   return (
 
     <div className="nav">
-      <Tooltip title="home">
+      <Tooltip title="Home">
         <Link to="/home">
           <table className="nav-title">
             <tbody>

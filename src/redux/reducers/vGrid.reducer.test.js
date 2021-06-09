@@ -66,6 +66,4 @@ describe('testing vGrid reducer', () => {
         expect(returnedState).toEqual(defaultState);
     })
 
-
-
 })

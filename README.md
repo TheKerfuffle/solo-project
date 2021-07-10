@@ -15,8 +15,13 @@ I play nonogram puzzles online all the time. I love puzzles. But there are no si
 
 
 ## Setup Instructions
+
+First, please note that the project is deployed to heroku so you can play [here](https://puzzle-please.herokuapp.com/#/home) without having to set up the code on your computer. If you would like to see the code then the instructions below will allow you to spin up a local environment for this project and see (with the redux logger in the console) all of the processes going on in the background as you navigate between and play/add puzzles.
+
+And if you are still reading. Thank you so much for your attention and consideration! I see you!
+
 - Fork and clone this repository
-- Run `npm install` in the file's directory on your computer
+- Run `npm install` in the terminal in the file's directory on your computer
 - create a new database in postico called "prime_app"
 - Run all commands in the database.sql file in postico
 - Create a `.env` file at the root of the project and paste this line into the file:
@@ -28,25 +33,3 @@ I play nonogram puzzles online all the time. I love puzzles. But there are no si
 - Run `npm run server`
 - Run `npm run client`
 - Navigate to `localhost:3000`
-
-## Production Build
-
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
-
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm start`
-- Navigate to `localhost:5000`
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2

@@ -9,7 +9,7 @@ const {
  * GET - Profile view - Gets a specific user's created puzzles
  */
 router.get('/', rejectUnauthenticated,(req, res) => {
-    user = req.user.id
+    const user = req.user.id
     const queryText = `SELECT * FROM raw_puzzles WHERE creator_id=$1`;
     // GET route code here
 

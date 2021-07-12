@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function MinesweeperElement({ element, i, j}) {
 
-    const [reveal, setReveal] = useState(false);
+    const [reveal, setReveal] = useState(true);
     
 
     return(

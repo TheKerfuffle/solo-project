@@ -64,7 +64,7 @@ function Minesweeper() {
                 // if the current block is a bomb, don't do anything with it
                 if (sampleMines[y][x] === 1) {
                     console.log('Bomb, y, x', y, x);
-                    underlayRow.push('&');
+                    underlayRow.push({ value: '&', reveal: false });
                 } else {
                     // Since we know this space does not hold a bomb...
                     // We want to check all of the blocks around the current block
@@ -308,7 +308,7 @@ function Minesweeper() {
                         }
                     }
                     console.log('finished clue, y, x', y, x);
-                    underlayRow.push(clueValue);
+                    underlayRow.push({ value: clueValue, reveal: false });
                 }
             }
             console.log('Finished underlay Row', underlayRow);
@@ -328,12 +328,19 @@ function Minesweeper() {
             <table className="playtable">
                 <tbody>
                     {
-                        underlay && underlay.map((row, i) =>
-                            <tr key={'row' + i}>
+                        underlay && underlay.map((row, y) =>
+                            <tr key={'row' + y}>
                                 {
-                                    row.map((element, j) =>
+                                    row.map((element, x) =>
 
-                                        <MinesweeperElement element={element} xValue={j} yValue={i} key={i + 'element' + j} />
+                                        <MinesweeperElement
+                                            underlay={underlay}
+                                            element={element.value}
+                                            reveal={element.reveal}
+                                            y={y}
+                                            x={x}
+                                            key={y + 'element' + x}
+                                        />
 
                                     )
                                 }

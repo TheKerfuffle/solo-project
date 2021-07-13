@@ -2,17 +2,19 @@ import { useState } from "react";
 
 
 
-function MinesweeperElement({ element, i, j}) {
+function MinesweeperElement({ underlay, element, reveal, y, x }) {
 
-    const [reveal, setReveal] = useState(true);
-    
+    function revealElement() {
+        
+    }
 
-    return(
+
+    return (
         <>
             {reveal ? (
                 <td>{element}</td>
-            ):(
-                <td></td>
+            ) : (
+                <td onClick={revealElement}></td>
             )}
         </>
 

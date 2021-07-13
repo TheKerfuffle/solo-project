@@ -318,10 +318,10 @@ function Minesweeper() {
         setUnderlay(newUnderlay);
     }
 
-    function revealElement(element, y, x) {
-        console.log('logging overlay click, underlay value, y, x', underlay[y][x], y, x);
-        setUnderlay(...underlay, underlay[y][x] = { value: element, reveal: true });
-    }
+    // function revealElement(element, y, x) {
+    //     console.log('logging overlay click, underlay value, y, x', underlay[y][x], y, x);
+    //     setUnderlay(...underlay, underlay[y][x] = { value: element, reveal: true });
+    // }
 
     function renderMinesweeper() {
         return (
@@ -332,22 +332,22 @@ function Minesweeper() {
                             {
                                 row.map((element, x) =>
 
-                                    element.reveal ? (
-                                        // Underlay
-                                        <td>{element.value}</td>
-                                    ) : (
-                                        // Overlay
-                                        <td onClick={() => revealElement(element.value, y, x)}></td>
-                                    )
+                                    // element.reveal ? (
+                                    //     // Underlay
+                                    //     <td>{element.value}</td>
+                                    // ) : (
+                                    //     // Overlay
+                                    //     <td onClick={() => revealElement(element.value, y, x)}></td>
+                                    // )
 
-                                    // <MinesweeperElement
-                                    //     underlay={underlay}
-                                    //     element={element.value}
-                                    //     reveal={element.reveal}
-                                    //     y={y}
-                                    //     x={x}
-                                    //     key={y + 'element' + x}
-                                    // />
+                                    <MinesweeperElement
+                                        underlay={underlay}
+                                        element={element.value}
+                                        reveal={element.reveal}
+                                        y={y}
+                                        x={x}
+                                        key={y + 'element' + x}
+                                    />
 
                                 )
                             }

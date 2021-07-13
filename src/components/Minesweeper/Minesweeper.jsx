@@ -318,40 +318,49 @@ function Minesweeper() {
         setUnderlay(newUnderlay);
     }
 
+    function renderMinesweeper() {
+        return (
+            <>
+            {
+                underlay && underlay.map((row, y) =>
+                    <tr key={'row' + y}>
+                        {
+                            row.map((element, x) =>
 
-    return (
-        <>
-            <p>Sample Mines: {JSON.stringify(sampleMines)}</p>
-            <p>Underlay: {JSON.stringify(underlay)}</p>
-            <p>Difficulty buttons go here</p>
-            <p>Size buttons go here</p>
-            <table className="playtable">
-                <tbody>
-                    {
-                        underlay && underlay.map((row, y) =>
-                            <tr key={'row' + y}>
-                                {
-                                    row.map((element, x) =>
+                                <MinesweeperElement
+                                    underlay={underlay}
+                                    element={element.value}
+                                    reveal={element.reveal}
+                                    y={y}
+                                    x={x}
+                                    key={y + 'element' + x}
+                                />
 
-                                        <MinesweeperElement
-                                            underlay={underlay}
-                                            element={element.value}
-                                            reveal={element.reveal}
-                                            y={y}
-                                            x={x}
-                                            key={y + 'element' + x}
-                                        />
+                            )
+                        }
+                    </tr>
+                )
+            }
+            </>
+        )
+}
 
-                                    )
-                                }
-                            </tr>
-                        )
-                    }
 
-                </tbody>
-            </table>
-        </>
-    )
+return (
+    <>
+        <p>Sample Mines: {JSON.stringify(sampleMines)}</p>
+        <p>Underlay: {JSON.stringify(underlay)}</p>
+        <p>Difficulty buttons go here</p>
+        <p>Size buttons go here</p>
+        <table className="playtable">
+            <tbody>
+
+                {renderMinesweeper()}
+
+            </tbody>
+        </table>
+    </>
+)
 }
 
 export default Minesweeper;

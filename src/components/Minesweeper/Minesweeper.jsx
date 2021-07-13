@@ -318,49 +318,62 @@ function Minesweeper() {
         setUnderlay(newUnderlay);
     }
 
+    function revealElement(element, y, x) {
+        console.log('logging overlay click, underlay value, y, x', underlay[y][x], y, x);
+        setUnderlay(...underlay, underlay[y][x] = { value: element, reveal: true });
+    }
+
     function renderMinesweeper() {
         return (
             <>
-            {
-                underlay && underlay.map((row, y) =>
-                    <tr key={'row' + y}>
-                        {
-                            row.map((element, x) =>
+                {
+                    underlay && underlay.map((row, y) =>
+                        <tr key={'row' + y}>
+                            {
+                                row.map((element, x) =>
 
-                                <MinesweeperElement
-                                    underlay={underlay}
-                                    element={element.value}
-                                    reveal={element.reveal}
-                                    y={y}
-                                    x={x}
-                                    key={y + 'element' + x}
-                                />
+                                    element.reveal ? (
+                                        // Underlay
+                                        <td>{element.value}</td>
+                                    ) : (
+                                        // Overlay
+                                        <td onClick={() => revealElement(element.value, y, x)}></td>
+                                    )
 
-                            )
-                        }
-                    </tr>
-                )
-            }
+                                    // <MinesweeperElement
+                                    //     underlay={underlay}
+                                    //     element={element.value}
+                                    //     reveal={element.reveal}
+                                    //     y={y}
+                                    //     x={x}
+                                    //     key={y + 'element' + x}
+                                    // />
+
+                                )
+                            }
+                        </tr>
+                    )
+                }
             </>
         )
-}
+    }
 
 
-return (
-    <>
-        <p>Sample Mines: {JSON.stringify(sampleMines)}</p>
-        <p>Underlay: {JSON.stringify(underlay)}</p>
-        <p>Difficulty buttons go here</p>
-        <p>Size buttons go here</p>
-        <table className="playtable">
-            <tbody>
+    return (
+        <>
+            <p>Sample Mines: {JSON.stringify(sampleMines)}</p>
+            <p>Underlay: {JSON.stringify(underlay)}</p>
+            <p>Difficulty buttons go here</p>
+            <p>Size buttons go here</p>
+            <table className="playtable">
+                <tbody>
 
-                {renderMinesweeper()}
+                    {renderMinesweeper()}
 
-            </tbody>
-        </table>
-    </>
-)
+                </tbody>
+            </table>
+        </>
+    )
 }
 
 export default Minesweeper;

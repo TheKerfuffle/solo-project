@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 
 
@@ -5,34 +6,63 @@ function Minesweeper() {
 
     const [minesBoard, setMinesBoard] = useState([])
 
+    const [underlay, setUnderlay] = useState([]);
+    const [reveal, setReveal] = useState([]);
+
+    useEffect(() => {
+        generateMinesweeper(8, 10, 10);
+    }, [])
+
     function generateMinesweeper(difficulty, width, height) {
         console.log('difficulty', difficulty);
-        console.log('size', size);
+        console.log('width, height', width, height);
 
-        // For now generate a 10x10 grid with easy difficulty (10% of spaces are bombs)
-        width = 10;
-        height = 10;
-        difficulty = .1;
+        // For now generate a 10x10 grid with 8 difficulty (8 bombs)
+        // width = 10;
+        // height = 10;
+        // difficulty = 8;
 
+        // Makes the empty grid of the requisite size
         let newGrid = [];
 
-        while (let i < height) {
+        for (let i = 0; i < height; i++) {
 
             let newRow = [];
 
-            while (let j<width){
+            for (let j = 0; j < width; j++) {
 
+                newRow.push(0);
+
+            }
+
+            newGrid.push(newRow);
+        }
+        // Log Empty Grid
+        console.log('newGrid without bombs', newGrid);
+
+        // Add Bombs to unique locations
+        while (difficulty > 0) {
+            let xPos = Math.floor(Math.random() * width);
+            let yPos = Math.floor(Math.random() * height);
+
+            if (newGrid[yPos][xPos] === 0) {
+                newGrid[yPos][xPos] = 1;
+                difficulty--;
             }
         }
 
+        // Log Grid with bombs
+        console.log('newGrid with bombs', newGrid);
 
 
 
+        // Initialize variables to create the game Underlay
         let newUnderlay = [];
         let newReveal = [];
 
 
 
+        // Go through the generated grid and calculate the value of each square from 1-8
 
         for (let y = 0; y < newGrid.length; y++) {
             let underlayRow = [];
@@ -297,10 +327,35 @@ function Minesweeper() {
         }
         console.log('Finished underlay', newUnderlay);
         setUnderlay(newUnderlay);
+        setReveal(newReveal);
     }
 
     return (
         <>
+            <p>Underlay: {JSON.stringify(underlay)}</p>
+            <p>Reveal: {JSON.stringify(reveal)}</p>
+
+            <table>
+                <tbody>
+                    {underlay && underlay.map((row, y) =>
+
+                        <tr key={y + 'elementRow'}>
+
+
+                            {row.map((element, x) =>
+                                <td key={y + 'element' + x} >
+                                    {reveal[y][x] && element}
+                                </td>
+                            )}
+                        </tr>
+
+
+
+                    )}
+                </tbody>
+            </table>
+
+
 
         </>
     )

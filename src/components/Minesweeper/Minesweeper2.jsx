@@ -414,4 +414,4 @@ function Minesweeper2() {
     )
 }
 
-export default Minesweeper;
+export default Minesweeper2;

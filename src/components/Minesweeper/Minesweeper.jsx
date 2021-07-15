@@ -16,7 +16,12 @@ function Minesweeper() {
 
     useEffect(() => {
         console.log('Reveal has been updated!', reveal);
+        checkComplete()
     }, [reveal])
+
+    function checkComplete() {
+
+    }
 
 
     // ________________________________________Generate Puzzle Function________________________________________
@@ -80,7 +85,7 @@ function Minesweeper() {
                 if (newGrid[y][x] === 1) {
                     console.log('Bomb, y, x', y, x);
                     underlayRow.push('&');
-                    newRevealRow.push(false);
+                    newRevealRow.push(0);
                 } else {
                     // Since we know this space does not hold a bomb...
                     // We want to check all of the blocks around the current block
@@ -325,7 +330,7 @@ function Minesweeper() {
                     }
                     console.log('finished clue, y, x', y, x);
                     underlayRow.push(clueValue);
-                    newRevealRow.push(false);
+                    newRevealRow.push(0);
                 }
             }
             console.log('Finished underlay Row', underlayRow);
@@ -341,503 +346,8 @@ function Minesweeper() {
         setReveal(newReveal);
     }
 
-
-
-    // ________________________________________Reveal Function________________________________________
-    function revealElement(y, x, nestedArray) {
-
-        console.log('in revealElement, y, x, nestedArray', y, x, nestedArray);
-
-        // Create a copy of reveal with JSON
-        let changeReveal = JSON.parse(JSON.stringify(nestedArray));
-
-        // if (reveal[y][x] === false) {
-
-        // }
-
-
-        if (underlay[y][x] === '&') {
-            alert('YOU FUCKIN LOSE')
-        }
-
-        // If the revealed element has a value of zero, we want to reveal all surrounding elements
-        // But only under specific circumstances...
-        else if (underlay[y][x] === 0) {
-
-            // _____CORNERS_____
-
-            // TOP LEFT X=0, Y=0
-            if (x === 0 && y === 0) {
-
-                // DOWN
-                revealElement(y + 1, x, changeReveal);
-
-                // DOWN RIGHT
-                revealElement(y + 1, x + 1, changeReveal);
-
-                // RIGHT
-                revealElement(y, x + 1, changeReveal);
-            }
-
-            // BOTTOM LEFT X=0, Y=UNDERLAY.LENGTH-1
-            else if (x === 0 && y === underlay.length - 1) {
-                // UP
-                if (reveal[y - 1][x] === false) {
-                    revealElement(y - 1, x, changeReveal);
-                }
-
-                // UP RIGHT
-                if (reveal[y - 1][x + 1] === false) {
-                    revealElement(y - 1, x + 1, changeReveal);
-                }
-
-                // RIGHT
-                if (reveal[y][x + 1] === false) {
-                    revealElement(y, x + 1, changeReveal);
-                }
-            }
-
-            // BOTTOM RIGHT X=UNDERLAY[0].LENGTH, Y=UNDERLAY.LENGTH
-            else if (x === underlay[0].length - 1 && y === underlay.length - 1) {
-                // LEFT
-                if (reveal[y][x - 1] === false) {
-                    revealElement(y, x - 1, changeReveal);
-                }
-
-                // UP LEFT
-                if (reveal[y - 1][x - 1] === false) {
-                    revealElement(y - 1, x - 1, changeReveal);
-                }
-
-                // UP
-                if (reveal[y - 1][x] === false) {
-                    revealElement(y - 1, x, changeReveal);
-                }
-            }
-
-            // TOP RIGHT X=UNDERLAY[0].LENGTH, Y=0
-            else if (x === underlay[0].length - 1 && y === 0) {
-                // DOWN
-                if (reveal[y + 1][x] === false) {
-                    revealElement(y + 1, x, changeReveal);
-                }
-
-                // DOWN LEFT
-                if (reveal[y + 1][x - 1] === false) {
-                    revealElement(y + 1, x - 1, changeReveal);
-                }
-
-                // LEFT
-                if (reveal[y][x - 1] === false) {
-                    revealElement(y, x - 1, changeReveal);
-                }
-            }
-
-            // _____EDGES_____
-
-            // TOP EDGE
-            else if (y === 0) {
-                // RIGHT
-                if (reveal[y][x + 1] === false) {
-                    revealElement(y, x + 1, changeReveal);
-                }
-
-                // DOWN RIGHT
-                if (reveal[y + 1][x + 1] === false) {
-                    revealElement(y + 1, x + 1, changeReveal);
-                }
-
-                // DOWN
-                if (reveal[y + 1][x] === false) {
-                    revealElement(y + 1, x, changeReveal);
-                }
-
-                // DOWN LEFT
-                if (reveal[y + 1][x - 1] === false) {
-                    revealElement(y + 1, x - 1, changeReveal);
-                }
-
-                // LEFT
-                if (reveal[y][x - 1] === false) {
-                    revealElement(y, x - 1, changeReveal);
-                }
-            }
-
-            // BOTTOM EDGE
-            else if (y === underlay.length - 1) {
-                // LEFT
-                if (reveal[y][x - 1] === false) {
-                    revealElement(y, x - 1, changeReveal);
-                }
-
-                // UP LEFT
-                if (reveal[y - 1][x - 1] === false) {
-                    revealElement(y - 1, x - 1, changeReveal);
-                }
-
-                // UP
-                if (reveal[y - 1][x] === false) {
-                    revealElement(y - 1, x, changeReveal);
-                }
-
-                // UP RIGHT
-                if (reveal[y - 1][x + 1] === false) {
-                    revealElement(y - 1, x + 1, changeReveal);
-                }
-
-                // RIGHT
-                if (reveal[y][x + 1] === false) {
-                    revealElement(y, x + 1, changeReveal);
-                }
-
-            }
-
-            // LEFT EDGE
-            else if (x === 0) {
-                // UP
-                if (reveal[y - 1][x] === false) {
-                    revealElement(y - 1, x, changeReveal);
-                }
-
-                // UP RIGHT
-                if (reveal[y - 1][x + 1] === false) {
-                    revealElement(y - 1, x + 1, changeReveal);
-                }
-
-                // RIGHT
-                if (reveal[y][x + 1] === false) {
-                    revealElement(y, x + 1, changeReveal);
-                }
-
-                // DOWN RIGHT
-                if (reveal[y + 1][x + 1] === false) {
-                    revealElement(y + 1, x + 1, changeReveal);
-                }
-
-                // DOWN
-                if (reveal[y + 1][x] === false) {
-                    revealElement(y + 1, x, changeReveal);
-                }
-            }
-
-            // RIGHT EDGE
-            else if (x === underlay[0].length - 1) {
-                // DOWN
-                if (reveal[y + 1][x] === false) {
-                    revealElement(y + 1, x, changeReveal);
-                }
-
-                // DOWN LEFT
-                if (reveal[y + 1][x - 1] === false) {
-                    revealElement(y + 1, x - 1, changeReveal);
-                }
-
-                // LEFT
-                if (reveal[y][x - 1] === false) {
-                    revealElement(y, x - 1, changeReveal);
-                }
-
-                // UP LEFT
-                if (reveal[y - 1][x - 1] === false) {
-                    revealElement(y - 1, x - 1, changeReveal);
-                }
-
-                // UP
-                if (reveal[y - 1][x] === false) {
-                    revealElement(y - 1, x, changeReveal);
-                }
-            }
-
-            // _____INNER SQUARES_____
-            else {
-                // UP
-                if (reveal[y - 1][x] === false) {
-                    revealElement(y - 1, x, changeReveal);
-                }
-
-                // UP RIGHT
-                if (reveal[y - 1][x + 1] === false) {
-                    revealElement(y - 1, x + 1, changeReveal);
-                }
-
-                // RIGHT
-                if (reveal[y][x + 1] === false) {
-                    revealElement(y, x + 1, changeReveal);
-                }
-
-                // DOWN RIGHT
-                if (reveal[y + 1][x + 1] === false) {
-                    revealElement(y + 1, x + 1, changeReveal);
-                }
-
-                // DOWN
-                if (reveal[y + 1][x] === false) {
-                    revealElement(y + 1, x, changeReveal);
-                }
-
-                // DOWN LEFT
-                if (reveal[y + 1][x - 1] === false) {
-                    revealElement(y + 1, x - 1, changeReveal);
-                }
-
-                // LEFT
-                if (reveal[y][x - 1] === false) {
-                    revealElement(y, x - 1, changeReveal);
-                }
-
-                // UP LEFT
-                if (reveal[y][x] === false) {
-                    revealElement(y - 1, x - 1, changeReveal);
-                }
-            }
-        }
-
-
-
-        // console.log(reveal);
-        // console.log(changeReveal);
-
-        // console.log('clicked on element y, x, reveal[y][x]', y, x, reveal[y][x]);
-        // console.log('clicked on element y, x, changeReveal[y][x]', y, x, changeReveal[y][x]);
-
-        // Create a copy of reveal with JSON
-        // let changeReveal = JSON.parse(JSON.stringify(reveal));
-
-        // Set the clicked element's reveal variable to true
-        changeReveal[y][x] = true;
-
-        // Update the State variable
-        setReveal(changeReveal);
-
-    }
-
-    // function revealCell(y, x) {
-
-
-    //     // Check for bombs first
-    //     if (underlay[y][x] === '&') {
-    //         alert('YOU FUCKIN LOSE')
-    //     }
-
-    //     // See if we have checked this element already
-    //     // if we have we do not allow it to be checked again
-    //     let notChecked = true;
-    //     for (let check of revealedCells) {
-    //         if (check[0] === y && check[1] === x) {
-    //             notChecked = false;
-    //             console.log('cell has been checked, y, x', y, x);
-    //         }
-    //     }
-
-
-    //     if (underlay[y][x] > 0) {
-
-    //         if (notChecked) {
-
-    //             let updateRevealedCells = JSON.parse(JSON.stringify(revealedCells));
-
-    //             updateRevealedCells.push([y, x])
-
-    //             setRevealedCells(updateRevealedCells);
-
-    //             console.log('in revealCell for normal cell, y, x, array of checked spots', y, x, revealedCells);
-
-    //             // Create a copy of reveal with JSON
-    //             let changeReveal = JSON.parse(JSON.stringify(reveal));
-
-    //             // Set the clicked element's reveal variable to true
-    //             changeReveal[y][x] = true;
-
-    //             // Update the State variable
-    //             setReveal(changeReveal);
-    //         } else {
-    //             console.log('skipping a value>0 because already checked, y ,x', y, x);
-    //         }
-
-    //     } else {
-
-    //         if (notChecked) {
-
-    //             let updateRevealedCells = JSON.parse(JSON.stringify(revealedCells));
-
-    //             updateRevealedCells.push([y, x])
-
-    //             setRevealedCells(updateRevealedCells);
-
-    //             console.log('in revealCell for normal cell, y, x, array of checked spots', y, x, revealedCells);
-
-    //             // Create a copy of reveal with JSON
-    //             let changeReveal = JSON.parse(JSON.stringify(reveal));
-
-    //             // Set the clicked element's reveal variable to true
-    //             changeReveal[y][x] = true;
-
-    //             // Update the State variable
-    //             setReveal(changeReveal);
-
-    //             // ________________________________________BEGIN RECURSION FOR 0 VALUE________________________________________
-    //             // _____CORNERS_____
-
-    //             // TOP LEFT X=0, Y=0
-    //             if (x === 0 && y === 0) {
-
-    //                 // DOWN
-    //                 revealCell(y + 1, x);
-
-    //                 // DOWN RIGHT
-    //                 revealCell(y + 1, x + 1);
-
-    //                 // RIGHT
-    //                 revealCell(y, x + 1);
-    //             }
-
-    //             // BOTTOM LEFT X=0, Y=UNDERLAY.LENGTH-1
-    //             else if (x === 0 && y === underlay.length - 1) {
-    //                 // UP
-    //                 revealCell(y - 1, x);
-
-    //                 // UP RIGHT
-    //                 revealCell(y - 1, x + 1);
-
-    //                 // RIGHT
-    //                 revealCell(y, x + 1);
-    //             }
-
-    //             // BOTTOM RIGHT X=UNDERLAY[0].LENGTH-1, Y=UNDERLAY.LENGTH-1
-    //             else if (x === underlay[0].length - 1 && y === underlay.length - 1) {
-    //                 // LEFT
-    //                 revealCell(y, x - 1);
-
-    //                 // UP LEFT
-    //                 revealCell(y - 1, x - 1);
-
-    //                 // UP
-    //                 revealCell(y - 1, x);
-    //             }
-
-    //             // TOP RIGHT X=UNDERLAY[0].LENGTH-1, Y=0
-    //             else if (x === underlay[0].length - 1 && y === 0) {
-    //                 // DOWN
-    //                 revealCell(y + 1, x);
-
-    //                 // DOWN LEFT
-    //                 revealCell(y + 1, x - 1);
-
-    //                 // LEFT
-    //                 revealCell(y, x - 1);
-    //             }
-
-    //             // _____EDGES_____
-
-    //             // TOP EDGE
-    //             else if (y === 0) {
-    //                 // RIGHT
-    //                 revealCell(y, x + 1);
-
-    //                 // DOWN RIGHT
-    //                 revealCell(y + 1, x + 1);
-
-    //                 // DOWN
-    //                 revealCell(y + 1, x);
-
-    //                 // DOWN LEFT
-    //                 revealCell(y + 1, x - 1);
-
-    //                 // LEFT
-    //                 revealCell(y, x - 1);
-    //             }
-
-    //             // BOTTOM EDGE
-    //             else if (y === underlay.length - 1) {
-    //                 // LEFT
-    //                 revealCell(y, x - 1);
-
-    //                 // UP LEFT
-    //                 revealCell(y - 1, x - 1);
-
-    //                 // UP
-    //                 revealCell(y - 1, x);
-
-    //                 // UP RIGHT
-    //                 revealCell(y - 1, x + 1);
-
-    //                 // RIGHT
-    //                 revealCell(y, x + 1);
-
-    //             }
-
-    //             // LEFT EDGE
-    //             else if (x === 0) {
-    //                 // UP
-    //                 revealCell(y - 1, x);
-
-    //                 // UP RIGHT
-    //                 revealCell(y - 1, x + 1);
-
-    //                 // RIGHT
-    //                 revealCell(y, x + 1);
-
-    //                 // DOWN RIGHT
-    //                 revealCell(y + 1, x + 1);
-
-    //                 // DOWN
-    //                 revealCell(y + 1, x);
-    //             }
-
-    //             // RIGHT EDGE
-    //             else if (x === underlay[0].length - 1) {
-    //                 // DOWN
-    //                 revealCell(y + 1, x);
-
-    //                 // DOWN LEFT
-    //                 revealCell(y + 1, x - 1);
-
-    //                 // LEFT
-    //                 revealCell(y, x - 1);
-
-    //                 // UP LEFT
-    //                 revealCell(y - 1, x - 1);
-
-    //                 // UP
-    //                 revealCell(y - 1, x);
-    //             }
-
-    //             // _____INNER SQUARES_____
-    //             else {
-    //                 // UP
-    //                 revealCell(y - 1, x);
-
-    //                 // UP RIGHT
-    //                 revealCell(y - 1, x + 1);
-
-    //                 // RIGHT
-    //                 revealCell(y, x + 1);
-
-    //                 // DOWN RIGHT
-    //                 revealCell(y + 1, x + 1);
-
-    //                 // DOWN
-    //                 revealCell(y + 1, x);
-
-    //                 // DOWN LEFT
-    //                 revealCell(y + 1, x - 1);
-
-    //                 // LEFT
-    //                 revealCell(y, x - 1);
-
-    //                 // UP LEFT
-    //                 revealCell(y - 1, x - 1);
-    //             }
-    //         } else {
-    //             console.log('skipping value of 0 because already checked, y, x', y, x);
-    //         }
-    //     }
-
-
-    // }
-
     // ____________________Breadth First Search____________________
-    function revealCell(enqueue, dequeue) {
+    function revealCell(enqueue, dequeue, changeReveal) {
         // enqueue and dequeue are arrays,
         // enqueue holds all things to be checked, begins with cell that was clicked
         // dequeue holds all things previously checked, begins as an empty array
@@ -846,9 +356,16 @@ function Minesweeper() {
         console.log('enqueue', enqueue);
         console.log('dequeue', dequeue);
 
+        // IF DEQUEUE IS EMPTY, THIS IS THE FIRST PASS OF THE FUNCTION
+        // SO, WE INITIALIZE A REVEAL MIRROR
+        if (dequeue.length === 0) {
+            changeReveal = JSON.parse(JSON.stringify(reveal))
+        }
+
         // We begin by grabbing the first value in enqueue
         // The values in enqueue are always in the format [y,x]
         let elementToCheck = enqueue.shift();
+
         // Add the current values to the dequeue array
         dequeue.push(elementToCheck);
         let y = elementToCheck[0];
@@ -866,7 +383,7 @@ function Minesweeper() {
             for (let row of underlay) {
                 let newRow = [];
                 for (let cell of row) {
-                    newRow.push(true);
+                    newRow.push(1);
                 }
                 newReveal.push(newRow)
             }
@@ -874,181 +391,193 @@ function Minesweeper() {
             alert('YOU FUCKIN LOSE');
         }
 
-        // If the revealed cell is > 0, we do not do recursion - GOOD
-        else if (underlay[y][x] > 0) {
-            // Create a copy of reveal with JSON
-            let changeReveal = JSON.parse(JSON.stringify(reveal));
-
-            // Set the clicked element's reveal variable to true
-            changeReveal[y][x] = true;
-
-            // Update the State variable
-            setReveal(changeReveal);
-        }
-
         // If the revealed cell is 0, we begin a flood fill algorithm
+        else {
 
-        // BEGIN BY ADDING ALL 8 DIRECTIONS TO THE ENQUEUE ARRAY, 
-        // WE ONLY ADD TO ENQUEUE IF THE VALUE HAS NOT ALREADY BEEN ADDED TO ENQUEUE OR IS IN DEQUEUE
+            // Add things to enqueue array if the value is 0
+            if (underlay[y][x] === 0) {
+                // BEGIN BY ADDING ALL 8 DIRECTIONS TO THE ENQUEUE ARRAY, 
+                // WE ONLY ADD TO ENQUEUE IF THE VALUE HAS NOT ALREADY BEEN ADDED TO ENQUEUE OR IS IN DEQUEUE
 
-        // UP - NO Y=0
-        if (y > 0) {
-            let checkUp = true;
-            for (let cell of enqueue) {
-                if (y - 1 === cell[0] && x === cell[1]) {
-                    checkUp = false;
+                // UP - NO Y=0
+                if (y > 0) {
+                    let checkUp = true;
+                    for (let cell of enqueue) {
+                        if (y - 1 === cell[0] && x === cell[1]) {
+                            checkUp = false;
+                        }
+                    }
+                    for (let cell of dequeue) {
+                        if (y - 1 === cell[0] && x === cell[1]) {
+                            checkUp = false;
+                        }
+                    }
+                    if (checkUp) {
+                        enqueue.push([y - 1, x])
+                    }
+                }
+
+                // UP RIGHT - NO Y=0 OR X=UNDERLAY[0].LENGTH-1
+
+                if (y > 0 && x < underlay[0].length - 1) {
+                    let checkUpRight = true;
+                    for (let cell of enqueue) {
+                        if (y - 1 === cell[0] && x + 1 === cell[1]) {
+                            checkUpRight = false;
+                        }
+                    }
+                    for (let cell of dequeue) {
+                        if (y - 1 === cell[0] && x + 1 === cell[1]) {
+                            checkUpRight = false;
+                        }
+                    }
+                    if (checkUpRight) {
+                        enqueue.push([y - 1, x + 1])
+                    }
+                }
+
+                // RIGHT - NO X=UNDERLAY[0].LENGTH-1
+
+                if (x < underlay[0].length - 1) {
+                    let checkRight = true;
+                    for (let cell of enqueue) {
+                        if (y === cell[0] && x + 1 === cell[1]) {
+                            checkRight = false;
+                        }
+                    }
+                    for (let cell of dequeue) {
+                        if (y === cell[0] && x + 1 === cell[1]) {
+                            checkRight = false;
+                        }
+                    }
+                    if (checkRight) {
+                        enqueue.push([y, x + 1])
+                    }
+                }
+
+                // DOWN RIGHT - NO Y=UNDERLAY.LENGTH-1 OR X=UNDERLAY[0].LENGTH-1
+
+                if (y < underlay.length - 1 && x < underlay[0].length - 1) {
+                    let checkDownRight = true;
+                    for (let cell of enqueue) {
+                        if (y + 1 === cell[0] && x + 1 === cell[1]) {
+                            checkDownRight = false;
+                        }
+                    }
+                    for (let cell of dequeue) {
+                        if (y + 1 === cell[0] && x + 1 === cell[1]) {
+                            checkDownRight = false;
+                        }
+                    }
+                    if (checkDownRight) {
+                        enqueue.push([y + 1, x + 1])
+                    }
+                }
+
+                // DOWN - NO Y=UNDERLAY.LENGTH-1
+
+                if (y < underlay.length - 1) {
+                    let checkDown = true;
+                    for (let cell of enqueue) {
+                        if (y + 1 === cell[0] && x === cell[1]) {
+                            checkDown = false;
+                        }
+                    }
+                    for (let cell of dequeue) {
+                        if (y + 1 === cell[0] && x === cell[1]) {
+                            checkDown = false;
+                        }
+                    }
+                    if (checkDown) {
+                        enqueue.push([y + 1, x])
+                    }
+                }
+
+                // DOWN LEFT - NO Y=UNDERLAY.LENGTH-1 OR X=0
+
+                if (y < underlay.length - 1 && x > 0) {
+                    let checkDownLeft = true;
+                    for (let cell of enqueue) {
+                        if (y + 1 === cell[0] && x - 1 === cell[1]) {
+                            checkDownLeft = false;
+                        }
+                    }
+                    for (let cell of dequeue) {
+                        if (y + 1 === cell[0] && x - 1 === cell[1]) {
+                            checkDownLeft = false;
+                        }
+                    }
+                    if (checkDownLeft) {
+                        enqueue.push([y + 1, x - 1])
+                    }
+                }
+
+                // LEFT - NO X=0
+
+                if (x > 0) {
+                    let checkLeft = true;
+                    for (let cell of enqueue) {
+                        if (y === cell[0] && x - 1 === cell[1]) {
+                            checkLeft = false;
+                        }
+                    }
+                    for (let cell of dequeue) {
+                        if (y === cell[0] && x - 1 === cell[1]) {
+                            checkLeft = false;
+                        }
+                    }
+                    if (checkLeft) {
+                        enqueue.push([y, x - 1])
+                    }
+                }
+
+                // LEFT UP - NO Y=0 OR X=0
+
+                if (x > 0 && y > 0) {
+                    let checkUpLeft = true;
+                    for (let cell of enqueue) {
+                        if (y - 1 === cell[0] && x - 1 === cell[1]) {
+                            checkUpLeft = false;
+                        }
+                    }
+                    for (let cell of dequeue) {
+                        if (y - 1 === cell[0] && x - 1 === cell[1]) {
+                            checkUpLeft = false;
+                        }
+                    }
+                    if (checkUpLeft) {
+                        enqueue.push([y - 1, x - 1])
+                    }
                 }
             }
-            for (let cell of dequeue) {
-                if (y - 1 === cell[0] && x === cell[1]) {
-                    checkUp = false;
-                }
-            }
-            if (checkUp) {
-                enqueue.push([y - 1, x])
-            }
-        }
 
-        // UP RIGHT - NO Y=0 OR X=UNDERLAY[0].LENGTH-1
-
-        if (y > 0 && x < underlay[0].length - 1) {
-            let checkUpRight = true;
-            for (let cell of enqueue) {
-                if (y - 1 === cell[0] && x + 1 === cell[1]) {
-                    checkUpRight = false;
-                }
-            }
-            for (let cell of dequeue) {
-                if (y - 1 === cell[0] && x + 1 === cell[1]) {
-                    checkUpRight = false;
-                }
-            }
-            if (checkUpRight) {
-                enqueue.push([y - 1, x + 1])
-            }
-        }
-
-        // RIGHT - NO X=UNDERLAY[0].LENGTH-1
-
-        if (x < underlay[0].length - 1) {
-            let checkRight = true;
-            for (let cell of enqueue) {
-                if (y === cell[0] && x + 1 === cell[1]) {
-                    checkRight = false;
-                }
-            }
-            for (let cell of dequeue) {
-                if (y === cell[0] && x + 1 === cell[1]) {
-                    checkRight = false;
-                }
-            }
-            if (checkRight) {
-                enqueue.push([y, x + 1])
-            }
-        }
-
-        // DOWN RIGHT - NO Y=UNDERLAY.LENGTH-1 OR X=UNDERLAY[0].LENGTH-1
-
-        if (y < underlay.length - 1 && x < underlay[0].length - 1) {
-            let checkDownRight = true;
-            for (let cell of enqueue) {
-                if (y + 1 === cell[0] && x + 1 === cell[1]) {
-                    checkDownRight = false;
-                }
-            }
-            for (let cell of dequeue) {
-                if (y + 1 === cell[0] && x + 1 === cell[1]) {
-                    checkDownRight = false;
-                }
-            }
-            if (checkDownRight) {
-                enqueue.push([y + 1, x + 1])
-            }
-        }
-
-        // DOWN - NO Y=UNDERLAY.LENGTH-1
-
-        if (y < underlay.length - 1) {
-            let checkDown = true;
-            for (let cell of enqueue) {
-                if (y + 1 === cell[0] && x === cell[1]) {
-                    checkDown = false;
-                }
-            }
-            for (let cell of dequeue) {
-                if (y + 1 === cell[0] && x === cell[1]) {
-                    checkDown = false;
-                }
-            }
-            if (checkDown) {
-                enqueue.push([y + 1, x])
-            }
-        }
-
-        // DOWN LEFT - NO Y=UNDERLAY.LENGTH-1 OR X=0
-
-        if (y < underlay.length - 1 && x > 0) {
-            let checkDownLeft = true;
-            for (let cell of enqueue) {
-                if (y + 1 === cell[0] && x - 1 === cell[1]) {
-                    checkDownLeft = false;
-                }
-            }
-            for (let cell of dequeue) {
-                if (y + 1 === cell[0] && x - 1 === cell[1]) {
-                    checkDownLeft = false;
-                }
-            }
-            if (checkDownLeft) {
-                enqueue.push([y + 1, x - 1])
-            }
-        }
-
-        // LEFT - NO X=0
-
-        if (x > 0) {
-            let checkLeft = true;
-            for (let cell of enqueue) {
-                if (y === cell[0] && x - 1 === cell[1]) {
-                    checkLeft = false;
-                }
-            }
-            for (let cell of dequeue) {
-                if (y === cell[0] && x - 1 === cell[1]) {
-                    checkLeft = false;
-                }
-            }
-            if (checkLeft) {
-                enqueue.push([y, x - 1])
-            }
-        }
-
-        // LEFT UP - NO Y=0 OR X=0
-
-        if (x > 0 && y > 0) {
-            let checkUpLeft = true;
-            for (let cell of enqueue) {
-                if (y - 1 === cell[0] && x - 1 === cell[1]) {
-                    checkUpLeft = false;
-                }
-            }
-            for (let cell of dequeue) {
-                if (y - 1 === cell[0] && x - 1 === cell[1]) {
-                    checkUpLeft = false;
-                }
-            }
-            if (checkUpLeft) {
-                enqueue.push([y - 1, x - 1])
-            }
+            // Set the clicked element's reveal variable
+            // to 1 which will trigger the element to display
+            changeReveal[y][x] = 1;
         }
 
         console.log('enqueue after pushes', enqueue);
 
         if (enqueue.length > 0) {
-            revealCell(enqueue, dequeue);
+            revealCell(enqueue, dequeue, changeReveal);
+        } else {
+            setReveal(changeReveal);
         }
 
 
+    }
+
+    function flagCell(e, y, x) {
+        e.preventDefault();
+        let changeReveal = JSON.parse(JSON.stringify(reveal));
+
+        if (changeReveal[y][x] === 2) {
+            changeReveal[y][x] = 0;
+        } else {
+            changeReveal[y][x] = 2;
+        }
+
+        setReveal(changeReveal);
     }
 
     return (
@@ -1064,11 +593,13 @@ function Minesweeper() {
                         <tr key={y + 'elementRow'}>
 
 
-                            {row.map((element, x) =>
-                                <td key={y + 'element' + x} onClick={() => revealCell([[y, x]], [])}>
-                                    {reveal[y][x] && element}
-                                </td>
-                            )}
+                            {
+                                row.map((element, x) =>
+                                    <td key={y + 'element' + x} onContextMenu={(event) => flagCell(event, y, x)} onClick={() => revealCell([[y, x]], [])}>
+                                        {reveal[y][x] === 0 ? ('') : (reveal[y][x] === 1 ? (element) : ('F'))}
+                                    </td>
+                                )
+                            }
                         </tr>
 
 

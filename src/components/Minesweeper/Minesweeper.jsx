@@ -892,22 +892,161 @@ function Minesweeper() {
         // WE ONLY ADD TO ENQUEUE IF THE VALUE HAS NOT ALREADY BEEN ADDED TO ENQUEUE OR IS IN DEQUEUE
 
         // UP - NO Y=0
-        
+        if (y > 0) {
+            let checkUp = true;
+            for (let cell of enqueue) {
+                if (y - 1 === cell[0] && x === cell[1]) {
+                    checkUp = false;
+                }
+            }
+            for (let cell of dequeue) {
+                if (y - 1 === cell[0] && x === cell[1]) {
+                    checkUp = false;
+                }
+            }
+            if (checkUp) {
+                enqueue.push([y - 1, x])
+            }
+        }
 
         // UP RIGHT - NO Y=0 OR X=UNDERLAY[0].LENGTH-1
 
+        if (y > 0 && x < underlay[0].length - 1) {
+            let checkUpRight = true;
+            for (let cell of enqueue) {
+                if (y - 1 === cell[0] && x + 1 === cell[1]) {
+                    checkUpRight = false;
+                }
+            }
+            for (let cell of dequeue) {
+                if (y - 1 === cell[0] && x + 1 === cell[1]) {
+                    checkUpRight = false;
+                }
+            }
+            if (checkUpRight) {
+                enqueue.push([y - 1, x + 1])
+            }
+        }
+
         // RIGHT - NO X=UNDERLAY[0].LENGTH-1
+
+        if (x < underlay[0].length - 1) {
+            let checkRight = true;
+            for (let cell of enqueue) {
+                if (y === cell[0] && x + 1 === cell[1]) {
+                    checkRight = false;
+                }
+            }
+            for (let cell of dequeue) {
+                if (y === cell[0] && x + 1 === cell[1]) {
+                    checkRight = false;
+                }
+            }
+            if (checkRight) {
+                enqueue.push([y, x + 1])
+            }
+        }
 
         // DOWN RIGHT - NO Y=UNDERLAY.LENGTH-1 OR X=UNDERLAY[0].LENGTH-1
 
+        if (y < underlay.length - 1 && x < underlay[0].length - 1) {
+            let checkDownRight = true;
+            for (let cell of enqueue) {
+                if (y + 1 === cell[0] && x + 1 === cell[1]) {
+                    checkDownRight = false;
+                }
+            }
+            for (let cell of dequeue) {
+                if (y + 1 === cell[0] && x + 1 === cell[1]) {
+                    checkDownRight = false;
+                }
+            }
+            if (checkDownRight) {
+                enqueue.push([y + 1, x + 1])
+            }
+        }
+
         // DOWN - NO Y=UNDERLAY.LENGTH-1
+
+        if (y < underlay.length - 1) {
+            let checkDown = true;
+            for (let cell of enqueue) {
+                if (y + 1 === cell[0] && x === cell[1]) {
+                    checkDown = false;
+                }
+            }
+            for (let cell of dequeue) {
+                if (y + 1 === cell[0] && x === cell[1]) {
+                    checkDown = false;
+                }
+            }
+            if (checkDown) {
+                enqueue.push([y + 1, x])
+            }
+        }
 
         // DOWN LEFT - NO Y=UNDERLAY.LENGTH-1 OR X=0
 
+        if (y < underlay.length - 1 && x > 0) {
+            let checkDownLeft = true;
+            for (let cell of enqueue) {
+                if (y + 1 === cell[0] && x - 1 === cell[1]) {
+                    checkDownLeft = false;
+                }
+            }
+            for (let cell of dequeue) {
+                if (y + 1 === cell[0] && x - 1 === cell[1]) {
+                    checkDownLeft = false;
+                }
+            }
+            if (checkDownLeft) {
+                enqueue.push([y + 1, x - 1])
+            }
+        }
+
         // LEFT - NO X=0
+
+        if (x > 0) {
+            let checkLeft = true;
+            for (let cell of enqueue) {
+                if (y === cell[0] && x - 1 === cell[1]) {
+                    checkLeft = false;
+                }
+            }
+            for (let cell of dequeue) {
+                if (y === cell[0] && x - 1 === cell[1]) {
+                    checkLeft = false;
+                }
+            }
+            if (checkLeft) {
+                enqueue.push([y, x - 1])
+            }
+        }
 
         // LEFT UP - NO Y=0 OR X=0
 
+        if (x > 0 && y > 0) {
+            let checkUpLeft = true;
+            for (let cell of enqueue) {
+                if (y - 1 === cell[0] && x - 1 === cell[1]) {
+                    checkUpLeft = false;
+                }
+            }
+            for (let cell of dequeue) {
+                if (y - 1 === cell[0] && x - 1 === cell[1]) {
+                    checkUpLeft = false;
+                }
+            }
+            if (checkUpLeft) {
+                enqueue.push([y - 1, x - 1])
+            }
+        }
+
+        console.log('enqueue after pushes', enqueue);
+
+        if (enqueue.length > 0) {
+            revealCell(enqueue, dequeue);
+        }
 
 
     }

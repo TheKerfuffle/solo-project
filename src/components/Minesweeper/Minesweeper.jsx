@@ -13,6 +13,12 @@ function Minesweeper() {
         generateMinesweeper(8, 10, 10);
     }, [])
 
+    useEffect(()=>{
+        console.log('Reveal has been updated!', reveal);
+    }, [reveal])
+
+
+    // ________________________________________Generate Puzzle Function________________________________________
     function generateMinesweeper(difficulty, width, height) {
         console.log('difficulty', difficulty);
         console.log('width, height', width, height);
@@ -73,7 +79,7 @@ function Minesweeper() {
                 if (newGrid[y][x] === 1) {
                     console.log('Bomb, y, x', y, x);
                     underlayRow.push('&');
-                    newReveal.push(false);
+                    newRevealRow.push(false);
                 } else {
                     // Since we know this space does not hold a bomb...
                     // We want to check all of the blocks around the current block
@@ -323,11 +329,34 @@ function Minesweeper() {
             }
             console.log('Finished underlay Row', underlayRow);
             newUnderlay.push(underlayRow);
+
+            console.log('finished reveal row', newRevealRow);
             newReveal.push(newRevealRow);
+
+            console.log('pushed to newReveal, reveal:', newReveal);
         }
         console.log('Finished underlay', newUnderlay);
         setUnderlay(newUnderlay);
         setReveal(newReveal);
+    }
+
+
+
+    // ________________________________________Reveal Function________________________________________
+    function revealElement(y, x) {
+
+        let changeReveal = JSON.parse(JSON.stringify(reveal));
+
+        // console.log(reveal);
+        // console.log(changeReveal);
+
+        // console.log('clicked on element y, x, reveal[y][x]', y, x, reveal[y][x]);
+        // console.log('clicked on element y, x, changeReveal[y][x]', y, x, changeReveal[y][x]);
+
+        changeReveal[y][x] = true;
+
+        setReveal(changeReveal);
+
     }
 
     return (
@@ -343,7 +372,7 @@ function Minesweeper() {
 
 
                             {row.map((element, x) =>
-                                <td key={y + 'element' + x} >
+                                <td key={y + 'element' + x} onClick={(e) => revealElement(y, x)}>
                                     {reveal[y][x] && element}
                                 </td>
                             )}

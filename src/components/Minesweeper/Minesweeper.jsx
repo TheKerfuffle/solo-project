@@ -343,37 +343,256 @@ function Minesweeper() {
 
 
     // ________________________________________Reveal Function________________________________________
-    function revealElement(y, x) {
+    function revealElement(y, x, nestedArray) {
 
-        // If the revealed element has a value of zero, we want to reveal all surrounding elements
-        // But only under specific circumstances...
+        // Create a copy of reveal with JSON
+        let changeReveal = JSON.parse(JSON.stringify(nestedArray));
+
+        // if (reveal[y][x] === false) {
+
+        // }
+
 
         if (underlay[y][x] === '&') {
             alert('YOU FUCKIN LOSE')
+        }
 
-        } else if (underlay[y][x] === 0) {
+        // If the revealed element has a value of zero, we want to reveal all surrounding elements
+        // But only under specific circumstances...
+        else if (underlay[y][x] === 0) {
 
+            // _____CORNERS_____
 
-            // UP
+            // TOP LEFT X=0, Y=0
+            if (x === 0 && y === 0) {
 
-            if (y > 0 && underlay[y][x] === 0) {
+                // DOWN
+                if (reveal[y + 1][x] === false) {
+                    revealElement(y + 1, x, changeReveal);
+                }
+
+                // DOWN RIGHT
+                if (reveal[y + 1][x + 1] === false) {
+                    revealElement(y + 1, x + 1, changeReveal);
+                }
+
+                // RIGHT
+                if (reveal[y][x + 1] === false) {
+                    revealElement(y, x + 1, changeReveal);
+                }
+            }
+
+            // BOTTOM LEFT X=0, Y=UNDERLAY.LENGTH-1
+            else if (x === 0 && y === underlay.length - 1) {
+                // UP
+                if (reveal[y - 1][x] === false) {
+                    revealElement(y - 1, x, changeReveal);
+                }
+
+                // UP RIGHT
+                if (reveal[y - 1][x + 1] === false) {
+                    revealElement(y - 1, x + 1, changeReveal);
+                }
+
+                // RIGHT
+                if (reveal[y][x + 1] === false) {
+                    revealElement(y, x + 1, changeReveal);
+                }
+            }
+
+            // BOTTOM RIGHT X=UNDERLAY[0].LENGTH, Y=UNDERLAY.LENGTH
+            else if (x === underlay[0].length - 1 && y === underlay.length - 1) {
+                // LEFT
+                if (reveal[y][x - 1] === false) {
+                    revealElement(y, x - 1, changeReveal);
+                }
+
+                // UP LEFT
+                if (reveal[y - 1][x - 1] === false) {
+                    revealElement(y - 1, x - 1, changeReveal);
+                }
+
+                // UP
+                if (reveal[y - 1][x] === false) {
+                    revealElement(y - 1, x, changeReveal);
+                }
+            }
+
+            // TOP RIGHT X=UNDERLAY[0].LENGTH, Y=0
+            else if (x === underlay[0].length - 1 && y === 0) {
+                // DOWN
+                if (reveal[y + 1][x] === false) {
+                    revealElement(y + 1, x, changeReveal);
+                }
+
+                // DOWN LEFT
+                if (reveal[y + 1][x - 1] === false) {
+                    revealElement(y + 1, x - 1, changeReveal);
+                }
+
+                // LEFT
+                if (reveal[y][x - 1] === false) {
+                    revealElement(y, x - 1, changeReveal);
+                }
+            }
+
+            // _____EDGES_____
+
+            // TOP EDGE
+            else if (y === 0) {
+                // RIGHT
+                if (reveal[y][x + 1] === false) {
+                    revealElement(y, x + 1, changeReveal);
+                }
+
+                // DOWN RIGHT
+                if (reveal[y + 1][x + 1] === false) {
+                    revealElement(y + 1, x + 1, changeReveal);
+                }
+
+                // DOWN
+                if (reveal[y + 1][x] === false) {
+                    revealElement(y + 1, x, changeReveal);
+                }
+
+                // DOWN LEFT
+                if (reveal[y + 1][x - 1] === false) {
+                    revealElement(y + 1, x - 1, changeReveal);
+                }
+
+                // LEFT
+                if (reveal[y][x - 1] === false) {
+                    revealElement(y, x - 1, changeReveal);
+                }
+            }
+
+            // BOTTOM EDGE
+            else if (y === underlay.length - 1) {
+                // LEFT
+                if (reveal[y][x - 1] === false) {
+                    revealElement(y, x - 1, changeReveal);
+                }
+
+                // UP LEFT
+                if (reveal[y - 1][x - 1] === false) {
+                    revealElement(y - 1, x - 1, changeReveal);
+                }
+
+                // UP
+                if (reveal[y - 1][x] === false) {
+                    revealElement(y - 1, x, changeReveal);
+                }
+
+                // UP RIGHT
+                if (reveal[y - 1][x + 1] === false) {
+                    revealElement(y - 1, x + 1, changeReveal);
+                }
+
+                // RIGHT
+                if (reveal[y][x + 1] === false) {
+                    revealElement(y, x + 1, changeReveal);
+                }
 
             }
 
-            // UP RIGHT
+            // LEFT EDGE
+            else if (x === 0) {
+                // UP
+                if (reveal[y - 1][x] === false) {
+                    revealElement(y - 1, x, changeReveal);
+                }
 
-            // RIGHT
+                // UP RIGHT
+                if (reveal[y - 1][x + 1] === false) {
+                    revealElement(y - 1, x + 1, changeReveal);
+                }
 
-            // DOWN RIGHT
+                // RIGHT
+                if (reveal[y][x + 1] === false) {
+                    revealElement(y, x + 1, changeReveal);
+                }
 
-            // DOWN
+                // DOWN RIGHT
+                if (reveal[y + 1][x + 1] === false) {
+                    revealElement(y + 1, x + 1, changeReveal);
+                }
 
-            // DOWN LEFT
+                // DOWN
+                if (reveal[y + 1][x] === false) {
+                    revealElement(y + 1, x, changeReveal);
+                }
+            }
 
-            // LEFT
+            // RIGHT EDGE
+            else if (x === underlay[0].length - 1) {
+                // DOWN
+                if (reveal[y + 1][x] === false) {
+                    revealElement(y + 1, x, changeReveal);
+                }
 
-            // UP LEFT
+                // DOWN LEFT
+                if (reveal[y + 1][x - 1] === false) {
+                    revealElement(y + 1, x - 1, changeReveal);
+                }
 
+                // LEFT
+                if (reveal[y][x - 1] === false) {
+                    revealElement(y, x - 1, changeReveal);
+                }
+
+                // UP LEFT
+                if (reveal[y - 1][x - 1] === false) {
+                    revealElement(y - 1, x - 1, changeReveal);
+                }
+
+                // UP
+                if (reveal[y - 1][x] === false) {
+                    revealElement(y - 1, x, changeReveal);
+                }
+            }
+
+            // _____INNER SQUARES_____
+            else {
+                // UP
+                if (reveal[y - 1][x] === false) {
+                    revealElement(y - 1, x, changeReveal);
+                }
+
+                // UP RIGHT
+                if (reveal[y - 1][x + 1] === false) {
+                    revealElement(y - 1, x + 1, changeReveal);
+                }
+
+                // RIGHT
+                if (reveal[y][x + 1] === false) {
+                    revealElement(y, x + 1, changeReveal);
+                }
+
+                // DOWN RIGHT
+                if (reveal[y + 1][x + 1] === false) {
+                    revealElement(y + 1, x + 1, changeReveal);
+                }
+
+                // DOWN
+                if (reveal[y + 1][x] === false) {
+                    revealElement(y + 1, x, changeReveal);
+                }
+
+                // DOWN LEFT
+                if (reveal[y + 1][x - 1] === false) {
+                    revealElement(y + 1, x - 1, changeReveal);
+                }
+
+                // LEFT
+                if (reveal[y][x - 1] === false) {
+                    revealElement(y, x - 1, changeReveal);
+                }
+
+                // UP LEFT
+                if (reveal[y][x] === false) {
+                    revealElement(y - 1, x - 1, changeReveal);
+                }
+            }
         }
 
 
@@ -385,7 +604,7 @@ function Minesweeper() {
         // console.log('clicked on element y, x, changeReveal[y][x]', y, x, changeReveal[y][x]);
 
         // Create a copy of reveal with JSON
-        let changeReveal = JSON.parse(JSON.stringify(reveal));
+        // let changeReveal = JSON.parse(JSON.stringify(reveal));
 
         // Set the clicked element's reveal variable to true
         changeReveal[y][x] = true;
@@ -408,7 +627,7 @@ function Minesweeper() {
 
 
                             {row.map((element, x) =>
-                                <td key={y + 'element' + x} onClick={(e) => revealElement(y, x)}>
+                                <td key={y + 'element' + x} onClick={() => revealElement(y, x, reveal)}>
                                     {reveal[y][x] && element}
                                 </td>
                             )}

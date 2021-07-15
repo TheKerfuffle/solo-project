@@ -4,14 +4,17 @@ import { useState } from "react";
 
 function Minesweeper() {
 
-    const [minesBoard, setMinesBoard] = useState([])
-
+    // Minesweeper Game Board Data
     const [underlay, setUnderlay] = useState([]);
     const [reveal, setReveal] = useState([]);
-    const [revealedCells, setRevealedCells] = useState([]);
+
+    // Minesweeper Grid Size/Difficulty Parameters
+    const [difficulty, setDifficulty] = useState(8);
+    const [width, setWidth] = useState(10);
+    const [height, setHeight] = useState(10);
 
     useEffect(() => {
-        generateMinesweeper(8, 10, 10);
+        generateMinesweeper(difficulty, width, height);
     }, [])
 
     useEffect(() => {
@@ -20,7 +23,23 @@ function Minesweeper() {
     }, [reveal])
 
     function checkComplete() {
-
+        let minesUnflagged = 0;
+        let bombs = 0;
+        // Reveal all cells in the game board
+        for (let y = 0; y < underlay.length - 1; y++) {
+            for (let x = 0; x < underlay[0].length - 1; x++) {
+                if (underlay[y][x] === '&') {
+                    bombs++;
+                    if (reveal[y][x] !== 2) {
+                        minesUnflagged++;
+                    }
+                }
+            }
+        }
+        // Only triggers when game is successfully completed
+        if (bombs > 0 && minesUnflagged === 0) {
+            alert('Minesweeper Complete');
+        }
     }
 
 
@@ -584,7 +603,6 @@ function Minesweeper() {
         <>
             <p>Underlay: {JSON.stringify(underlay)}</p>
             <p>Reveal: {JSON.stringify(reveal)}</p>
-            <p>Revealed Cells: {JSON.stringify(revealedCells)}</p>
 
             <table>
                 <tbody>
@@ -596,7 +614,16 @@ function Minesweeper() {
                             {
                                 row.map((element, x) =>
                                     <td key={y + 'element' + x} onContextMenu={(event) => flagCell(event, y, x)} onClick={() => revealCell([[y, x]], [])}>
-                                        {reveal[y][x] === 0 ? ('') : (reveal[y][x] === 1 ? (element) : ('F'))}
+                                        {
+                                            reveal[y][x] === 0 ?
+                                                ('')
+                                                :
+                                                (reveal[y][x] === 1 ?
+                                                    (underlay[y][x] > 0 && element)
+                                                    :
+                                                    ('F')
+                                                )
+                                        }
                                     </td>
                                 )
                             }

@@ -8,6 +8,7 @@ function Minesweeper() {
 
     const [underlay, setUnderlay] = useState([]);
     const [reveal, setReveal] = useState([]);
+    const [revealedCells, setRevealedCells] = useState([]);
 
     useEffect(() => {
         generateMinesweeper(8, 10, 10);
@@ -369,19 +370,13 @@ function Minesweeper() {
             if (x === 0 && y === 0) {
 
                 // DOWN
-                if (reveal[y + 1][x] === false) {
-                    revealElement(y + 1, x, changeReveal);
-                }
+                revealElement(y + 1, x, changeReveal);
 
                 // DOWN RIGHT
-                if (reveal[y + 1][x + 1] === false) {
-                    revealElement(y + 1, x + 1, changeReveal);
-                }
+                revealElement(y + 1, x + 1, changeReveal);
 
                 // RIGHT
-                if (reveal[y][x + 1] === false) {
-                    revealElement(y, x + 1, changeReveal);
-                }
+                revealElement(y, x + 1, changeReveal);
             }
 
             // BOTTOM LEFT X=0, Y=UNDERLAY.LENGTH-1
@@ -616,18 +611,271 @@ function Minesweeper() {
 
     }
 
-    function revealCell(y, x, array) {
+    // function revealCell(y, x) {
 
-        let notChecked = true;
 
+    //     // Check for bombs first
+    //     if (underlay[y][x] === '&') {
+    //         alert('YOU FUCKIN LOSE')
+    //     }
+
+    //     // See if we have checked this element already
+    //     // if we have we do not allow it to be checked again
+    //     let notChecked = true;
+    //     for (let check of revealedCells) {
+    //         if (check[0] === y && check[1] === x) {
+    //             notChecked = false;
+    //             console.log('cell has been checked, y, x', y, x);
+    //         }
+    //     }
+
+
+    //     if (underlay[y][x] > 0) {
+
+    //         if (notChecked) {
+
+    //             let updateRevealedCells = JSON.parse(JSON.stringify(revealedCells));
+
+    //             updateRevealedCells.push([y, x])
+
+    //             setRevealedCells(updateRevealedCells);
+
+    //             console.log('in revealCell for normal cell, y, x, array of checked spots', y, x, revealedCells);
+
+    //             // Create a copy of reveal with JSON
+    //             let changeReveal = JSON.parse(JSON.stringify(reveal));
+
+    //             // Set the clicked element's reveal variable to true
+    //             changeReveal[y][x] = true;
+
+    //             // Update the State variable
+    //             setReveal(changeReveal);
+    //         } else {
+    //             console.log('skipping a value>0 because already checked, y ,x', y, x);
+    //         }
+
+    //     } else {
+
+    //         if (notChecked) {
+
+    //             let updateRevealedCells = JSON.parse(JSON.stringify(revealedCells));
+
+    //             updateRevealedCells.push([y, x])
+
+    //             setRevealedCells(updateRevealedCells);
+
+    //             console.log('in revealCell for normal cell, y, x, array of checked spots', y, x, revealedCells);
+
+    //             // Create a copy of reveal with JSON
+    //             let changeReveal = JSON.parse(JSON.stringify(reveal));
+
+    //             // Set the clicked element's reveal variable to true
+    //             changeReveal[y][x] = true;
+
+    //             // Update the State variable
+    //             setReveal(changeReveal);
+
+    //             // ________________________________________BEGIN RECURSION FOR 0 VALUE________________________________________
+    //             // _____CORNERS_____
+
+    //             // TOP LEFT X=0, Y=0
+    //             if (x === 0 && y === 0) {
+
+    //                 // DOWN
+    //                 revealCell(y + 1, x);
+
+    //                 // DOWN RIGHT
+    //                 revealCell(y + 1, x + 1);
+
+    //                 // RIGHT
+    //                 revealCell(y, x + 1);
+    //             }
+
+    //             // BOTTOM LEFT X=0, Y=UNDERLAY.LENGTH-1
+    //             else if (x === 0 && y === underlay.length - 1) {
+    //                 // UP
+    //                 revealCell(y - 1, x);
+
+    //                 // UP RIGHT
+    //                 revealCell(y - 1, x + 1);
+
+    //                 // RIGHT
+    //                 revealCell(y, x + 1);
+    //             }
+
+    //             // BOTTOM RIGHT X=UNDERLAY[0].LENGTH-1, Y=UNDERLAY.LENGTH-1
+    //             else if (x === underlay[0].length - 1 && y === underlay.length - 1) {
+    //                 // LEFT
+    //                 revealCell(y, x - 1);
+
+    //                 // UP LEFT
+    //                 revealCell(y - 1, x - 1);
+
+    //                 // UP
+    //                 revealCell(y - 1, x);
+    //             }
+
+    //             // TOP RIGHT X=UNDERLAY[0].LENGTH-1, Y=0
+    //             else if (x === underlay[0].length - 1 && y === 0) {
+    //                 // DOWN
+    //                 revealCell(y + 1, x);
+
+    //                 // DOWN LEFT
+    //                 revealCell(y + 1, x - 1);
+
+    //                 // LEFT
+    //                 revealCell(y, x - 1);
+    //             }
+
+    //             // _____EDGES_____
+
+    //             // TOP EDGE
+    //             else if (y === 0) {
+    //                 // RIGHT
+    //                 revealCell(y, x + 1);
+
+    //                 // DOWN RIGHT
+    //                 revealCell(y + 1, x + 1);
+
+    //                 // DOWN
+    //                 revealCell(y + 1, x);
+
+    //                 // DOWN LEFT
+    //                 revealCell(y + 1, x - 1);
+
+    //                 // LEFT
+    //                 revealCell(y, x - 1);
+    //             }
+
+    //             // BOTTOM EDGE
+    //             else if (y === underlay.length - 1) {
+    //                 // LEFT
+    //                 revealCell(y, x - 1);
+
+    //                 // UP LEFT
+    //                 revealCell(y - 1, x - 1);
+
+    //                 // UP
+    //                 revealCell(y - 1, x);
+
+    //                 // UP RIGHT
+    //                 revealCell(y - 1, x + 1);
+
+    //                 // RIGHT
+    //                 revealCell(y, x + 1);
+
+    //             }
+
+    //             // LEFT EDGE
+    //             else if (x === 0) {
+    //                 // UP
+    //                 revealCell(y - 1, x);
+
+    //                 // UP RIGHT
+    //                 revealCell(y - 1, x + 1);
+
+    //                 // RIGHT
+    //                 revealCell(y, x + 1);
+
+    //                 // DOWN RIGHT
+    //                 revealCell(y + 1, x + 1);
+
+    //                 // DOWN
+    //                 revealCell(y + 1, x);
+    //             }
+
+    //             // RIGHT EDGE
+    //             else if (x === underlay[0].length - 1) {
+    //                 // DOWN
+    //                 revealCell(y + 1, x);
+
+    //                 // DOWN LEFT
+    //                 revealCell(y + 1, x - 1);
+
+    //                 // LEFT
+    //                 revealCell(y, x - 1);
+
+    //                 // UP LEFT
+    //                 revealCell(y - 1, x - 1);
+
+    //                 // UP
+    //                 revealCell(y - 1, x);
+    //             }
+
+    //             // _____INNER SQUARES_____
+    //             else {
+    //                 // UP
+    //                 revealCell(y - 1, x);
+
+    //                 // UP RIGHT
+    //                 revealCell(y - 1, x + 1);
+
+    //                 // RIGHT
+    //                 revealCell(y, x + 1);
+
+    //                 // DOWN RIGHT
+    //                 revealCell(y + 1, x + 1);
+
+    //                 // DOWN
+    //                 revealCell(y + 1, x);
+
+    //                 // DOWN LEFT
+    //                 revealCell(y + 1, x - 1);
+
+    //                 // LEFT
+    //                 revealCell(y, x - 1);
+
+    //                 // UP LEFT
+    //                 revealCell(y - 1, x - 1);
+    //             }
+    //         } else {
+    //             console.log('skipping value of 0 because already checked, y, x', y, x);
+    //         }
+    //     }
+
+
+    // }
+
+    // ____________________Breadth First Search____________________
+    function revealCell(enqueue, dequeue) {
+        // enqueue and dequeue are arrays,
+        // enqueue holds all things to be checked, begins with cell that was clicked
+        // dequeue holds all things previously checked, begins as an empty array
+
+        console.log('Beginning revealCell');
+        console.log('enqueue', enqueue);
+        console.log('dequeue', dequeue);
+
+        // We begin by grabbing the first value in enqueue
+        // The values in enqueue are always in the format [y,x]
+        let elementToCheck = enqueue.shift();
+        // Add the current values to the dequeue array
+        dequeue.push(elementToCheck);
+        let y = elementToCheck[0];
+        let x = elementToCheck[1];
+
+        console.log('elementToCheck, y, x', elementToCheck, y, x);
+
+        // We must go through and check all 8 directions for each square 
+        // and we only check them if they have not previously been checked
+
+        // If the revealed cell is a bomb, we crash out - GOOD
         if (underlay[y][x] === '&') {
-            alert('YOU FUCKIN LOSE')
-        } else if (underlay[y][x] > 0) {
+            let newReveal = [];
+            // Reveal all cells in the game board
+            for (let row of underlay) {
+                let newRow = [];
+                for (let cell of row) {
+                    newRow.push(true);
+                }
+                newReveal.push(newRow)
+            }
+            setReveal(newReveal);
+            alert('YOU FUCKIN LOSE');
+        }
 
-            array.push([y, x]);
-
-            console.log('in revealElement for normal cell, y, x, array of checked spots', y, x, array);
-
+        // If the revealed cell is > 0, we do not do recursion - GOOD
+        else if (underlay[y][x] > 0) {
             // Create a copy of reveal with JSON
             let changeReveal = JSON.parse(JSON.stringify(reveal));
 
@@ -636,36 +884,30 @@ function Minesweeper() {
 
             // Update the State variable
             setReveal(changeReveal);
-
-        } else {
-            // See if we have checked this element already
-            // if we have we do not allow it to be checked again
-            for (let check of array) {
-                if ([y, x] === check) {
-                    notChecked = false;
-                    console.log('cell has been checked, y, x', y, x);
-                }
-            }
-
-            if (notChecked) {
-
-
-
-
-                array.push([y, x]);
-
-                console.log('in revealElement, y, x, array of checked spots', y, x, array);
-
-                // Create a copy of reveal with JSON
-                let changeReveal = JSON.parse(JSON.stringify(reveal));
-
-                // Set the clicked element's reveal variable to true
-                changeReveal[y][x] = true;
-
-                // Update the State variable
-                setReveal(changeReveal);
-            }
         }
+
+        // If the revealed cell is 0, we begin a flood fill algorithm
+
+        // BEGIN BY ADDING ALL 8 DIRECTIONS TO THE ENQUEUE ARRAY, 
+        // WE ONLY ADD TO ENQUEUE IF THE VALUE HAS NOT ALREADY BEEN ADDED TO ENQUEUE OR IS IN DEQUEUE
+
+        // UP - NO Y=0
+        
+
+        // UP RIGHT - NO Y=0 OR X=UNDERLAY[0].LENGTH-1
+
+        // RIGHT - NO X=UNDERLAY[0].LENGTH-1
+
+        // DOWN RIGHT - NO Y=UNDERLAY.LENGTH-1 OR X=UNDERLAY[0].LENGTH-1
+
+        // DOWN - NO Y=UNDERLAY.LENGTH-1
+
+        // DOWN LEFT - NO Y=UNDERLAY.LENGTH-1 OR X=0
+
+        // LEFT - NO X=0
+
+        // LEFT UP - NO Y=0 OR X=0
+
 
 
     }
@@ -674,6 +916,7 @@ function Minesweeper() {
         <>
             <p>Underlay: {JSON.stringify(underlay)}</p>
             <p>Reveal: {JSON.stringify(reveal)}</p>
+            <p>Revealed Cells: {JSON.stringify(revealedCells)}</p>
 
             <table>
                 <tbody>
@@ -683,7 +926,7 @@ function Minesweeper() {
 
 
                             {row.map((element, x) =>
-                                <td key={y + 'element' + x} onClick={() => revealCell(y, x, [])}>
+                                <td key={y + 'element' + x} onClick={() => revealCell([[y, x]], [])}>
                                     {reveal[y][x] && element}
                                 </td>
                             )}

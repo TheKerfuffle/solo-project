@@ -345,6 +345,8 @@ function Minesweeper() {
     // ________________________________________Reveal Function________________________________________
     function revealElement(y, x, nestedArray) {
 
+        console.log('in revealElement, y, x, nestedArray', y, x, nestedArray);
+
         // Create a copy of reveal with JSON
         let changeReveal = JSON.parse(JSON.stringify(nestedArray));
 
@@ -614,6 +616,60 @@ function Minesweeper() {
 
     }
 
+    function revealCell(y, x, array) {
+
+        let notChecked = true;
+
+        if (underlay[y][x] === '&') {
+            alert('YOU FUCKIN LOSE')
+        } else if (underlay[y][x] > 0) {
+
+            array.push([y, x]);
+
+            console.log('in revealElement for normal cell, y, x, array of checked spots', y, x, array);
+
+            // Create a copy of reveal with JSON
+            let changeReveal = JSON.parse(JSON.stringify(reveal));
+
+            // Set the clicked element's reveal variable to true
+            changeReveal[y][x] = true;
+
+            // Update the State variable
+            setReveal(changeReveal);
+
+        } else {
+            // See if we have checked this element already
+            // if we have we do not allow it to be checked again
+            for (let check of array) {
+                if ([y, x] === check) {
+                    notChecked = false;
+                    console.log('cell has been checked, y, x', y, x);
+                }
+            }
+
+            if (notChecked) {
+
+
+
+
+                array.push([y, x]);
+
+                console.log('in revealElement, y, x, array of checked spots', y, x, array);
+
+                // Create a copy of reveal with JSON
+                let changeReveal = JSON.parse(JSON.stringify(reveal));
+
+                // Set the clicked element's reveal variable to true
+                changeReveal[y][x] = true;
+
+                // Update the State variable
+                setReveal(changeReveal);
+            }
+        }
+
+
+    }
+
     return (
         <>
             <p>Underlay: {JSON.stringify(underlay)}</p>
@@ -627,7 +683,7 @@ function Minesweeper() {
 
 
                             {row.map((element, x) =>
-                                <td key={y + 'element' + x} onClick={() => revealElement(y, x, reveal)}>
+                                <td key={y + 'element' + x} onClick={() => revealCell(y, x, [])}>
                                     {reveal[y][x] && element}
                                 </td>
                             )}

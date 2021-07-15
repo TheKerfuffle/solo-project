@@ -13,7 +13,7 @@ function Minesweeper() {
         generateMinesweeper(8, 10, 10);
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log('Reveal has been updated!', reveal);
     }, [reveal])
 
@@ -345,7 +345,38 @@ function Minesweeper() {
     // ________________________________________Reveal Function________________________________________
     function revealElement(y, x) {
 
-        let changeReveal = JSON.parse(JSON.stringify(reveal));
+        // If the revealed element has a value of zero, we want to reveal all surrounding elements
+        // But only under specific circumstances...
+
+        if (underlay[y][x] === '&') {
+            alert('YOU FUCKIN LOSE')
+
+        } else if (underlay[y][x] === 0) {
+
+
+            // UP
+
+            if (y > 0 && underlay[y][x] === 0) {
+
+            }
+
+            // UP RIGHT
+
+            // RIGHT
+
+            // DOWN RIGHT
+
+            // DOWN
+
+            // DOWN LEFT
+
+            // LEFT
+
+            // UP LEFT
+
+        }
+
+
 
         // console.log(reveal);
         // console.log(changeReveal);
@@ -353,8 +384,13 @@ function Minesweeper() {
         // console.log('clicked on element y, x, reveal[y][x]', y, x, reveal[y][x]);
         // console.log('clicked on element y, x, changeReveal[y][x]', y, x, changeReveal[y][x]);
 
+        // Create a copy of reveal with JSON
+        let changeReveal = JSON.parse(JSON.stringify(reveal));
+
+        // Set the clicked element's reveal variable to true
         changeReveal[y][x] = true;
 
+        // Update the State variable
         setReveal(changeReveal);
 
     }

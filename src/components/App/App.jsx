@@ -27,7 +27,7 @@ import './App.css';
 import Profile from '../Profile/Profile';
 
 import Minesweeper2 from '../Minesweeper/Minesweeper2';
-import Minesweeper from '../Minesweeper/Minesweeper2';
+import Minesweeper from '../Minesweeper/Minesweeper';
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -92,19 +92,21 @@ function App() {
               <Grid />
             </ProtectedRoute>
             {/* Play Minesweeper */}
+
             <ProtectedRoute
               // logged in shows PlayPuzzle else shows LoginPage
               exact
               path="/mine"
             >
-              <Minesweeper2 />
+              <Minesweeper />
             </ProtectedRoute>
+            
             <ProtectedRoute
               // logged in shows PlayPuzzle else shows LoginPage
               exact
               path="/mine/:id"
             >
-              <Minesweeper2 />
+              <Minesweeper />
             </ProtectedRoute>
 
             {/* Play Nonograms */}

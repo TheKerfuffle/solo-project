@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
+import FlagIcon from '@material-ui/icons/Flag';
+
 
 function Minesweeper() {
 
@@ -25,9 +27,14 @@ function Minesweeper() {
     function checkComplete() {
         let minesUnflagged = 0;
         let bombs = 0;
+
+        console.log('Checking Completeness');
+
         // Reveal all cells in the game board
-        for (let y = 0; y < underlay.length - 1; y++) {
-            for (let x = 0; x < underlay[0].length - 1; x++) {
+        for (let y = 0; y < underlay.length; y++) {
+            console.log('underlay[y], y', underlay[y], y);
+            for (let x = 0; x < underlay[0].length; x++) {
+                console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
                 if (underlay[y][x] === '&') {
                     bombs++;
                     if (reveal[y][x] !== 2) {
@@ -36,6 +43,7 @@ function Minesweeper() {
                 }
             }
         }
+        console.log('bombs, minesUnflagged', bombs, minesUnflagged);
         // Only triggers when game is successfully completed
         if (bombs > 0 && minesUnflagged === 0) {
             alert('Minesweeper Complete');
@@ -55,6 +63,7 @@ function Minesweeper() {
 
         // Makes the empty grid of the requisite size
         let newGrid = [];
+        let mines = difficulty;
 
         for (let i = 0; i < height; i++) {
 
@@ -72,13 +81,13 @@ function Minesweeper() {
         console.log('newGrid without bombs', newGrid);
 
         // Add Bombs to unique locations
-        while (difficulty > 0) {
+        while (mines > 0) {
             let xPos = Math.floor(Math.random() * width);
             let yPos = Math.floor(Math.random() * height);
 
             if (newGrid[yPos][xPos] === 0) {
                 newGrid[yPos][xPos] = 1;
-                difficulty--;
+                mines--;
             }
         }
 
@@ -604,7 +613,12 @@ function Minesweeper() {
             <p>Underlay: {JSON.stringify(underlay)}</p>
             <p>Reveal: {JSON.stringify(reveal)}</p>
 
-            <table>
+            <input type="number" value={width} onChange={(e) => setWidth(e.target.value)} />
+            <input type="number" value={height} onChange={(e) => setHeight(e.target.value)} />
+            <input type="number" value={difficulty} onChange={(e) => setDifficulty(e.target.value)} />
+            <button onClick={() => generateMinesweeper(difficulty, width, height)}>New Game</button>
+
+            <table className="playtable">
                 <tbody>
                     {underlay && underlay.map((row, y) =>
 
@@ -613,7 +627,12 @@ function Minesweeper() {
 
                             {
                                 row.map((element, x) =>
-                                    <td key={y + 'element' + x} onContextMenu={(event) => flagCell(event, y, x)} onClick={() => revealCell([[y, x]], [])}>
+                                    <td
+                                        key={y + 'element' + x}
+                                        onClick={() => revealCell([[y, x]], [])}
+                                        onContextMenu={(event) => flagCell(event, y, x)}
+                                        className="reveal"
+                                    >
                                         {
                                             reveal[y][x] === 0 ?
                                                 ('')
@@ -621,7 +640,7 @@ function Minesweeper() {
                                                 (reveal[y][x] === 1 ?
                                                     (underlay[y][x] > 0 && element)
                                                     :
-                                                    ('F')
+                                                    <FlagIcon style={{ fontSize: 20, color: 'maroon' }} />
                                                 )
                                         }
                                     </td>

@@ -11,6 +11,7 @@ function Minesweeper() {
     // Minesweeper Game Board Data
     const [underlay, setUnderlay] = useState([]);
     const [reveal, setReveal] = useState([]);
+    const [completeness, setCompleteness] = useState(false);
 
     // Minesweeper Grid Size/Difficulty Parameters
     const [difficulty, setDifficulty] = useState(8);
@@ -27,43 +28,47 @@ function Minesweeper() {
     }, [reveal])
 
     function checkComplete() {
-        let minesUnflagged = 0;
-        let bombs = 0;
+        if (!completeness) {
 
-        console.log('Checking Completeness');
+            let minesUnflagged = 0;
+            let bombs = 0;
 
-        // Check that all cells have been flagged
-        for (let y = 0; y < underlay.length; y++) {
-            for (let x = 0; x < underlay[0].length; x++) {
-                if (underlay[y][x] === '&') {
-                    bombs++;
-                    if (reveal[y][x] !== 2) {
-                        minesUnflagged++;
-                    }
-                }
-            }
-        }
-        console.log('bombs, minesUnflagged', bombs, minesUnflagged);
-        // Only triggers when game is successfully completed
-        if (bombs > 0 && minesUnflagged === 0) {
-            alert('Minesweeper Complete');
-            let newReveal = [];
-            // To Do! Add a function that REVEALS ALL____________________________________________________________________________________________________________
+            console.log('Checking Completeness');
+
+            // Check that all cells have been flagged
             for (let y = 0; y < underlay.length; y++) {
-                let newRow = [];
-                console.log('underlay[y], y', underlay[y], y);
                 for (let x = 0; x < underlay[0].length; x++) {
-                    console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
-                    if (reveal[y][x] === 2) {
-                        newRow.push(2);
-                    } else {
-                        newRow.push(1);
+                    if (underlay[y][x] === '&') {
+                        bombs++;
+                        if (reveal[y][x] !== 2) {
+                            minesUnflagged++;
+                        }
                     }
                 }
-                newReveal.push(newRow);
             }
+            console.log('bombs, minesUnflagged', bombs, minesUnflagged);
+            // Only triggers when game is successfully completed
+            if (bombs > 0 && minesUnflagged === 0) {
+                alert('Minesweeper Complete');
+                let newReveal = [];
+                // To Do! Add a function that REVEALS ALL____________________________________________________________________________________________________________
+                for (let y = 0; y < underlay.length; y++) {
+                    let newRow = [];
+                    console.log('underlay[y], y', underlay[y], y);
+                    for (let x = 0; x < underlay[0].length; x++) {
+                        console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
+                        if (reveal[y][x] === 2) {
+                            newRow.push(2);
+                        } else {
+                            newRow.push(1);
+                        }
+                    }
+                    newReveal.push(newRow);
+                }
 
-            setReveal(newReveal);
+                setReveal(newReveal);
+                setCompleteness(true);
+            }
         }
     }
 
@@ -652,7 +657,7 @@ function Minesweeper() {
                                             key={y + 'element' + x}
                                             onClick={() => revealCell([[y, x]], [])}
                                             onContextMenu={(event) => flagCell(event, y, x)}
-                                            className="reveal"
+                                            className={"reveal" + reveal[y][x] + " element" + element}
                                         >
                                             {
                                                 reveal[y][x] === 0 ?

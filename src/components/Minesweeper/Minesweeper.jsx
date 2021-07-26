@@ -5,6 +5,8 @@ import FlagIcon from '@material-ui/icons/Flag';
 
 import './Minesweeper.css';
 
+import { Tooltip, Grid, TextField, Button } from "@material-ui/core";
+
 
 function Minesweeper() {
 
@@ -634,13 +636,65 @@ function Minesweeper() {
 
     return (
         <>
-            <p>Underlay: {JSON.stringify(underlay)}</p>
-            <p>Reveal: {JSON.stringify(reveal)}</p>
+            {/* <p>Underlay: {JSON.stringify(underlay)}</p>
+            <p>Reveal: {JSON.stringify(reveal)}</p> */}
 
-            <input type="number" value={width} onChange={(e) => setWidth(e.target.value)} />
+            {/* <input type="number" value={width} onChange={(e) => setWidth(e.target.value)} />
             <input type="number" value={height} onChange={(e) => setHeight(e.target.value)} />
-            <input type="number" value={difficulty} onChange={(e) => setDifficulty(e.target.value)} />
-            <button onClick={() => generateMinesweeper(difficulty, width, height)}>New Game</button>
+            <input type="number" />
+            <button >New Game</button> */}
+
+            <Grid container>
+                <Grid item xs={4} s={4} align="center" style={{ marginBottom: 20 }}>
+                    <>
+                        <Tooltip title="This will set how wide your puzzle will be">
+                            <TextField
+                                id="standard-basic"
+                                value={width}
+                                label="Puzzle Width"
+                                type="number"
+                                onChange={(e) => setWidth(e.target.value)}
+                            />
+                        </Tooltip>
+                    </>
+                </Grid>
+                <Grid item xs={4} s={4} align="center" style={{ marginBottom: 20 }}>
+                    <>
+                        <>
+                            <Tooltip title="This will set how tall your puzzle will be">
+                                <TextField
+                                    id="standard-basic"
+                                    value={height}
+                                    label="Puzzle Height"
+                                    type="number"
+                                    onChange={(e) => setHeight(e.target.value)}
+                                />
+                            </Tooltip>
+                        </>
+                    </>
+                </Grid>
+                <Grid item xs={4} s={4} align="center" style={{ marginBottom: 20 }}>
+                    <>
+                        <Tooltip title="This will set how many mines your puzzle will have">
+                            <TextField
+                                id="standard-basic"
+                                value={difficulty}
+                                label="Puzzle Difficulty"
+                                type="number"
+                                onChange={(e) => setDifficulty(e.target.value)}
+                            />
+                        </Tooltip>
+                    </>
+                </Grid>
+                <Grid item xs={12} align="center" style={{ marginBottom: 20 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => generateMinesweeper(difficulty, width, height)}
+                        style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                    >Generate Minesweeper
+                    </Button>
+                </Grid>
+            </Grid>
 
             <table className="playtable">
                 <tbody>
@@ -682,6 +736,103 @@ function Minesweeper() {
 
                 </tbody>
             </table>
+
+            <Grid container>
+
+                    {/* Small Minesweeper Auto Generations */}
+                <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => generateMinesweeper(8, 10, 10)}
+                        style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                    >
+                        Small Easy
+                    </Button>
+                </Grid>
+
+                <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => generateMinesweeper(16, 10, 10)}
+                        style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                    >
+                        Small Normal
+                    </Button>
+                </Grid>
+
+                <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => generateMinesweeper(25, 10, 10)}
+                        style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                    >
+                        Small Hard
+                    </Button>
+                </Grid>
+
+                {/* Medium Minesweeper Auto Generations */}
+                <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => generateMinesweeper(16, 20, 20)}
+                        style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                    >
+                        Small Easy
+                    </Button>
+                </Grid>
+
+                <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => generateMinesweeper(50, 20, 20)}
+                        style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                    >
+                        Small Normal
+                    </Button>
+                </Grid>
+
+                <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => generateMinesweeper(75, 20, 20)}
+                        style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                    >
+                        Small Hard
+                    </Button>
+                </Grid>
+
+                {/* Large Minesweeper Auto Generations */}
+                <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => generateMinesweeper(30, 30, 30)}
+                        style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                    >
+                        Small Easy
+                    </Button>
+                </Grid>
+
+                <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => generateMinesweeper(60, 30, 30)}
+                        style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                    >
+                        Small Normal
+                    </Button>
+                </Grid>
+
+                <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => generateMinesweeper(100, 30, 30)}
+                        style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
+                    >
+                        Small Hard
+                    </Button>
+                </Grid>
+
+            </Grid>
 
 
 

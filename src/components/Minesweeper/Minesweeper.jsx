@@ -391,7 +391,7 @@ function Minesweeper() {
         setReveal(newReveal);
     }
 
-    // ____________________Breadth First Search____________________
+    // ____________________Flood Fill Function, Breadth First Search____________________
     function revealCell(enqueue, dequeue, changeReveal) {
         // enqueue and dequeue are arrays,
         // enqueue holds all things to be checked, begins with cell that was clicked
@@ -616,10 +616,12 @@ function Minesweeper() {
         e.preventDefault();
         let changeReveal = JSON.parse(JSON.stringify(reveal));
 
-        if (changeReveal[y][x] === 2) {
-            changeReveal[y][x] = 0;
-        } else {
-            changeReveal[y][x] = 2;
+        if (changeReveal[y][x] !== 1) {
+            if (changeReveal[y][x] === 2) {
+                changeReveal[y][x] = 0;
+            } else {
+                changeReveal[y][x] = 2;
+            }
         }
 
         setReveal(changeReveal);

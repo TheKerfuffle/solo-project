@@ -51,7 +51,7 @@ function Minesweeper() {
             if (bombs > 0 && minesUnflagged === 0) {
                 alert('Minesweeper Complete');
                 let newReveal = [];
-                // To Do! Add a function that REVEALS ALL____________________________________________________________________________________________________________
+                // To Do! Add a function that REVEALS ALL___Done___________________________________________
                 for (let y = 0; y < underlay.length; y++) {
                     let newRow = [];
                     console.log('underlay[y], y', underlay[y], y);
@@ -402,9 +402,9 @@ function Minesweeper() {
         // enqueue holds all things to be checked, begins with cell that was clicked
         // dequeue holds all things previously checked, begins as an empty array
 
-        console.log('Beginning revealCell');
-        console.log('enqueue', enqueue);
-        console.log('dequeue', dequeue);
+        // console.log('Beginning revealCell');
+        // console.log('enqueue', enqueue);
+        // console.log('dequeue', dequeue);
 
         // IF DEQUEUE IS EMPTY, THIS IS THE FIRST PASS OF THE FUNCTION
         // SO, WE INITIALIZE A REVEAL MIRROR
@@ -421,7 +421,7 @@ function Minesweeper() {
         let y = elementToCheck[0];
         let x = elementToCheck[1];
 
-        console.log('elementToCheck, y, x', elementToCheck, y, x);
+        // console.log('elementToCheck, y, x', elementToCheck, y, x);
 
         // We must go through and check all 8 directions for each square 
         // and we only check them if they have not previously been checked
@@ -606,7 +606,7 @@ function Minesweeper() {
             changeReveal[y][x] = 1;
         }
 
-        console.log('enqueue after pushes', enqueue);
+        // console.log('enqueue after pushes', enqueue);
 
         if (enqueue.length > 0) {
             revealCell(enqueue, dequeue, changeReveal);

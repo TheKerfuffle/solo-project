@@ -59,10 +59,11 @@ function Minesweeper() {
                     } else {
                         newRow.push(1);
                     }
-
                 }
                 newReveal.push(newRow);
             }
+
+            setReveal(newReveal);
         }
     }
 
@@ -637,44 +638,41 @@ function Minesweeper() {
             <table className="playtable">
                 <tbody>
                     {/* TO DO: ADD SPECIALIZED CLASSNAMES AND CHANGE GAMEBOARD COLOR WHEN THINGS ARE BEING REVEALED */}
-                    {underlay && underlay.map((row, y) =>
+                    {
+                        underlay && underlay.map((row, y) =>
 
-                        <tr key={y + 'elementRow'}>
+                            <tr key={y + 'elementRow'}>
 
 
-                            {
-                                row.map((element, x) => {
-                                    reveal[y][x] === 0 ?
+                                {
+                                    row.map((element, x) =>
                                         <td
                                             key={y + 'element' + x}
                                             onClick={() => revealCell([[y, x]], [])}
                                             onContextMenu={(event) => flagCell(event, y, x)}
                                             className="reveal"
                                         >
-                                            {''}
+                                            {
+                                                reveal[y][x] === 0 ?
+                                                    ('')
+                                                    :
+                                                    (reveal[y][x] === 1 ?
+                                                        (underlay[y][x] > 0 && element)
+                                                        :
+                                                        <FlagIcon style={{ fontSize: 20, color: 'maroon' }} />
+                                                    )
+                                            }
                                         </td>
-                                        :
-                                        (reveal[y][x] === 1 ?
-                                            <td
-                                                key={y + 'element' + x}
-                                                className="reveal"
-                                            >
-                                                {(underlay[y][x] > 0 && element)}
-                                            </td>
-
-                                            :
-                                            <td
-                                                key={y + 'element' + x}
-                                                className="reveal"
-                                            >
-                                                <FlagIcon style={{ fontSize: 20, color: 'maroon' }} />
-                                            </td>
-                                        )
+                                    )
                                 }
-                                )
-                            }
-                        </tr>
-                    )}
+                            </tr>
+
+
+
+                        )
+                    }
+
+
                 </tbody>
             </table>
 
@@ -686,34 +684,3 @@ function Minesweeper() {
 
 export default Minesweeper;
 
-// {underlay && underlay.map((row, y) =>
-
-//     <tr key={y + 'elementRow'}>
-
-
-//         {
-//             row.map((element, x) =>
-//                 <td
-//                     key={y + 'element' + x}
-//                     onClick={() => revealCell([[y, x]], [])}
-//                     onContextMenu={(event) => flagCell(event, y, x)}
-//                     className="reveal"
-//                 >
-//                     {
-//                         reveal[y][x] === 0 ?
-//                             ('')
-//                             :
-//                             (reveal[y][x] === 1 ?
-//                                 (underlay[y][x] > 0 && element)
-//                                 :
-//                                 <FlagIcon style={{ fontSize: 20, color: 'maroon' }} />
-//                             )
-//                     }
-//                 </td>
-//             )
-//         }
-//     </tr>
-
-
-
-// )}

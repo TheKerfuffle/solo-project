@@ -47,6 +47,7 @@ function Minesweeper() {
         // Only triggers when game is successfully completed
         if (bombs > 0 && minesUnflagged === 0) {
             alert('Minesweeper Complete');
+            // To Do! Add a function that REVEALS ALL____________________________________________________________________________________________________________
         }
     }
 
@@ -620,6 +621,7 @@ function Minesweeper() {
 
             <table className="playtable">
                 <tbody>
+                    {/* TO DO: ADD SPECIALIZED CLASSNAMES AND CHANGE GAMEBOARD COLOR WHEN THINGS ARE BEING REVEALED */}
                     {underlay && underlay.map((row, y) =>
 
                         <tr key={y + 'elementRow'}>
@@ -661,3 +663,35 @@ function Minesweeper() {
 }
 
 export default Minesweeper;
+
+// {underlay && underlay.map((row, y) =>
+
+//     <tr key={y + 'elementRow'}>
+
+
+//         {
+//             row.map((element, x) =>
+//                 <td
+//                     key={y + 'element' + x}
+//                     onClick={() => revealCell([[y, x]], [])}
+//                     onContextMenu={(event) => flagCell(event, y, x)}
+//                     className="reveal"
+//                 >
+//                     {
+//                         reveal[y][x] === 0 ?
+//                             ('')
+//                             :
+//                             (reveal[y][x] === 1 ?
+//                                 (underlay[y][x] > 0 && element)
+//                                 :
+//                                 <FlagIcon style={{ fontSize: 20, color: 'maroon' }} />
+//                             )
+//                     }
+//                 </td>
+//             )
+//         }
+//     </tr>
+
+
+
+// )}

@@ -7,6 +7,31 @@
     margin-bottom: 20px;
 }
 
+.element1 {
+    color: blue;
+}
+.element2 {
+    color: blueviolet;
+}
+.element3 {
+    color: green;
+}
+.element4 {
+    color: yellow;
+}
+.element5 {
+    color: coral;
+}
+.element6 {
+    color: cyan;
+}
+.element7 {
+    color: deeppink;
+}
+.element8 {
+    color: lightseagreen;
+}
+
 .addPuzzleTable {
     margin: auto;
     border: solid black 3px;

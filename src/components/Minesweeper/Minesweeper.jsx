@@ -3,6 +3,8 @@ import { useState } from "react";
 
 import FlagIcon from '@material-ui/icons/Flag';
 
+import './Minesweeper.css';
+
 
 function Minesweeper() {
 
@@ -30,11 +32,9 @@ function Minesweeper() {
 
         console.log('Checking Completeness');
 
-        // Reveal all cells in the game board
+        // Check that all cells have been flagged
         for (let y = 0; y < underlay.length; y++) {
-            console.log('underlay[y], y', underlay[y], y);
             for (let x = 0; x < underlay[0].length; x++) {
-                console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
                 if (underlay[y][x] === '&') {
                     bombs++;
                     if (reveal[y][x] !== 2) {
@@ -47,6 +47,23 @@ function Minesweeper() {
         // Only triggers when game is successfully completed
         if (bombs > 0 && minesUnflagged === 0) {
             alert('Minesweeper Complete');
+            let newReveal = [];
+            // To Do! Add a function that REVEALS ALL____________________________________________________________________________________________________________
+            for (let y = 0; y < underlay.length; y++) {
+                let newRow = [];
+                console.log('underlay[y], y', underlay[y], y);
+                for (let x = 0; x < underlay[0].length; x++) {
+                    console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
+                    if (reveal[y][x] === 2) {
+                        newRow.push(2);
+                    } else {
+                        newRow.push(1);
+                    }
+                }
+                newReveal.push(newRow);
+            }
+
+            setReveal(newReveal);
         }
     }
 
@@ -374,7 +391,7 @@ function Minesweeper() {
         setReveal(newReveal);
     }
 
-    // ____________________Breadth First Search____________________
+    // ____________________Flood Fill Function, Breadth First Search____________________
     function revealCell(enqueue, dequeue, changeReveal) {
         // enqueue and dequeue are arrays,
         // enqueue holds all things to be checked, begins with cell that was clicked
@@ -599,10 +616,12 @@ function Minesweeper() {
         e.preventDefault();
         let changeReveal = JSON.parse(JSON.stringify(reveal));
 
-        if (changeReveal[y][x] === 2) {
-            changeReveal[y][x] = 0;
-        } else {
-            changeReveal[y][x] = 2;
+        if (changeReveal[y][x] !== 1) {
+            if (changeReveal[y][x] === 2) {
+                changeReveal[y][x] = 0;
+            } else {
+                changeReveal[y][x] = 2;
+            }
         }
 
         setReveal(changeReveal);
@@ -620,37 +639,42 @@ function Minesweeper() {
 
             <table className="playtable">
                 <tbody>
-                    {underlay && underlay.map((row, y) =>
+                    {/* TO DO: ADD SPECIALIZED CLASSNAMES AND CHANGE GAMEBOARD COLOR WHEN THINGS ARE BEING REVEALED */}
+                    {
+                        underlay && underlay.map((row, y) =>
 
-                        <tr key={y + 'elementRow'}>
+                            <tr key={y + 'elementRow'}>
 
 
-                            {
-                                row.map((element, x) =>
-                                    <td
-                                        key={y + 'element' + x}
-                                        onClick={() => revealCell([[y, x]], [])}
-                                        onContextMenu={(event) => flagCell(event, y, x)}
-                                        className="reveal"
-                                    >
-                                        {
-                                            reveal[y][x] === 0 ?
-                                                ('')
-                                                :
-                                                (reveal[y][x] === 1 ?
-                                                    (underlay[y][x] > 0 && element)
+                                {
+                                    row.map((element, x) =>
+                                        <td
+                                            key={y + 'element' + x}
+                                            onClick={() => revealCell([[y, x]], [])}
+                                            onContextMenu={(event) => flagCell(event, y, x)}
+                                            className="reveal"
+                                        >
+                                            {
+                                                reveal[y][x] === 0 ?
+                                                    ('')
                                                     :
-                                                    <FlagIcon style={{ fontSize: 20, color: 'maroon' }} />
-                                                )
-                                        }
-                                    </td>
-                                )
-                            }
-                        </tr>
+                                                    (reveal[y][x] === 1 ?
+                                                        (underlay[y][x] > 0 && element)
+                                                        :
+                                                        <FlagIcon style={{ fontSize: 20, color: 'maroon' }} />
+                                                    )
+                                            }
+                                        </td>
+                                    )
+                                }
+                            </tr>
 
 
 
-                    )}
+                        )
+                    }
+
+
                 </tbody>
             </table>
 
@@ -661,3 +685,4 @@ function Minesweeper() {
 }
 
 export default Minesweeper;
+

@@ -7,6 +7,10 @@
     margin-bottom: 20px;
 }
 
+.element0 {
+    color: white;
+}
+
 .element1 {
     color: blue;
 }
@@ -30,6 +34,18 @@
 }
 .element8 {
     color: lightseagreen;
+}
+
+.reveal0 {
+    background-color: lightgray;
+}
+
+.reveal1 {
+    background-color: white;
+}
+
+.reveal2 {
+    background-color: darkgray;
 }
 
 .addPuzzleTable {

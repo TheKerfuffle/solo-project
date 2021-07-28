@@ -16,12 +16,12 @@ function Minesweeper() {
     const [completeness, setCompleteness] = useState(false);
 
     // Minesweeper Grid Size/Difficulty Parameters
-    const [difficulty, setDifficulty] = useState(8);
-    const [width, setWidth] = useState(10);
-    const [height, setHeight] = useState(10);
+    const [difficulty, setDifficulty] = useState();
+    const [width, setWidth] = useState();
+    const [height, setHeight] = useState();
 
     useEffect(() => {
-        generateMinesweeper(difficulty, width, height);
+        generateMinesweeper(8, 10, 10);
     }, [])
 
     useEffect(() => {
@@ -777,7 +777,7 @@ function Minesweeper() {
                         onClick={() => generateMinesweeper(16, 20, 20)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
-                        Small Easy
+                        Medium Easy
                     </Button>
                 </Grid>
 
@@ -787,7 +787,7 @@ function Minesweeper() {
                         onClick={() => generateMinesweeper(50, 20, 20)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
-                        Small Normal
+                        Medium Normal
                     </Button>
                 </Grid>
 
@@ -797,7 +797,7 @@ function Minesweeper() {
                         onClick={() => generateMinesweeper(75, 20, 20)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
-                        Small Hard
+                        Medium Hard
                     </Button>
                 </Grid>
 
@@ -808,7 +808,7 @@ function Minesweeper() {
                         onClick={() => generateMinesweeper(30, 30, 30)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
-                        Small Easy
+                        Large Easy
                     </Button>
                 </Grid>
 
@@ -818,7 +818,7 @@ function Minesweeper() {
                         onClick={() => generateMinesweeper(60, 30, 30)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
-                        Small Normal
+                        Large Normal
                     </Button>
                 </Grid>
 
@@ -828,7 +828,7 @@ function Minesweeper() {
                         onClick={() => generateMinesweeper(100, 30, 30)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
-                        Small Hard
+                        Large Hard
                     </Button>
                 </Grid>
 

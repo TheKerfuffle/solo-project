@@ -14,6 +14,7 @@ function Minesweeper() {
     const [underlay, setUnderlay] = useState([]);
     const [reveal, setReveal] = useState([]);
     const [completeness, setCompleteness] = useState(false);
+    const [finishMessage, setFinishMessage] = useState("");
 
     // Minesweeper Grid Size/Difficulty Parameters
     const [difficulty, setDifficulty] = useState();
@@ -753,7 +754,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(16, 10, 10)}
+                        onClick={() => generateMinesweeper(14, 10, 10)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Small Normal
@@ -763,7 +764,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(25, 10, 10)}
+                        onClick={() => generateMinesweeper(20, 10, 10)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Small Hard

@@ -14,7 +14,7 @@ function Minesweeper() {
     const [underlay, setUnderlay] = useState([]);
     const [reveal, setReveal] = useState([]);
     const [completeness, setCompleteness] = useState(false);
-    const [finishMessage, setFinishMessage] = useState("");
+    const [finishMessage, setFinishMessage] = useState("No Message");
 
     // Minesweeper Grid Size/Difficulty Parameters
     const [difficulty, setDifficulty] = useState();
@@ -78,8 +78,8 @@ function Minesweeper() {
 
     // ________________________________________Generate Puzzle Function________________________________________
     function generateMinesweeper(difficulty, width, height) {
-        console.log('difficulty', difficulty);
-        console.log('width, height', width, height);
+        // console.log('difficulty', difficulty);
+        // console.log('width, height', width, height);
 
         // For now generate a 10x10 grid with 8 difficulty (8 bombs)
         // width = 10;
@@ -103,7 +103,7 @@ function Minesweeper() {
             newGrid.push(newRow);
         }
         // Log Empty Grid
-        console.log('newGrid without bombs', newGrid);
+        // console.log('newGrid without bombs', newGrid);
 
         // Add Bombs to unique locations
         while (mines > 0) {
@@ -401,238 +401,246 @@ function Minesweeper() {
 
     // ____________________Flood Fill Function, Breadth First Search____________________
     function revealCell(enqueue, dequeue, changeReveal) {
-        // enqueue and dequeue are arrays,
-        // enqueue holds all things to be checked, begins with cell that was clicked
-        // dequeue holds all things previously checked, begins as an empty array
+        if (!completeness) {
+            // enqueue and dequeue are arrays,
+            // enqueue holds all things to be checked, begins with cell that was clicked
+            // dequeue holds all things previously checked, begins as an empty array
 
-        // console.log('Beginning revealCell');
-        // console.log('enqueue', enqueue);
-        // console.log('dequeue', dequeue);
+            // console.log('Beginning revealCell');
+            // console.log('enqueue', enqueue);
+            // console.log('dequeue', dequeue);
 
-        // IF DEQUEUE IS EMPTY, THIS IS THE FIRST PASS OF THE FUNCTION
-        // SO, WE INITIALIZE A REVEAL MIRROR
-        if (dequeue.length === 0) {
-            changeReveal = JSON.parse(JSON.stringify(reveal))
-        }
-
-        // We begin by grabbing the first value in enqueue
-        // The values in enqueue are always in the format [y,x]
-        let elementToCheck = enqueue.shift();
-
-        // Add the current values to the dequeue array
-        dequeue.push(elementToCheck);
-        let y = elementToCheck[0];
-        let x = elementToCheck[1];
-
-        // console.log('elementToCheck, y, x', elementToCheck, y, x);
-
-        // We must go through and check all 8 directions for each square 
-        // and we only check them if they have not previously been checked
-
-        // If the revealed cell is a bomb, we crash out - GOOD
-        if (underlay[y][x] === '&') {
-            let newReveal = [];
-            // Reveal all cells in the game board
-            for (let row of underlay) {
-                let newRow = [];
-                for (let cell of row) {
-                    newRow.push(1);
-                }
-                newReveal.push(newRow)
+            // IF DEQUEUE IS EMPTY, THIS IS THE FIRST PASS OF THE FUNCTION
+            // SO, WE INITIALIZE A REVEAL MIRROR
+            if (dequeue.length === 0) {
+                changeReveal = JSON.parse(JSON.stringify(reveal))
             }
-            setReveal(newReveal);
-            alert('YOU FUCKIN LOSE');
-        }
 
-        // If the revealed cell is 0, we begin a flood fill algorithm
+            // We begin by grabbing the first value in enqueue
+            // The values in enqueue are always in the format [y,x]
+            let elementToCheck = enqueue.shift();
+
+            // Add the current values to the dequeue array
+            dequeue.push(elementToCheck);
+            let y = elementToCheck[0];
+            let x = elementToCheck[1];
+
+            // console.log('elementToCheck, y, x', elementToCheck, y, x);
+
+            // We must go through and check all 8 directions for each square 
+            // and we only check them if they have not previously been checked
+
+            // If the revealed cell is a bomb, we crash out - GOOD
+            if (underlay[y][x] === '&') {
+                let newReveal = [];
+                // Reveal all cells in the game board
+                for (let row of underlay) {
+                    let newRow = [];
+                    for (let cell of row) {
+                        newRow.push(1);
+                    }
+                    newReveal.push(newRow)
+                }
+                setReveal(newReveal);
+                setFinishMessage('YOU FUCKIN LOSE');
+                setCompleteness(true);
+            }
+
+            // If the revealed cell is 0, we begin a flood fill algorithm
+            else {
+
+                // Add things to enqueue array if the value is 0
+                if (underlay[y][x] === 0) {
+                    // BEGIN BY ADDING ALL 8 DIRECTIONS TO THE ENQUEUE ARRAY, 
+                    // WE ONLY ADD TO ENQUEUE IF THE VALUE HAS NOT ALREADY BEEN ADDED TO ENQUEUE OR IS IN DEQUEUE
+
+                    // UP - NO Y=0
+                    if (y > 0) {
+                        let checkUp = true;
+                        for (let cell of enqueue) {
+                            if (y - 1 === cell[0] && x === cell[1]) {
+                                checkUp = false;
+                            }
+                        }
+                        for (let cell of dequeue) {
+                            if (y - 1 === cell[0] && x === cell[1]) {
+                                checkUp = false;
+                            }
+                        }
+                        if (checkUp) {
+                            enqueue.push([y - 1, x])
+                        }
+                    }
+
+                    // UP RIGHT - NO Y=0 OR X=UNDERLAY[0].LENGTH-1
+
+                    if (y > 0 && x < underlay[0].length - 1) {
+                        let checkUpRight = true;
+                        for (let cell of enqueue) {
+                            if (y - 1 === cell[0] && x + 1 === cell[1]) {
+                                checkUpRight = false;
+                            }
+                        }
+                        for (let cell of dequeue) {
+                            if (y - 1 === cell[0] && x + 1 === cell[1]) {
+                                checkUpRight = false;
+                            }
+                        }
+                        if (checkUpRight) {
+                            enqueue.push([y - 1, x + 1])
+                        }
+                    }
+
+                    // RIGHT - NO X=UNDERLAY[0].LENGTH-1
+
+                    if (x < underlay[0].length - 1) {
+                        let checkRight = true;
+                        for (let cell of enqueue) {
+                            if (y === cell[0] && x + 1 === cell[1]) {
+                                checkRight = false;
+                            }
+                        }
+                        for (let cell of dequeue) {
+                            if (y === cell[0] && x + 1 === cell[1]) {
+                                checkRight = false;
+                            }
+                        }
+                        if (checkRight) {
+                            enqueue.push([y, x + 1])
+                        }
+                    }
+
+                    // DOWN RIGHT - NO Y=UNDERLAY.LENGTH-1 OR X=UNDERLAY[0].LENGTH-1
+
+                    if (y < underlay.length - 1 && x < underlay[0].length - 1) {
+                        let checkDownRight = true;
+                        for (let cell of enqueue) {
+                            if (y + 1 === cell[0] && x + 1 === cell[1]) {
+                                checkDownRight = false;
+                            }
+                        }
+                        for (let cell of dequeue) {
+                            if (y + 1 === cell[0] && x + 1 === cell[1]) {
+                                checkDownRight = false;
+                            }
+                        }
+                        if (checkDownRight) {
+                            enqueue.push([y + 1, x + 1])
+                        }
+                    }
+
+                    // DOWN - NO Y=UNDERLAY.LENGTH-1
+
+                    if (y < underlay.length - 1) {
+                        let checkDown = true;
+                        for (let cell of enqueue) {
+                            if (y + 1 === cell[0] && x === cell[1]) {
+                                checkDown = false;
+                            }
+                        }
+                        for (let cell of dequeue) {
+                            if (y + 1 === cell[0] && x === cell[1]) {
+                                checkDown = false;
+                            }
+                        }
+                        if (checkDown) {
+                            enqueue.push([y + 1, x])
+                        }
+                    }
+
+                    // DOWN LEFT - NO Y=UNDERLAY.LENGTH-1 OR X=0
+
+                    if (y < underlay.length - 1 && x > 0) {
+                        let checkDownLeft = true;
+                        for (let cell of enqueue) {
+                            if (y + 1 === cell[0] && x - 1 === cell[1]) {
+                                checkDownLeft = false;
+                            }
+                        }
+                        for (let cell of dequeue) {
+                            if (y + 1 === cell[0] && x - 1 === cell[1]) {
+                                checkDownLeft = false;
+                            }
+                        }
+                        if (checkDownLeft) {
+                            enqueue.push([y + 1, x - 1])
+                        }
+                    }
+
+                    // LEFT - NO X=0
+
+                    if (x > 0) {
+                        let checkLeft = true;
+                        for (let cell of enqueue) {
+                            if (y === cell[0] && x - 1 === cell[1]) {
+                                checkLeft = false;
+                            }
+                        }
+                        for (let cell of dequeue) {
+                            if (y === cell[0] && x - 1 === cell[1]) {
+                                checkLeft = false;
+                            }
+                        }
+                        if (checkLeft) {
+                            enqueue.push([y, x - 1])
+                        }
+                    }
+
+                    // LEFT UP - NO Y=0 OR X=0
+
+                    if (x > 0 && y > 0) {
+                        let checkUpLeft = true;
+                        for (let cell of enqueue) {
+                            if (y - 1 === cell[0] && x - 1 === cell[1]) {
+                                checkUpLeft = false;
+                            }
+                        }
+                        for (let cell of dequeue) {
+                            if (y - 1 === cell[0] && x - 1 === cell[1]) {
+                                checkUpLeft = false;
+                            }
+                        }
+                        if (checkUpLeft) {
+                            enqueue.push([y - 1, x - 1])
+                        }
+                    }
+                }
+
+                // Set the clicked element's reveal variable
+                // to 1 which will trigger the element to display
+                changeReveal[y][x] = 1;
+            }
+
+            // console.log('enqueue after pushes', enqueue);
+
+            if (enqueue.length > 0) {
+                revealCell(enqueue, dequeue, changeReveal);
+            } else {
+                setReveal(changeReveal);
+            }
+
+        }
         else {
-
-            // Add things to enqueue array if the value is 0
-            if (underlay[y][x] === 0) {
-                // BEGIN BY ADDING ALL 8 DIRECTIONS TO THE ENQUEUE ARRAY, 
-                // WE ONLY ADD TO ENQUEUE IF THE VALUE HAS NOT ALREADY BEEN ADDED TO ENQUEUE OR IS IN DEQUEUE
-
-                // UP - NO Y=0
-                if (y > 0) {
-                    let checkUp = true;
-                    for (let cell of enqueue) {
-                        if (y - 1 === cell[0] && x === cell[1]) {
-                            checkUp = false;
-                        }
-                    }
-                    for (let cell of dequeue) {
-                        if (y - 1 === cell[0] && x === cell[1]) {
-                            checkUp = false;
-                        }
-                    }
-                    if (checkUp) {
-                        enqueue.push([y - 1, x])
-                    }
-                }
-
-                // UP RIGHT - NO Y=0 OR X=UNDERLAY[0].LENGTH-1
-
-                if (y > 0 && x < underlay[0].length - 1) {
-                    let checkUpRight = true;
-                    for (let cell of enqueue) {
-                        if (y - 1 === cell[0] && x + 1 === cell[1]) {
-                            checkUpRight = false;
-                        }
-                    }
-                    for (let cell of dequeue) {
-                        if (y - 1 === cell[0] && x + 1 === cell[1]) {
-                            checkUpRight = false;
-                        }
-                    }
-                    if (checkUpRight) {
-                        enqueue.push([y - 1, x + 1])
-                    }
-                }
-
-                // RIGHT - NO X=UNDERLAY[0].LENGTH-1
-
-                if (x < underlay[0].length - 1) {
-                    let checkRight = true;
-                    for (let cell of enqueue) {
-                        if (y === cell[0] && x + 1 === cell[1]) {
-                            checkRight = false;
-                        }
-                    }
-                    for (let cell of dequeue) {
-                        if (y === cell[0] && x + 1 === cell[1]) {
-                            checkRight = false;
-                        }
-                    }
-                    if (checkRight) {
-                        enqueue.push([y, x + 1])
-                    }
-                }
-
-                // DOWN RIGHT - NO Y=UNDERLAY.LENGTH-1 OR X=UNDERLAY[0].LENGTH-1
-
-                if (y < underlay.length - 1 && x < underlay[0].length - 1) {
-                    let checkDownRight = true;
-                    for (let cell of enqueue) {
-                        if (y + 1 === cell[0] && x + 1 === cell[1]) {
-                            checkDownRight = false;
-                        }
-                    }
-                    for (let cell of dequeue) {
-                        if (y + 1 === cell[0] && x + 1 === cell[1]) {
-                            checkDownRight = false;
-                        }
-                    }
-                    if (checkDownRight) {
-                        enqueue.push([y + 1, x + 1])
-                    }
-                }
-
-                // DOWN - NO Y=UNDERLAY.LENGTH-1
-
-                if (y < underlay.length - 1) {
-                    let checkDown = true;
-                    for (let cell of enqueue) {
-                        if (y + 1 === cell[0] && x === cell[1]) {
-                            checkDown = false;
-                        }
-                    }
-                    for (let cell of dequeue) {
-                        if (y + 1 === cell[0] && x === cell[1]) {
-                            checkDown = false;
-                        }
-                    }
-                    if (checkDown) {
-                        enqueue.push([y + 1, x])
-                    }
-                }
-
-                // DOWN LEFT - NO Y=UNDERLAY.LENGTH-1 OR X=0
-
-                if (y < underlay.length - 1 && x > 0) {
-                    let checkDownLeft = true;
-                    for (let cell of enqueue) {
-                        if (y + 1 === cell[0] && x - 1 === cell[1]) {
-                            checkDownLeft = false;
-                        }
-                    }
-                    for (let cell of dequeue) {
-                        if (y + 1 === cell[0] && x - 1 === cell[1]) {
-                            checkDownLeft = false;
-                        }
-                    }
-                    if (checkDownLeft) {
-                        enqueue.push([y + 1, x - 1])
-                    }
-                }
-
-                // LEFT - NO X=0
-
-                if (x > 0) {
-                    let checkLeft = true;
-                    for (let cell of enqueue) {
-                        if (y === cell[0] && x - 1 === cell[1]) {
-                            checkLeft = false;
-                        }
-                    }
-                    for (let cell of dequeue) {
-                        if (y === cell[0] && x - 1 === cell[1]) {
-                            checkLeft = false;
-                        }
-                    }
-                    if (checkLeft) {
-                        enqueue.push([y, x - 1])
-                    }
-                }
-
-                // LEFT UP - NO Y=0 OR X=0
-
-                if (x > 0 && y > 0) {
-                    let checkUpLeft = true;
-                    for (let cell of enqueue) {
-                        if (y - 1 === cell[0] && x - 1 === cell[1]) {
-                            checkUpLeft = false;
-                        }
-                    }
-                    for (let cell of dequeue) {
-                        if (y - 1 === cell[0] && x - 1 === cell[1]) {
-                            checkUpLeft = false;
-                        }
-                    }
-                    if (checkUpLeft) {
-                        enqueue.push([y - 1, x - 1])
-                    }
-                }
-            }
-
-            // Set the clicked element's reveal variable
-            // to 1 which will trigger the element to display
-            changeReveal[y][x] = 1;
+            console.log('NOPE! THING IS DONE!');
         }
-
-        // console.log('enqueue after pushes', enqueue);
-
-        if (enqueue.length > 0) {
-            revealCell(enqueue, dequeue, changeReveal);
-        } else {
-            setReveal(changeReveal);
-        }
-
-
     }
 
     function flagCell(e, y, x) {
-        e.preventDefault();
-        let changeReveal = JSON.parse(JSON.stringify(reveal));
+        if (!completeness) {
 
-        if (changeReveal[y][x] !== 1) {
-            if (changeReveal[y][x] === 2) {
-                changeReveal[y][x] = 0;
-            } else {
-                changeReveal[y][x] = 2;
+            e.preventDefault();
+            let changeReveal = JSON.parse(JSON.stringify(reveal));
+
+            if (changeReveal[y][x] !== 1) {
+                if (changeReveal[y][x] === 2) {
+                    changeReveal[y][x] = 0;
+                } else {
+                    changeReveal[y][x] = 2;
+                }
             }
-        }
 
-        setReveal(changeReveal);
+            setReveal(changeReveal);
+        }
     }
 
     return (
@@ -697,6 +705,9 @@ function Minesweeper() {
                 </Grid>
             </Grid>
 
+            {finishMessage === "No Message" && 
+            <p>{finishMessage}</p>}
+
             <table className="playtable">
                 <tbody>
                     {/* TO DO: ADD SPECIALIZED CLASSNAMES AND CHANGE GAMEBOARD COLOR WHEN THINGS ARE BEING REVEALED */}
@@ -740,7 +751,7 @@ function Minesweeper() {
 
             <Grid container>
 
-                    {/* Small Minesweeper Auto Generations */}
+                {/* Small Minesweeper Auto Generations */}
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"

@@ -53,23 +53,7 @@ function Minesweeper() {
             // Only triggers when game is successfully completed
             if (bombs > 0 && minesUnflagged === 0) {
                 alert('Minesweeper Complete');
-                let newReveal = [];
-                // To Do! Add a function that REVEALS ALL___Done___________________________________________
-                for (let y = 0; y < underlay.length; y++) {
-                    let newRow = [];
-                    console.log('underlay[y], y', underlay[y], y);
-                    for (let x = 0; x < underlay[0].length; x++) {
-                        console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
-                        if (reveal[y][x] === 2) {
-                            newRow.push(2);
-                        } else {
-                            newRow.push(1);
-                        }
-                    }
-                    newReveal.push(newRow);
-                }
-
-                setReveal(newReveal);
+                revealAll();
                 setCompleteness(true);
             }
         }
@@ -399,6 +383,25 @@ function Minesweeper() {
         setReveal(newReveal);
     }
 
+    function revealAll() {
+
+        let newReveal = [];
+        for (let y = 0; y < underlay.length; y++) {
+            let newRow = [];
+            console.log('underlay[y], y', underlay[y], y);
+            for (let x = 0; x < underlay[0].length; x++) {
+                console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
+                if (reveal[y][x] === 2) {
+                    newRow.push(2);
+                } else {
+                    newRow.push(1);
+                }
+            }
+            newReveal.push(newRow);
+        }
+
+    }
+
     // ____________________Flood Fill Function, Breadth First Search____________________
     function revealCell(enqueue, dequeue, changeReveal) {
         if (!completeness) {
@@ -432,16 +435,7 @@ function Minesweeper() {
 
             // If the revealed cell is a bomb, we crash out - GOOD
             if (underlay[y][x] === '&') {
-                let newReveal = [];
-                // Reveal all cells in the game board
-                for (let row of underlay) {
-                    let newRow = [];
-                    for (let cell of row) {
-                        newRow.push(1);
-                    }
-                    newReveal.push(newRow)
-                }
-                setReveal(newReveal);
+                revealAll();
                 setFinishMessage('YOU FUCKIN LOSE');
                 setCompleteness(true);
             }
@@ -705,8 +699,8 @@ function Minesweeper() {
                 </Grid>
             </Grid>
 
-            {finishMessage === "No Message" && 
-            <p>{finishMessage}</p>}
+            {finishMessage !== "No Message" &&
+                <p>{finishMessage}</p>}
 
             <table className="playtable">
                 <tbody>

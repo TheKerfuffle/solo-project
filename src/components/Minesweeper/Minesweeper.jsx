@@ -22,7 +22,7 @@ function Minesweeper() {
     const [height, setHeight] = useState();
 
     useEffect(() => {
-        generateMinesweeper(8, 10, 10);
+        generateMinesweeper(8, 10, 10, true);
     }, [])
 
     useEffect(() => {
@@ -61,7 +61,7 @@ function Minesweeper() {
 
 
     // ________________________________________Generate Puzzle Function________________________________________
-    function generateMinesweeper(difficulty, width, height) {
+    function generateMinesweeper(difficulty, width, height, autogenerate = false) {
         // console.log('difficulty', difficulty);
         // console.log('width, height', width, height);
 
@@ -69,6 +69,12 @@ function Minesweeper() {
         // width = 10;
         // height = 10;
         // difficulty = 8;
+
+        if (autogenerate) {
+            setDifficulty(difficulty);
+            setWidth(width);
+            setHeight(height);
+        }
 
         // When you generate a new game, reset completeness and the alert message 
         setFinishMessage("No Message");
@@ -388,14 +394,14 @@ function Minesweeper() {
     }
 
     function revealAll() {
-
+        console.log('Revealing All Cells');
         let newReveal = [];
         for (let y = 0; y < underlay.length; y++) {
             let newRow = [];
             console.log('underlay[y], y', underlay[y], y);
             for (let x = 0; x < underlay[0].length; x++) {
                 console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
-                if (reveal[y][x] === 2) {
+                if (underlay[y][x] === '&') {
                     newRow.push(2);
                 } else {
                     newRow.push(1);
@@ -403,6 +409,8 @@ function Minesweeper() {
             }
             newReveal.push(newRow);
         }
+
+        setReveal(newReveal);
 
     }
 
@@ -439,9 +447,9 @@ function Minesweeper() {
 
             // If the revealed cell is a bomb, we crash out - GOOD
             if (underlay[y][x] === '&') {
-                revealAll();
                 setFinishMessage('YOU FUCKIN LOSE');
                 setCompleteness(true);
+                revealAll();
             }
 
             // If the revealed cell is 0, we begin a flood fill algorithm
@@ -624,9 +632,9 @@ function Minesweeper() {
     }
 
     function flagCell(e, y, x) {
+        e.preventDefault();
         if (!completeness) {
 
-            e.preventDefault();
             let changeReveal = JSON.parse(JSON.stringify(reveal));
 
             if (changeReveal[y][x] !== 1) {
@@ -753,7 +761,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(8, 10, 10)}
+                        onClick={() => generateMinesweeper(8, 10, 10, true)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Small Easy
@@ -763,7 +771,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(14, 10, 10)}
+                        onClick={() => generateMinesweeper(14, 10, 10, true)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Small Normal
@@ -773,7 +781,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(20, 10, 10)}
+                        onClick={() => generateMinesweeper(20, 10, 10, true)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Small Hard
@@ -784,7 +792,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(16, 20, 20)}
+                        onClick={() => generateMinesweeper(16, 20, 20, true)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Medium Easy
@@ -794,7 +802,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(50, 20, 20)}
+                        onClick={() => generateMinesweeper(50, 20, 20, true)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Medium Normal
@@ -804,7 +812,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(75, 20, 20)}
+                        onClick={() => generateMinesweeper(75, 20, 20, true)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Medium Hard
@@ -815,7 +823,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(30, 30, 30)}
+                        onClick={() => generateMinesweeper(30, 30, 30, true)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Large Easy
@@ -825,7 +833,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(60, 30, 30)}
+                        onClick={() => generateMinesweeper(60, 30, 30, true)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Large Normal
@@ -835,7 +843,7 @@ function Minesweeper() {
                 <Grid item xs={4} align="center" style={{ marginBottom: 20 }}>
                     <Button
                         variant="contained"
-                        onClick={() => generateMinesweeper(100, 30, 30)}
+                        onClick={() => generateMinesweeper(100, 30, 30, true)}
                         style={{ marginBottom: 20, color: 'white', backgroundColor: 'maroon' }}
                     >
                         Large Hard

@@ -26,8 +26,10 @@ function Minesweeper() {
     }, [])
 
     useEffect(() => {
-        console.log('Reveal has been updated!', reveal);
-        checkComplete()
+        if (!completeness) {
+            console.log('Reveal has been updated!', reveal);
+            checkComplete()
+        }
     }, [reveal])
 
     function checkComplete() {
@@ -396,20 +398,39 @@ function Minesweeper() {
     function revealAll() {
         console.log('Revealing All Cells');
         let newReveal = [];
+
+        for (let i = 0; i < underlay.length; i++) {
+            let newRow = [];
+            for (let x = 0; x < underlay[0].length; x++) {
+                newRow.push(0);
+            }
+            newReveal.push(newRow);
+        }
+
+
+
+
+
+
+
+
         for (let y = 0; y < underlay.length; y++) {
             let newRow = [];
             console.log('underlay[y], y', underlay[y], y);
             for (let x = 0; x < underlay[0].length; x++) {
                 console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
                 if (underlay[y][x] === '&') {
+                    console.log('mine, adding flag');
                     newRow.push(2);
                 } else {
+                    console.log('not a mine, reveal cell');
                     newRow.push(1);
                 }
             }
             newReveal.push(newRow);
         }
 
+        console.log('updating reveal array, newReveal:', newReveal);
         setReveal(newReveal);
 
     }

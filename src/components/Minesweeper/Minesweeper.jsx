@@ -70,6 +70,10 @@ function Minesweeper() {
         // height = 10;
         // difficulty = 8;
 
+        // When you generate a new game, reset completeness and the alert message 
+        setFinishMessage("No Message");
+        setCompleteness(false);
+
         // Makes the empty grid of the requisite size
         let newGrid = [];
         let mines = difficulty;
@@ -839,8 +843,6 @@ function Minesweeper() {
                 </Grid>
 
             </Grid>
-
-
 
         </>
     )

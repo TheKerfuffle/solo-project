@@ -26,8 +26,9 @@ function Minesweeper() {
     }, [])
 
     useEffect(() => {
+        console.log('reveal/underlay updated', reveal, underlay);
         if (!completeness) {
-            console.log('Reveal has been updated!', reveal);
+            console.log('Reveal has been updated! Game not over.', reveal);
             checkComplete()
         }
     }, [reveal])
@@ -55,7 +56,6 @@ function Minesweeper() {
             // Only triggers when game is successfully completed
             if (bombs > 0 && minesUnflagged === 0) {
                 alert('Minesweeper Complete');
-                revealAll();
                 setCompleteness(true);
             }
         }
@@ -395,46 +395,6 @@ function Minesweeper() {
         setReveal(newReveal);
     }
 
-    function revealAll() {
-        console.log('Revealing All Cells');
-        let newReveal = [];
-
-        for (let i = 0; i < underlay.length; i++) {
-            let newRow = [];
-            for (let x = 0; x < underlay[0].length; x++) {
-                newRow.push(0);
-            }
-            newReveal.push(newRow);
-        }
-
-
-
-
-
-
-
-
-        for (let y = 0; y < underlay.length; y++) {
-            let newRow = [];
-            console.log('underlay[y], y', underlay[y], y);
-            for (let x = 0; x < underlay[0].length; x++) {
-                console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
-                if (underlay[y][x] === '&') {
-                    console.log('mine, adding flag');
-                    newRow.push(2);
-                } else {
-                    console.log('not a mine, reveal cell');
-                    newRow.push(1);
-                }
-            }
-            newReveal.push(newRow);
-        }
-
-        console.log('updating reveal array, newReveal:', newReveal);
-        setReveal(newReveal);
-
-    }
-
     // ____________________Flood Fill Function, Breadth First Search____________________
     function revealCell(enqueue, dequeue, changeReveal) {
         if (!completeness) {
@@ -468,9 +428,19 @@ function Minesweeper() {
 
             // If the revealed cell is a bomb, we crash out - GOOD
             if (underlay[y][x] === '&') {
+                let newReveal = [];
+                // Reveal all cells in the game board
+                for (let row of underlay) {
+                    let newRow = [];
+                    for (let cell of row) {
+                        newRow.push(1);
+                    }
+                    newReveal.push(newRow)
+                }
+                setReveal(newReveal);
+                // alert('YOU FUCKIN LOSE');
+
                 setFinishMessage('YOU FUCKIN LOSE');
-                setCompleteness(true);
-                revealAll();
             }
 
             // If the revealed cell is 0, we begin a flood fill algorithm
@@ -879,3 +849,42 @@ function Minesweeper() {
 
 export default Minesweeper;
 
+
+
+// function revealAll() {
+//     console.log('Revealing All Cells');
+//     let newReveal = [];
+//     for (let i = 0; i < underlay.length; i++) {
+//         let newRow = [];
+//         for (let x = 0; x < underlay[0].length; x++) {
+//             newRow.push(0);
+//         }
+//         newReveal.push(newRow);
+//     }
+
+
+
+
+
+
+
+
+//     for (let y = 0; y < underlay.length; y++) {
+//         let newRow = [];
+//         console.log('underlay[y], y', underlay[y], y);
+//         for (let x = 0; x < underlay[0].length; x++) {
+//             console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
+//             if (underlay[y][x] === '&') {
+//                 console.log('mine, adding flag');
+//                 newRow.push(2);
+//             } else {
+//                 console.log('not a mine, reveal cell');
+//                 newRow.push(1);
+//             }
+//         }
+//         newReveal.push(newRow);
+//     }
+//     console.log('updating reveal array, newReveal:', newReveal);
+//     setReveal(newReveal);
+
+// }

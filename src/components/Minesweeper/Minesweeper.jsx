@@ -21,6 +21,9 @@ function Minesweeper() {
     const [width, setWidth] = useState();
     const [height, setHeight] = useState();
 
+
+    // ________________________________________ useEffect functions ________________________________________
+
     useEffect(() => {
         generateMinesweeper(8, 10, 10, true);
     }, [])
@@ -32,6 +35,8 @@ function Minesweeper() {
             checkComplete()
         }
     }, [reveal])
+
+    // ________________________________________ checkComplete ________________________________________
 
     function checkComplete() {
         if (!completeness) {
@@ -61,9 +66,17 @@ function Minesweeper() {
         }
     }
 
-
     // ________________________________________Generate Puzzle Function________________________________________
+    /* 
+    Difficulty: The number of mines in the puzzle
+    Width: The width of the puzzle
+    Height: The height of the puzzle
+    Autogenerate: Default value is false
+    
+    */
+
     function generateMinesweeper(difficulty, width, height, autogenerate = false) {
+
         // console.log('difficulty', difficulty);
         // console.log('width, height', width, height);
 

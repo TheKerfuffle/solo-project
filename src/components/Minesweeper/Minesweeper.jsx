@@ -68,6 +68,7 @@ function Minesweeper() {
 
     // ________________________________________Generate Puzzle Function________________________________________
     /* 
+
     Difficulty: The number of mines in the puzzle
     Width: The width of the puzzle
     Height: The height of the puzzle
@@ -102,15 +103,12 @@ function Minesweeper() {
         for (let i = 0; i < height; i++) {
 
             let newRow = [];
-
             for (let j = 0; j < width; j++) {
-
                 newRow.push(0);
-
             }
-
             newGrid.push(newRow);
         }
+
         // Log Empty Grid
         // console.log('newGrid without bombs', newGrid);
 
@@ -408,7 +406,7 @@ function Minesweeper() {
         setReveal(newReveal);
     }
 
-    // ____________________Flood Fill Function, Breadth First Search____________________
+    // ________________________________________Flood Fill Function, Breadth First Search________________________________________
     function revealCell(enqueue, dequeue, changeReveal) {
         if (!completeness) {
             // enqueue and dequeue are arrays,

@@ -10,7 +10,7 @@ I play nonogram puzzles online all the time. I love puzzles. But there are no si
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/en/)
-- [PostrgeSQL](https://www.postgresql.org/)
+- [PostgreSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
 
 

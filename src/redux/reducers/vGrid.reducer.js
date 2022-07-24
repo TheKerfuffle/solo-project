@@ -21,7 +21,7 @@ export default vGrid;
 
 // This block of code contains the most hard fought element of this project.
 // I am extremely proud of this code
-// I tried writing it for of loops, but we need to target specific indices
+// I tried writing it with for of loops, but we need to target specific indices
 // within the solution data to reorder and process the clues we need
 function generateVertical(gridData) {
 

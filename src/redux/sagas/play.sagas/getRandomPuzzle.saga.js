@@ -1,6 +1,6 @@
 import { put } from '@redux-saga/core/effects';
 import axios from 'axios';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 
 

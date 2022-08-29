@@ -13,8 +13,12 @@ function Minesweeper() {
     // Minesweeper Game Board Data
     const [underlay, setUnderlay] = useState([]);
     const [reveal, setReveal] = useState([]);
-    const [completeness, setCompleteness] = useState(false);
     const [finishMessage, setFinishMessage] = useState("No Message");
+
+    // If we've lost
+    const [lost, setLost] = useState(false);
+    // If we've won
+    const [completeness, setCompleteness] = useState(false);
 
     // Minesweeper Grid Size/Difficulty Parameters
     const [difficulty, setDifficulty] = useState();
@@ -36,6 +40,10 @@ function Minesweeper() {
         }
     }, [reveal])
 
+    useEffect(() => {
+        console.log('lost |', lost);
+
+    }, [lost])
     // ________________________________________ checkComplete ________________________________________
 
     function checkComplete() {
@@ -143,7 +151,7 @@ function Minesweeper() {
                 let clueValue = 0;
                 // if the current block is a bomb, don't do anything with it
                 if (newGrid[y][x] === 1) {
-                    console.log('Bomb, y, x', y, x);
+                    // console.log('Bomb, y, x', y, x);
                     underlayRow.push('&');
                     newRevealRow.push(0);
                 } else {
@@ -158,21 +166,21 @@ function Minesweeper() {
 
                     // First we check for corners
                     if (y === 0 && x === 0) {
-                        console.log('Top Left Corner, y, x', y, x);
+                        // console.log('Top Left Corner, y, x', y, x);
                         // x+1
                         if (newGrid[y][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         // x+1, y+1
                         if (newGrid[y + 1][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         // y+1
                         if (newGrid[y + 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                     } else if (y === 0 && x === newGrid[0].length) {
@@ -180,53 +188,53 @@ function Minesweeper() {
                         // x-1
                         if (newGrid[y][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         // x-1, y+1
                         if (newGrid[y + 1][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         // y+1
                         if (newGrid[y + 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                     } else if (y === newGrid.length - 1 && x === 0) {
-                        console.log('Bottom Left Corner, y, x', y, x);
+                        // console.log('Bottom Left Corner, y, x', y, x);
                         // x+1
                         if (newGrid[y][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         // x+1, y-1
                         if (newGrid[y - 1][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         // y-1
                         if (newGrid[y - 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                     } else if (y === newGrid.length - 1 && x === newGrid[newGrid.length - 1].length - 1) {
-                        console.log('Bottom Right Corner, y, x', y, x);
+                        // console.log('Bottom Right Corner, y, x', y, x);
                         // x-1
                         if (newGrid[y][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         // x-1, y-1
                         if (newGrid[y - 1][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         // y-1
                         if (newGrid[y - 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                     }
@@ -234,172 +242,172 @@ function Minesweeper() {
                     // Next we check for edges
                     // y=0
                     else if (y === 0) {
-                        console.log('Top Edge, y, x', y, x);
+                        // console.log('Top Edge, y, x', y, x);
                         // no y-1
                         if (newGrid[y][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y + 1][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y + 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y + 1][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                     }
 
                     // x=0
                     else if (x === 0) {
-                        console.log('Left Edge, y, x', y, x);
+                        // console.log('Left Edge, y, x', y, x);
                         // no x-1
                         if (newGrid[y - 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y - 1][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y + 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y + 1][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                     }
 
                     // y=newGrid.length
                     else if (y === newGrid.length - 1) {
-                        console.log('Bottom Edge, y, x', y, x);
+                        // console.log('Bottom Edge, y, x', y, x);
                         // no y+1
                         if (newGrid[y - 1][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y - 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y - 1][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                     }
                     // x=newGrid[y].length
                     else if (x === newGrid[y].length - 1) {
-                        console.log('Right Edge, y, x', y, x);
+                        // console.log('Right Edge, y, x', y, x);
                         // no x+1
                         if (newGrid[y + 1][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y - 1][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y + 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                         if (newGrid[y - 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                     }
                     // Otherwise we check everything
                     else {
-                        console.log('Normal Square, y, x', y, x);
+                        // console.log('Normal Square, y, x', y, x);
 
                         // Check Up             [y-1]   [x]
                         if (newGrid[y - 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                         // Check Up Right       [y-1]   [x+1]
                         if (newGrid[y - 1][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                         // Check Right          [y]     [x+1]
                         if (newGrid[y][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                         // Check Down Right     [y+1]   [x+1]
                         if (newGrid[y + 1][x + 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                         // Check Down           [y+1]   [x]
                         if (newGrid[y + 1][x] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                         // Check Down Left      [y+1]   [x-1]
                         if (newGrid[y + 1][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                         // Check Left           [y]     [x-1]
                         if (newGrid[y][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
 
                         // Check Up Left        [y-1]   [x-1]
                         if (newGrid[y - 1][x - 1] === 1) {
                             clueValue += 1;
-                            console.log('increasing clueValue', clueValue);
+                            // console.log('increasing clueValue', clueValue);
                         }
                     }
-                    console.log('finished clue, y, x', y, x);
+                    // console.log('finished clue, y, x', y, x);
                     underlayRow.push(clueValue);
                     newRevealRow.push(0);
                 }
             }
-            console.log('Finished underlay Row', underlayRow);
+            // console.log('Finished underlay Row', underlayRow);
             newUnderlay.push(underlayRow);
 
-            console.log('finished reveal row', newRevealRow);
+            // console.log('finished reveal row', newRevealRow);
             newReveal.push(newRevealRow);
 
-            console.log('pushed to newReveal, reveal:', newReveal);
+            // console.log('pushed to newReveal, reveal:', newReveal);
         }
         console.log('Finished underlay', newUnderlay);
         setUnderlay(newUnderlay);
@@ -437,186 +445,199 @@ function Minesweeper() {
             // We must go through and check all 8 directions for each square 
             // and we only check them if they have not previously been checked
 
-            // If the revealed cell is a bomb, we crash out - GOOD
-            if (underlay[y][x] === '&') {
-                let newReveal = [];
-                // Reveal all cells in the game board
-                for (let row of underlay) {
-                    let newRow = [];
-                    for (let cell of row) {
-                        newRow.push(1);
+            // If the square is flagged, ignore the click
+            if (reveal[y][x] !== 2) {
+
+
+
+                // If the revealed cell is a bomb, we crash out - GOOD
+                if (underlay[y][x] === '&') {
+
+                    console.log("Checking Reveal / Underlay Here");
+                    console.log(reveal, underlay);
+                    let newReveal = [];
+                    // Reveal all cells in the game board
+                    for (let row of underlay) {
+                        let newRow = [];
+                        for (let cell of row) {
+                            newRow.push(1);
+                        }
+                        newReveal.push(newRow)
                     }
-                    newReveal.push(newRow)
-                }
-                setReveal(newReveal);
-                // alert('YOU FUCKIN LOSE');
+                    setReveal(newReveal);
+                    // alert('YOU FUCKIN LOSE');
 
-                setFinishMessage('YOU FUCKIN LOSE');
-            }
+                    setLost(true);
 
-            // If the revealed cell is 0, we begin a flood fill algorithm
-            else {
-
-                // Add things to enqueue array if the value is 0
-                if (underlay[y][x] === 0) {
-                    // BEGIN BY ADDING ALL 8 DIRECTIONS TO THE ENQUEUE ARRAY, 
-                    // WE ONLY ADD TO ENQUEUE IF THE VALUE HAS NOT ALREADY BEEN ADDED TO ENQUEUE OR IS IN DEQUEUE
-
-                    // UP - NO Y=0
-                    if (y > 0) {
-                        let checkUp = true;
-                        for (let cell of enqueue) {
-                            if (y - 1 === cell[0] && x === cell[1]) {
-                                checkUp = false;
-                            }
-                        }
-                        for (let cell of dequeue) {
-                            if (y - 1 === cell[0] && x === cell[1]) {
-                                checkUp = false;
-                            }
-                        }
-                        if (checkUp) {
-                            enqueue.push([y - 1, x])
-                        }
-                    }
-
-                    // UP RIGHT - NO Y=0 OR X=UNDERLAY[0].LENGTH-1
-
-                    if (y > 0 && x < underlay[0].length - 1) {
-                        let checkUpRight = true;
-                        for (let cell of enqueue) {
-                            if (y - 1 === cell[0] && x + 1 === cell[1]) {
-                                checkUpRight = false;
-                            }
-                        }
-                        for (let cell of dequeue) {
-                            if (y - 1 === cell[0] && x + 1 === cell[1]) {
-                                checkUpRight = false;
-                            }
-                        }
-                        if (checkUpRight) {
-                            enqueue.push([y - 1, x + 1])
-                        }
-                    }
-
-                    // RIGHT - NO X=UNDERLAY[0].LENGTH-1
-
-                    if (x < underlay[0].length - 1) {
-                        let checkRight = true;
-                        for (let cell of enqueue) {
-                            if (y === cell[0] && x + 1 === cell[1]) {
-                                checkRight = false;
-                            }
-                        }
-                        for (let cell of dequeue) {
-                            if (y === cell[0] && x + 1 === cell[1]) {
-                                checkRight = false;
-                            }
-                        }
-                        if (checkRight) {
-                            enqueue.push([y, x + 1])
-                        }
-                    }
-
-                    // DOWN RIGHT - NO Y=UNDERLAY.LENGTH-1 OR X=UNDERLAY[0].LENGTH-1
-
-                    if (y < underlay.length - 1 && x < underlay[0].length - 1) {
-                        let checkDownRight = true;
-                        for (let cell of enqueue) {
-                            if (y + 1 === cell[0] && x + 1 === cell[1]) {
-                                checkDownRight = false;
-                            }
-                        }
-                        for (let cell of dequeue) {
-                            if (y + 1 === cell[0] && x + 1 === cell[1]) {
-                                checkDownRight = false;
-                            }
-                        }
-                        if (checkDownRight) {
-                            enqueue.push([y + 1, x + 1])
-                        }
-                    }
-
-                    // DOWN - NO Y=UNDERLAY.LENGTH-1
-
-                    if (y < underlay.length - 1) {
-                        let checkDown = true;
-                        for (let cell of enqueue) {
-                            if (y + 1 === cell[0] && x === cell[1]) {
-                                checkDown = false;
-                            }
-                        }
-                        for (let cell of dequeue) {
-                            if (y + 1 === cell[0] && x === cell[1]) {
-                                checkDown = false;
-                            }
-                        }
-                        if (checkDown) {
-                            enqueue.push([y + 1, x])
-                        }
-                    }
-
-                    // DOWN LEFT - NO Y=UNDERLAY.LENGTH-1 OR X=0
-
-                    if (y < underlay.length - 1 && x > 0) {
-                        let checkDownLeft = true;
-                        for (let cell of enqueue) {
-                            if (y + 1 === cell[0] && x - 1 === cell[1]) {
-                                checkDownLeft = false;
-                            }
-                        }
-                        for (let cell of dequeue) {
-                            if (y + 1 === cell[0] && x - 1 === cell[1]) {
-                                checkDownLeft = false;
-                            }
-                        }
-                        if (checkDownLeft) {
-                            enqueue.push([y + 1, x - 1])
-                        }
-                    }
-
-                    // LEFT - NO X=0
-
-                    if (x > 0) {
-                        let checkLeft = true;
-                        for (let cell of enqueue) {
-                            if (y === cell[0] && x - 1 === cell[1]) {
-                                checkLeft = false;
-                            }
-                        }
-                        for (let cell of dequeue) {
-                            if (y === cell[0] && x - 1 === cell[1]) {
-                                checkLeft = false;
-                            }
-                        }
-                        if (checkLeft) {
-                            enqueue.push([y, x - 1])
-                        }
-                    }
-
-                    // LEFT UP - NO Y=0 OR X=0
-
-                    if (x > 0 && y > 0) {
-                        let checkUpLeft = true;
-                        for (let cell of enqueue) {
-                            if (y - 1 === cell[0] && x - 1 === cell[1]) {
-                                checkUpLeft = false;
-                            }
-                        }
-                        for (let cell of dequeue) {
-                            if (y - 1 === cell[0] && x - 1 === cell[1]) {
-                                checkUpLeft = false;
-                            }
-                        }
-                        if (checkUpLeft) {
-                            enqueue.push([y - 1, x - 1])
-                        }
-                    }
+                    setFinishMessage('YOU FUCKIN LOSE');
                 }
 
-                // Set the clicked element's reveal variable
-                // to 1 which will trigger the element to display
-                changeReveal[y][x] = 1;
+                // If the revealed cell is 0, we begin a flood fill algorithm
+                else {
+
+                    // Add things to enqueue array if the value is 0
+                    if (underlay[y][x] === 0) {
+                        // BEGIN BY ADDING ALL 8 DIRECTIONS TO THE ENQUEUE ARRAY, 
+                        // WE ONLY ADD TO ENQUEUE IF THE VALUE HAS NOT ALREADY BEEN ADDED TO ENQUEUE OR IS IN DEQUEUE
+
+                        // UP - NO Y=0
+                        if (y > 0) {
+                            let checkUp = true;
+                            for (let cell of enqueue) {
+                                if (y - 1 === cell[0] && x === cell[1]) {
+                                    checkUp = false;
+                                }
+                            }
+                            for (let cell of dequeue) {
+                                if (y - 1 === cell[0] && x === cell[1]) {
+                                    checkUp = false;
+                                }
+                            }
+                            if (checkUp) {
+                                enqueue.push([y - 1, x])
+                            }
+                        }
+
+                        // UP RIGHT - NO Y=0 OR X=UNDERLAY[0].LENGTH-1
+
+                        if (y > 0 && x < underlay[0].length - 1) {
+                            let checkUpRight = true;
+                            for (let cell of enqueue) {
+                                if (y - 1 === cell[0] && x + 1 === cell[1]) {
+                                    checkUpRight = false;
+                                }
+                            }
+                            for (let cell of dequeue) {
+                                if (y - 1 === cell[0] && x + 1 === cell[1]) {
+                                    checkUpRight = false;
+                                }
+                            }
+                            if (checkUpRight) {
+                                enqueue.push([y - 1, x + 1])
+                            }
+                        }
+
+                        // RIGHT - NO X=UNDERLAY[0].LENGTH-1
+
+                        if (x < underlay[0].length - 1) {
+                            let checkRight = true;
+                            for (let cell of enqueue) {
+                                if (y === cell[0] && x + 1 === cell[1]) {
+                                    checkRight = false;
+                                }
+                            }
+                            for (let cell of dequeue) {
+                                if (y === cell[0] && x + 1 === cell[1]) {
+                                    checkRight = false;
+                                }
+                            }
+                            if (checkRight) {
+                                enqueue.push([y, x + 1])
+                            }
+                        }
+
+                        // DOWN RIGHT - NO Y=UNDERLAY.LENGTH-1 OR X=UNDERLAY[0].LENGTH-1
+
+                        if (y < underlay.length - 1 && x < underlay[0].length - 1) {
+                            let checkDownRight = true;
+                            for (let cell of enqueue) {
+                                if (y + 1 === cell[0] && x + 1 === cell[1]) {
+                                    checkDownRight = false;
+                                }
+                            }
+                            for (let cell of dequeue) {
+                                if (y + 1 === cell[0] && x + 1 === cell[1]) {
+                                    checkDownRight = false;
+                                }
+                            }
+                            if (checkDownRight) {
+                                enqueue.push([y + 1, x + 1])
+                            }
+                        }
+
+                        // DOWN - NO Y=UNDERLAY.LENGTH-1
+
+                        if (y < underlay.length - 1) {
+                            let checkDown = true;
+                            for (let cell of enqueue) {
+                                if (y + 1 === cell[0] && x === cell[1]) {
+                                    checkDown = false;
+                                }
+                            }
+                            for (let cell of dequeue) {
+                                if (y + 1 === cell[0] && x === cell[1]) {
+                                    checkDown = false;
+                                }
+                            }
+                            if (checkDown) {
+                                enqueue.push([y + 1, x])
+                            }
+                        }
+
+                        // DOWN LEFT - NO Y=UNDERLAY.LENGTH-1 OR X=0
+
+                        if (y < underlay.length - 1 && x > 0) {
+                            let checkDownLeft = true;
+                            for (let cell of enqueue) {
+                                if (y + 1 === cell[0] && x - 1 === cell[1]) {
+                                    checkDownLeft = false;
+                                }
+                            }
+                            for (let cell of dequeue) {
+                                if (y + 1 === cell[0] && x - 1 === cell[1]) {
+                                    checkDownLeft = false;
+                                }
+                            }
+                            if (checkDownLeft) {
+                                enqueue.push([y + 1, x - 1])
+                            }
+                        }
+
+                        // LEFT - NO X=0
+
+                        if (x > 0) {
+                            let checkLeft = true;
+                            for (let cell of enqueue) {
+                                if (y === cell[0] && x - 1 === cell[1]) {
+                                    checkLeft = false;
+                                }
+                            }
+                            for (let cell of dequeue) {
+                                if (y === cell[0] && x - 1 === cell[1]) {
+                                    checkLeft = false;
+                                }
+                            }
+                            if (checkLeft) {
+                                enqueue.push([y, x - 1])
+                            }
+                        }
+
+                        // LEFT UP - NO Y=0 OR X=0
+
+                        if (x > 0 && y > 0) {
+                            let checkUpLeft = true;
+                            for (let cell of enqueue) {
+                                if (y - 1 === cell[0] && x - 1 === cell[1]) {
+                                    checkUpLeft = false;
+                                }
+                            }
+                            for (let cell of dequeue) {
+                                if (y - 1 === cell[0] && x - 1 === cell[1]) {
+                                    checkUpLeft = false;
+                                }
+                            }
+                            if (checkUpLeft) {
+                                enqueue.push([y - 1, x - 1])
+                            }
+                        }
+                    }
+
+                    // Set the clicked element's reveal variable
+                    // to 1 which will trigger the element to display
+                    changeReveal[y][x] = 1;
+                }
+            } else {
+                console.log("flag clicked");
             }
 
             // console.log('enqueue after pushes', enqueue);
@@ -757,6 +778,7 @@ function Minesweeper() {
                 </tbody>
             </table>
 
+            {/* Difficulty Button Containers */}
             <Grid container>
 
                 {/* Small Minesweeper Auto Generations */}
@@ -859,43 +881,3 @@ function Minesweeper() {
 }
 
 export default Minesweeper;
-
-
-
-// function revealAll() {
-//     console.log('Revealing All Cells');
-//     let newReveal = [];
-//     for (let i = 0; i < underlay.length; i++) {
-//         let newRow = [];
-//         for (let x = 0; x < underlay[0].length; x++) {
-//             newRow.push(0);
-//         }
-//         newReveal.push(newRow);
-//     }
-
-
-
-
-
-
-
-
-//     for (let y = 0; y < underlay.length; y++) {
-//         let newRow = [];
-//         console.log('underlay[y], y', underlay[y], y);
-//         for (let x = 0; x < underlay[0].length; x++) {
-//             console.log('y, x, underlay[y][x]', y, x, underlay[y][x]);
-//             if (underlay[y][x] === '&') {
-//                 console.log('mine, adding flag');
-//                 newRow.push(2);
-//             } else {
-//                 console.log('not a mine, reveal cell');
-//                 newRow.push(1);
-//             }
-//         }
-//         newReveal.push(newRow);
-//     }
-//     console.log('updating reveal array, newReveal:', newReveal);
-//     setReveal(newReveal);
-
-// }

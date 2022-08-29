@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router-dom';
 import GridElement from '../GridElement/GridElement';
 import HClue from '../HClue/HClue';
 import VClue from '../VClue/VClue';

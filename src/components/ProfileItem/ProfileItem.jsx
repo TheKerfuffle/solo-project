@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 // Custom Styles/Themes
 import { makeStyles, useTheme } from '@material-ui/core/styles';

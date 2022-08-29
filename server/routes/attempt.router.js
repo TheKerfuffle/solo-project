@@ -67,7 +67,7 @@ router.post('/', (req, res) => {
 router.put('/', (req, res) => {
   const user = req.user.id;
   // console.log('user id', user);
-  // console.log('put attempt req.body', req.body);
+  // console.log('121212 put attempt req.body', req.body);
   const queryText = `UPDATE attempted_puzzles 
   SET (timer, input_data, completed)=($1, $2, $3)
   WHERE "id"=$4;`;

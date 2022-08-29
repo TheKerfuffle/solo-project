@@ -2,10 +2,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 import FlagIcon from '@material-ui/icons/Flag';
+import AssistWalkerIcon from '@mui/icons-material/AssistWalker';
 
 import './Minesweeper.css';
 
 import { Tooltip, Grid, TextField, Button } from "@material-ui/core";
+
 
 
 function Minesweeper() {
@@ -17,6 +19,8 @@ function Minesweeper() {
 
     // If we've lost
     const [lost, setLost] = useState(false);
+    const [exploded, setExploded] = useState({x: '', y: ''})
+
     // If we've won
     const [completeness, setCompleteness] = useState(false);
 
@@ -33,8 +37,8 @@ function Minesweeper() {
     }, [])
 
     useEffect(() => {
-        console.log('reveal/underlay updated', reveal, underlay);
-        if (!completeness) {
+        // console.log('reveal/underlay updated', reveal, underlay);
+        if (!completeness && !lost) {
             console.log('Reveal has been updated! Game not over.', reveal);
             checkComplete()
         }
@@ -46,6 +50,7 @@ function Minesweeper() {
     }, [lost])
     // ________________________________________ checkComplete ________________________________________
 
+    // Only checking for victories, not checking for the clicking mines
     function checkComplete() {
         if (!completeness) {
 
@@ -103,6 +108,7 @@ function Minesweeper() {
         // When you generate a new game, reset completeness and the alert message 
         setFinishMessage("No Message");
         setCompleteness(false);
+        setLost(false);
 
         // Makes the empty grid of the requisite size
         let newGrid = [];
@@ -448,14 +454,16 @@ function Minesweeper() {
             // If the square is flagged, ignore the click
             if (reveal[y][x] !== 2) {
 
-
-
                 // If the revealed cell is a bomb, we crash out - GOOD
                 if (underlay[y][x] === '&') {
 
-                    console.log("Checking Reveal / Underlay Here");
-                    console.log(reveal, underlay);
+                    setExploded({x: x, y: y})
+                    setLost(true);
+
+                    // console.log("Checking Reveal / Underlay Here");
+                    // console.log(reveal, underlay);
                     let newReveal = [];
+
                     // Reveal all cells in the game board
                     for (let row of underlay) {
                         let newRow = [];
@@ -464,10 +472,12 @@ function Minesweeper() {
                         }
                         newReveal.push(newRow)
                     }
+
+                    console.log("Lost, New Reveal |", newReveal);
                     setReveal(newReveal);
                     // alert('YOU FUCKIN LOSE');
 
-                    setLost(true);
+                    
 
                     setFinishMessage('YOU FUCKIN LOSE');
                 }
@@ -741,7 +751,7 @@ function Minesweeper() {
                 <tbody>
                     {/* TO DO: ADD SPECIALIZED CLASSNAMES AND CHANGE GAMEBOARD COLOR WHEN THINGS ARE BEING REVEALED */}
                     {
-                        underlay && underlay.map((row, y) =>
+                        !lost && !completeness && underlay && underlay.map((row, y) =>
 
                             <tr key={y + 'elementRow'}>
 
@@ -762,6 +772,7 @@ function Minesweeper() {
                                                         (underlay[y][x] > 0 && element)
                                                         :
                                                         <FlagIcon style={{ fontSize: 20, color: 'maroon' }} />
+                                                        
                                                     )
                                             }
                                         </td>
@@ -771,6 +782,48 @@ function Minesweeper() {
 
 
 
+                        )
+                    }
+                    {
+                        lost && underlay && underlay.map((row, y) =>
+
+                            <tr key={y + 'elementRow'}>
+
+
+                                {
+                                    row.map((element, x) =>
+                                        <td
+                                            key={y + 'element' + x}
+                                            className={"reveal1" + " element" + element}
+                                        >
+                                            {
+                                                y== exploded.y && x== exploded.x ? <AssistWalkerIcon style={{ fontSize: 20, color: 'maroon' }} /> : underlay[y][x] == '&' ? <FlagIcon style={{ fontSize: 20, color: 'maroon' }} /> : underlay[y][x]
+                                            }
+                                        </td>
+                                    )
+                                }
+                            </tr>
+                        )
+                    }
+                    {
+                        completeness && underlay && underlay.map((row, y) =>
+
+                            <tr key={y + 'elementRow'}>
+
+
+                                {
+                                    row.map((element, x) =>
+                                        <td
+                                            key={y + 'element' + x}
+                                            className={"reveal1" + " element" + element}
+                                        >
+                                            {
+                                                underlay[y][x] == '&' ? <FlagIcon style={{ fontSize: 20, color: 'maroon' }} /> : underlay[y][x]
+                                            }
+                                        </td>
+                                    )
+                                }
+                            </tr>
                         )
                     }
 
